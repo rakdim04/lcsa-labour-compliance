@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#123b5d">
+
+<meta name="description"
+      content="LCSA - Labour Compliance & Strategy Advisor">
+
+<link rel="manifest" href="manifest.json">
+
+<title>LCSA | Labour Compliance & Strategy Advisor</title>
+
+<style>
+
+:root{
+  --nav:#123b5d;
+  --accent:#d89b27;
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#17212b;
+  --muted:#64748b;
+  --line:#dbe2e8;
+  --good:#16834b;
+  --warn:#b7791f;
+  --bad:#c53030;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:linear-gradient(135deg,#123b5d,#1c628b);
+  color:#fff;
+  padding:18px 20px;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+header small{
+  opacity:.85;
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  background:#0e2f49;
+  padding:8px;
+  position:sticky;
+  top:74px;
+  z-index:4;
+}
+
+nav button{
+  border:0;
+  background:transparent;
+  color:#dceaf4;
+  padding:10px 12px;
+  border-radius:8px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+nav button.active,
+nav button:hover{
+  background:#2a6587;
+  color:#fff;
+}
+
+main{
+  max-width:1200px;
+  margin:auto;
+  padding:18px;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(210px,1fr));
+  gap:14px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px;
+  box-shadow:0 2px 8px #00000008;
+}
+
+.metric{
+  font-size:30px;
+  font-weight:700;
+  margin:7px 0;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+h2{
+  margin-top:4px;
+}
+
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:10px 14px;
+  cursor:pointer;
+  background:var(--nav);
+  color:#fff;
+}
+
+.btn.alt{
+  background:#e9eef2;
+  color:#203040;
+}
+
+.btn.gold{
+  background:var(--accent);
+  color:#17212b;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  margin:5px 0 12px;
+  font:inherit;
+}
+
+textarea{
+  min-height:110px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(180px,1fr));
+  gap:10px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#fff;
+}
+
+.tablewrap{
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+
+th,
+td{
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+  white-space:nowrap;
+}
+
+th{
+  background:#eef3f6;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.good{
+  background:#def7e8;
+  color:var(--good);
+}
+
+.warn{
+  background:#fff3d6;
+  color:var(--warn);
+}
+
+.bad{
+  background:#fde1e1;
+  color:var(--bad);
+}
+
+.toolbar{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:10px 0;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.check input{
+  width:auto;
+  margin-top:4px;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+}
+
+@media(max-width:600px){
+
+  main{
+    padding:10px;
+  }
+
+  .metric{
+    font-size:25px;
+  }
+
+  header{
+    padding:14px;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media print{
+
+  nav,
+  .btn,
+  footer{
+    display:none !important;
+  }
+
+  header{
+    position:static;
+  }
+
+  .page{
+    display:none;
+  }
+
+  #reports{
+    display:block;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>⚖️ LCSA</h1>
+
+<small>
+Labour Compliance & Strategy Advisor • India
+</small>
+
+</header>
+
+<nav id="nav">
+
+<button data-page="dashboard"
+        class="active">
+Dashboard
+</button>
+
+<button data-page="compliance">
+Compliance
+</button>
+
+<button data-page="ccs">
+CCS / FR-SR
+</button>
+
+<button data-page="cases">
+Cases & Opinions
+</button>
+
+<button data-page="judgments">
+Judgment Cards
+</button>
+
+<button data-page="calendar">
+Calendar
+</button>
+
+<button data-page="reports">
+Reports
+</button>
+
+<button data-page="settings">
+Settings
+</button>
+
+</nav>
+
+<main>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard"
+         class="page active">
+
+<h2>Compliance Dashboard</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="muted">
+Total checklist items
+</div>
+
+<div class="metric"
+     id="mTotal">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="muted">
+Compliant
+</div>
+
+<div class="metric"
+     id="mGood">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="muted">
+Pending / Review
+</div>
+
+<div class="metric"
+     id="mPending">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="muted">
+High-risk cases
+</div>
+
+<div class="metric"
+     id="mRisk">
+0
+</div>
+
+</div>
+
+</div>
+
+<div class="grid"
+     style="margin-top:14px">
+
+<div class="card">
+
+<h3>Quick Actions</h3>
+
+<div class="toolbar">
+
+<button class="btn"
+        onclick="go('compliance')">
+Run Audit
+</button>
+
+<button class="btn gold"
+        onclick="go('cases')">
+New Case
+</button>
+
+<button class="btn alt"
+        onclick="go('judgments')">
+Judgment Card
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>LCSA Method</h3>
+
+<p class="muted">
+
+Identify applicability →
+verify rule →
+check evidence →
+record status →
+assess risk →
+assign action →
+retain audit trail.
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- COMPLIANCE -->
+
+<section id="compliance"
+         class="page">
+
+<h2>Labour Compliance Audit</h2>
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<label>Search</label>
+
+<input id="cSearch"
+       oninput="renderCompliance()"
+       placeholder="wages, EPFO, POSH...">
+
+</div>
+
+<div>
+
+<label>Status</label>
+
+<select id="cFilter"
+        onchange="renderCompliance()">
+
+<option value="ALL">
+All
+</option>
+
+<option>
+Compliant
+</option>
+
+<option>
+Pending
+</option>
+
+<option>
+Non-Compliant
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<button class="btn"
+        onclick="addCompliance()">
+
+Add checklist item
+
+</button>
+
+<button class="btn alt"
+        onclick="resetCompliance()">
+
+Reset demo data
+
+</button>
+
+</div>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Area</th>
+<th>Requirement</th>
+<th>Evidence / Action</th>
+<th>Status</th>
+<th>Risk</th>
+
+</tr>
+
+</thead>
+
+<tbody id="complianceBody">
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CCS -->
+
+<section id="ccs"
+         class="page">
+
+<h2>
+CCS / FR-SR Reference Workspace
+</h2>
+
+<div class="card">
+
+<p class="muted">
+
+Use this workspace for fact-based rule analysis.
+Always verify the current rule/order applicable to
+the employee and date before final action.
+
+</p>
+
+<div class="row">
+
+<div>
+
+<label>
+Rule / Subject
+</label>
+
+<input id="ruleSubject"
+       placeholder="e.g. FR 22, LTC, CCS(CCA)">
+
+</div>
+
+<div>
+
+<label>
+Issue
+</label>
+
+<input id="ruleIssue"
+       placeholder="Describe the issue">
+
+</div>
+
+</div>
+
+<label>Facts</label>
+
+<textarea id="ruleFacts"
+placeholder="Enter verified facts, dates and orders...">
+</textarea>
+
+<label>
+Questions to Verify
+</label>
+
+<textarea id="ruleQuestions"
+placeholder="List points requiring Establishment / Legal verification...">
+</textarea>
+
+<button class="btn"
+        onclick="saveRuleNote()">
+
+Save Analysis Note
+
+</button>
+
+</div>
+
+<div id="ruleNotes"
+     class="grid"
+     style="margin-top:14px">
+</div>
+
+</section>
+
+
+<!-- CASES -->
+
+<section id="cases"
+         class="page">
+
+<h2>
+Cases & Legal Opinions
+</h2>
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<label>
+Employee / Case Title
+</label>
+
+<input id="caseTitle">
+
+</div>
+
+<div>
+
+<label>
+Reference No.
+</label>
+
+<input id="caseRef">
+
+</div>
+
+</div>
+
+<label>Facts</label>
+
+<textarea id="caseFacts">
+</textarea>
+
+<label>
+Issue for Opinion
+</label>
+
+<textarea id="caseIssue">
+</textarea>
+
+<label>
+Documents / Rules to Verify
+</label>
+
+<textarea id="caseDocs">
+</textarea>
+
+<label>
+Proposed Action / Questions for Legal
+</label>
+
+<textarea id="caseAction">
+</textarea>
+
+<button class="btn"
+        onclick="saveCase()">
+
+Save Case
+
+</button>
+
+</div>
+
+<div id="caseList"
+     style="margin-top:14px">
+</div>
+
+</section>
+
+
+<!-- JUDGMENTS -->
+
+<section id="judgments"
+         class="page">
+
+<h2>
+Judgment Brief Card
+</h2>
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<label>
+Case Name
+</label>
+
+<input id="jName">
+
+</div>
+
+<div>
+
+<label>
+Court / Date
+</label>
+
+<input id="jCourt">
+
+</div>
+
+</div>
+
+<label>Facts</label>
+
+<textarea id="jFacts">
+</textarea>
+
+<label>Issue</label>
+
+<textarea id="jIssue">
+</textarea>
+
+<label>
+Finding / Ratio
+</label>
+
+<textarea id="jFinding">
+</textarea>
+
+<label>
+Final Outcome
+</label>
+
+<textarea id="jOutcome">
+</textarea>
+
+<label>
+Compliance Implication / Action
+</label>
+
+<textarea id="jAction">
+</textarea>
+
+<button class="btn"
+        onclick="saveJudgment()">
+
+Save Judgment Card
+
+</button>
+
+</div>
+
+<div id="judgmentList"
+     style="margin-top:14px">
+</div>
+
+</section>
+
+
+<!-- CALENDAR -->
+
+<section id="calendar"
+         class="page">
+
+<h2>
+Compliance Calendar
+</h2>
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<label>
+Compliance
+</label>
+
+<input id="calTitle"
+       placeholder="Monthly return / audit / filing">
+
+</div>
+
+<div>
+
+<label>
+Due Date
+</label>
+
+<input id="calDate"
+       type="date">
+
+</div>
+
+<div>
+
+<label>
+Responsible Officer
+</label>
+
+<input id="calOwner">
+
+</div>
+
+</div>
+
+<button class="btn"
+        onclick="saveCalendar()">
+
+Add Deadline
+
+</button>
+
+</div>
+
+<div id="calendarList"
+     style="margin-top:14px">
+</div>
+
+</section>
+
+
+<!-- REPORTS -->
+
+<section id="reports"
+         class="page">
+
+<h2>
+Reports
+</h2>
+
+<div class="card">
+
+<p>
+Generate a printable management snapshot from
+current local data.
+</p>
+
+<button class="btn"
+        onclick="printReport()">
+
+Print / Save PDF
+
+</button>
+
+</div>
+
+<div id="reportPreview"
+     class="card"
+     style="margin-top:14px">
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="settings"
+         class="page">
+
+<h2>
+Settings & Backup
+</h2>
+
+<div class="card">
+
+<p class="muted">
+
+Data is stored locally in this browser/device in
+v1.0. Use backup regularly.
+
+</p>
+
+<div class="toolbar">
+
+<button class="btn"
+        onclick="exportData()">
+
+Export Backup
+
+</button>
+
+<button class="btn alt"
+        onclick="document.getElementById('importFile').click()">
+
+Import Backup
+
+</button>
+
+<input id="importFile"
+       type="file"
+       accept=".json"
+       hidden
+       onchange="importData(event)">
+
+</div>
+
+<button class="btn"
+        onclick="installApp()"
+        id="installBtn"
+        style="display:none">
+
+Install LCSA
+
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+LCSA v1.0 • Labour Compliance & Strategy Advisor
+
+</footer>
+
+
+<script>
+
+const KEY =
+"lcsa_v1_data";
+
+
+const seed = {
+
+compliance:[
+
+{
+area:"Wages",
+req:"Verify wage payment, minimum wage and applicable wage records",
+evidence:"Wage register / payroll / applicable notification",
+status:"Pending",
+risk:"Medium"
+},
+
+{
+area:"Working Hours",
+req:"Verify working hours, weekly rest and overtime controls",
+evidence:"Attendance / OT records / approvals",
+status:"Pending",
+risk:"Medium"
+},
+
+{
+area:"Social Security",
+req:"Verify EPFO / ESIC applicability and remittances",
+evidence:"Registration, challans, returns",
+status:"Pending",
+risk:"High"
+},
+
+{
+area:"POSH",
+req:"Verify Internal Committee, policy, awareness and annual compliance",
+evidence:"IC order / policy / training / annual report",
+status:"Pending",
+risk:"High"
+},
+
+{
+area:"Contract Labour",
+req:"Verify contractor licences, wage records and principal-employer controls where applicable",
+evidence:"Agreements / licences / registers",
+status:"Pending",
+risk:"High"
+},
+
+{
+area:"Records",
+req:"Verify statutory registers, notices and retention requirements",
+evidence:"Registers / notices / digital records",
+status:"Pending",
+risk:"Medium"
+}
+
+],
+
+notes:[],
+cases:[],
+judgments:[],
+calendar:[]
+
+};
+
+
+let db =
+JSON.parse(localStorage.getItem(KEY) || "null")
+|| structuredClone(seed);
+
+
+function persist(){
+
+localStorage.setItem(
+KEY,
+JSON.stringify(db)
+);
+
+updateDashboard();
+renderAll();
+
+}
+
+
+function go(id){
+
+document
+.querySelectorAll(".page")
+.forEach(x =>
+x.classList.remove("active")
+);
+
+document
+.getElementById(id)
+.classList.add("active");
+
+document
+.querySelectorAll("nav button")
+.forEach(x =>
+x.classList.toggle(
+"active",
+x.dataset.page === id
+));
+
+renderAll();
+
+}
+
+
+document
+.querySelectorAll("nav button")
+.forEach(
+b =>
+b.onclick =
+() => go(b.dataset.page)
+);
+
+
+function updateDashboard(){
+
+let a =
+db.compliance;
+
+document.getElementById("mTotal")
+.textContent =
+a.length;
+
+document.getElementById("mGood")
+.textContent =
+a.filter(
+x => x.status === "Compliant"
+).length;
+
+document.getElementById("mPending")
+.textContent =
+a.filter(
+x => x.status !== "Compliant"
+).length;
+
+document.getElementById("mRisk")
+.textContent =
+a.filter(
+x =>
+x.risk === "High"
+&&
+x.status !== "Compliant"
+).length;
+
+}
+
+
+function renderCompliance(){
+
+let q =
+(
+document.getElementById("cSearch")
+?.value || ""
+).toLowerCase();
+
+let f =
+document.getElementById("cFilter")
+?.value || "ALL";
+
+
+let rows =
+db.compliance.filter(
+
+x =>
+(
+f === "ALL"
+||
+x.status === f
+)
+&&
+JSON.stringify(x)
+.toLowerCase()
+.includes(q)
+
+);
+
+
+document.getElementById(
+"complianceBody"
+).innerHTML =
+
+rows.map(
+
+x => `
+
+<tr>
+
+<td>
+${esc(x.area)}
+</td>
+
+<td>
+${esc(x.req)}
+</td>
+
+<td>
+${esc(x.evidence)}
+</td>
+
+<td>
+
+<select
+onchange="setC(
+${db.compliance.indexOf(x)},
+this.value
+)">
+
+<option
+${x.status==="Compliant"?"selected":""}>
+Compliant
+</option>
+
+<option
+${x.status==="Pending"?"selected":""}>
+Pending
+</option>
+
+<option
+${x.status==="Non-Compliant"?"selected":""}>
+Non-Compliant
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<span class="badge
+${x.risk==="High"
+?"bad"
+:x.risk==="Medium"
+?"warn"
+:"good"}">
+
+${x.risk}
+
+</span>
+
+</td>
+
+</tr>
+
+`
+
+).join("")
+
+||
+
+`
+
+<tr>
+<td colspan="5"
+class="empty">
+
+No items found
+
+</td>
+</tr>
+
+`;
+
+}
+
+
+function setC(i,v){
+
+db.compliance[i].status = v;
+
+persist();
+
+}
+
+
+function addCompliance(){
+
+let area =
+prompt("Area");
+
+if(!area)return;
+
+let req =
+prompt("Requirement");
+
+if(!req)return;
+
+db.compliance.push({
+
+area,
+req,
+evidence:"Evidence to verify",
+status:"Pending",
+risk:"Medium"
+
+});
+
+persist();
+
+}
+
+
+function resetCompliance(){
+
+if(
+confirm(
+"Reset checklist to demo data?"
+)
+){
+
+db.compliance =
+structuredClone(
+seed.compliance
+);
+
+persist();
+
+}
+
+}
+
+
+function saveRuleNote(){
+
+db.notes.push({
+
+subject:val("ruleSubject"),
+issue:val("ruleIssue"),
+facts:val("ruleFacts"),
+questions:val("ruleQuestions"),
+date:new Date().toLocaleString()
+
+});
+
+[
+"ruleSubject",
+"ruleIssue",
+"ruleFacts",
+"ruleQuestions"
+].forEach(clear);
+
+persist();
+
+}
+
+
+function renderNotes(){
+
+document.getElementById(
+"ruleNotes"
+).innerHTML =
+
+db.notes.map(
+
+(n,i) => `
+
+<div class="card">
+
+<b>
+${esc(n.subject)}
+</b>
+
+<p>
+${esc(n.issue)}
+</p>
+
+<p>
+${esc(n.facts)}
+</p>
+
+<p class="muted">
+${esc(n.questions)}
+</p>
+
+<button
+class="btn alt"
+onclick="
+
+db.notes.splice(${i},1);
+persist();
+
+">
+
+Delete
+
+</button>
+
+</div>
+
+`
+
+).join("")
+
+||
+
+'<div class="empty">No analysis notes</div>';
+
+}
+
+
+function saveCase(){
+
+db.cases.push({
+
+title:val("caseTitle"),
+ref:val("caseRef"),
+facts:val("caseFacts"),
+issue:val("caseIssue"),
+docs:val("caseDocs"),
+action:val("caseAction"),
+date:new Date().toLocaleString()
+
+});
+
+[
+"caseTitle",
+"caseRef",
+"caseFacts",
+"caseIssue",
+"caseDocs",
+"caseAction"
+].forEach(clear);
+
+persist();
+
+}
+
+
+function renderCases(){
+
+document.getElementById(
+"caseList"
+).innerHTML =
+
+db.cases.map(
+
+(c,i) => `
+
+<div class="card">
+
+<h3>
+${esc(c.title)}
+</h3>
+
+<span class="badge warn">
+${esc(c.ref || "No ref")}
+</span>
+
+<h4>Facts</h4>
+
+<p>
+${esc(c.facts)}
+</p>
+
+<h4>Issue</h4>
+
+<p>
+${esc(c.issue)}
+</p>
+
+<h4>
+Documents / Verification
+</h4>
+
+<p>
+${esc(c.docs)}
+</p>
+
+<h4>
+Action / Legal Questions
+</h4>
+
+<p>
+${esc(c.action)}
+</p>
+
+<button
+class="btn alt"
+onclick="
+
+db.cases.splice(${i},1);
+persist();
+
+">
+
+Delete
+
+</button>
+
+</div>
+
+`
+
+).join("")
+
+||
+
+'<div class="empty">No cases saved</div>';
+
+}
+
+
+function saveJudgment(){
+
+db.judgments.push({
+
+name:val("jName"),
+court:val("jCourt"),
+facts:val("jFacts"),
+issue:val("jIssue"),
+finding:val("jFinding"),
+outcome:val("jOutcome"),
+action:val("jAction")
+
+});
+
+[
+"jName",
+"jCourt",
+"jFacts",
+"jIssue",
+"jFinding",
+"jOutcome",
+"jAction"
+].forEach(clear);
+
+persist();
+
+}
+
+
+function renderJudgments(){
+
+document.getElementById(
+"judgmentList"
+).innerHTML =
+
+db.judgments.map(
+
+(j,i) => `
+
+<div class="card">
+
+<h3>
+⚖️ ${esc(j.name)}
+</h3>
+
+<p class="muted">
+${esc(j.court)}
+</p>
+
+<p>
+<b>Facts:</b>
+${esc(j.facts)}
+</p>
+
+<p>
+<b>Issue:</b>
+${esc(j.issue)}
+</p>
+
+<p>
+<b>Finding / Ratio:</b>
+${esc(j.finding)}
+</p>
+
+<p>
+<b>Outcome:</b>
+${esc(j.outcome)}
+</p>
+
+<p>
+<b>Compliance Action:</b>
+${esc(j.action)}
+</p>
+
+<button
+class="btn alt"
+onclick="
+
+db.judgments.splice(${i},1);
+persist();
+
+">
+
+Delete
+
+</button>
+
+</div>
+
+`
+
+).join("")
+
+||
+
+'<div class="empty">No judgment cards</div>';
+
+}
+
+
+function saveCalendar(){
+
+db.calendar.push({
+
+title:val("calTitle"),
+date:val("calDate"),
+owner:val("calOwner")
+
+});
+
+[
+"calTitle",
+"calDate",
+"calOwner"
+].forEach(clear);
+
+persist();
+
+}
+
+
+function renderCalendar(){
+
+let a =
+[...db.calendar]
+.sort(
+(x,y) =>
+x.date.localeCompare(y.date)
+);
+
+
+document.getElementById(
+"calendarList"
+).innerHTML =
+
+a.map(
+
+(c,i) => `
+
+<div class="card">
+
+<b>
+${esc(c.title)}
+</b>
+
+<p>
+
+Due:
+${esc(c.date)}
+
+•
+
+Owner:
+${esc(c.owner)}
+
+</p>
+
+<button
+class="btn alt"
+onclick="
+
+db.calendar.splice(
+${db.calendar.indexOf(c)},
+1
+);
+
+persist();
+
+">
+
+Delete
+
+</button>
+
+</div>
+
+`
+
+).join("")
+
+||
+
+'<div class="empty">No deadlines</div>';
+
+}
+
+
+function renderReport(){
+
+document.getElementById(
+"reportPreview"
+).innerHTML = `
+
+<h3>
+LCSA Compliance Snapshot
+</h3>
+
+<p>
+Generated:
+<b>
+${new Date().toLocaleString()}
+</b>
+</p>
+
+<p>
+
+Total Items:
+<b>
+${db.compliance.length}
+</b>
+
+|
+
+Compliant:
+<b>
+${db.compliance.filter(
+x=>x.status==="Compliant"
+).length}
+</b>
+
+|
+
+Pending / Non-Compliant:
+<b>
+${db.compliance.filter(
+x=>x.status!=="Compliant"
+).length}
+</b>
+
+|
+
+High Risk Open:
+<b>
+${db.compliance.filter(
+x =>
+x.risk==="High"
+&&
+x.status!=="Compliant"
+).length}
+</b>
+
+</p>
+
+<p>
+
+Cases:
+${db.cases.length}
+
+|
+
+Judgment Cards:
+${db.judgments.length}
+
+|
+
+Calendar Items:
+${db.calendar.length}
+
+</p>
+
+`;
+
+}
+
+
+function renderAll(){
+
+renderCompliance();
+renderNotes();
+renderCases();
+renderJudgments();
+renderCalendar();
+renderReport();
+updateDashboard();
+
+}
+
+
+function val(id){
+
+return document
+.getElementById(id)
+.value
+.trim();
+
+}
+
+
+function clear(id){
+
+document
+.getElementById(id)
+.value = "";
+
+}
+
+
+function esc(s){
+
+return String(s ?? "")
+.replace(
+/[&<>"']/g,
+m => ({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m])
+
+);
+
+}
+
+
+function exportData(){
+
+let blob =
+new Blob(
+[
+JSON.stringify(
+db,
+null,
+2
+)
+],
+{
+type:"application/json"
+}
+);
+
+let a =
+document.createElement("a");
+
+a.href =
+URL.createObjectURL(blob);
+
+a.download =
+"LCSA-backup-"
++
+new Date()
+.toISOString()
+.slice(0,10)
++
+".json";
+
+a.click();
+
+}
+
+
+function importData(e){
+
+let f =
+e.target.files[0];
+
+if(!f)return;
+
+let r =
+new FileReader();
+
+r.onload = () => {
+
+try{
+
+db =
+JSON.parse(
+r.result
+);
+
+persist();
+
+alert(
+"Backup imported successfully."
+);
+
+}
+
+catch{
+
+alert(
+"Invalid backup file."
+);
+
+}
+
+};
+
+r.readAsText(f);
+
+}
+
+
+function printReport(){
+
+renderReport();
+
+go("reports");
+
+window.print();
+
+}
+
+
+let deferredPrompt;
+
+
+window.addEventListener(
+"beforeinstallprompt",
+e => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+document.getElementById(
+"installBtn"
+).style.display =
+"inline-block";
+
+});
+
+
+async function installApp(){
+
+if(deferredPrompt){
+
+deferredPrompt.prompt();
+
+await deferredPrompt.userChoice;
+
+deferredPrompt = null;
+
+}
+
+}
+
+
+if(
+"serviceWorker"
+in navigator
+){
+
+window.addEventListener(
+"load",
+() => {
+
+navigator.serviceWorker.register(
+"service-worker.js"
+);
+
+});
+
+}
+
+
+renderAll();
+
+</script>
+
+</body>
+</html>
