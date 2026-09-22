@@ -1,0 +1,10 @@
+{
+  "name": "LCSA - Labour Compliance & Strategy Advisor",
+  "short_name": "LCSA",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#123b5d",
+  "description": "India labour compliance, CCS/FR-SR, legal case and compliance management workspace.",
+  "icons": []
+}
