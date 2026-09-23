@@ -1,4 +1,4 @@
-const CACHE_NAME = "lcsa-v2-0-1";
+const CACHE_NAME = "lcsa-v3-0-1";
 
 const FILES_TO_CACHE = [
   "./",
@@ -13,9 +13,10 @@ self.addEventListener("install", event => {
 
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(FILES_TO_CACHE))
-      .then(() => self.skipWaiting())
 
   );
+
+  self.skipWaiting();
 
 });
 
@@ -34,14 +35,20 @@ self.addEventListener("activate", event => {
 
       )
 
-    ).then(() => self.clients.claim())
+    )
 
   );
+
+  self.clients.claim();
 
 });
 
 
 self.addEventListener("fetch", event => {
+
+  if(event.request.method !== "GET"){
+    return;
+  }
 
   event.respondWith(
 
@@ -66,9 +73,16 @@ self.addEventListener("fetch", event => {
             const copy=response.clone();
 
             caches.open(CACHE_NAME)
-              .then(cache => cache.put(event.request,copy));
+              .then(cache=>{
+                cache.put(event.request,copy);
+              });
 
             return response;
+
+          })
+          .catch(()=>{
+
+            return caches.match("./index.html");
 
           });
 
