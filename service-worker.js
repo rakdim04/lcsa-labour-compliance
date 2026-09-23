@@ -1,17 +1,19 @@
-const CACHE = "lcsa-v1";
+const CACHE_NAME = "lcsa-v2-0-1";
 
-const ASSETS = [
+const FILES_TO_CACHE = [
   "./",
   "./index.html",
-  "./manifest.json"
+  "./manifest.json",
+  "./service-worker.js"
 ];
 
 self.addEventListener("install", event => {
 
   event.waitUntil(
 
-    caches.open(CACHE)
-      .then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(FILES_TO_CACHE))
+      .then(() => self.skipWaiting())
 
   );
 
@@ -21,7 +23,19 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
 
   event.waitUntil(
-    self.clients.claim()
+
+    caches.keys().then(keys =>
+
+      Promise.all(
+
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
+
+      )
+
+    ).then(() => self.clients.claim())
+
   );
 
 });
@@ -32,35 +46,31 @@ self.addEventListener("fetch", event => {
   event.respondWith(
 
     caches.match(event.request)
-      .then(response => {
+      .then(cached => {
 
-        if (response) {
-          return response;
+        if(cached){
+          return cached;
         }
 
         return fetch(event.request)
-          .then(networkResponse => {
+          .then(response => {
 
-            const copy =
-              networkResponse.clone();
+            if(
+              !response ||
+              response.status !== 200 ||
+              response.type === "opaque"
+            ){
+              return response;
+            }
 
-            caches.open(CACHE)
-              .then(cache => {
+            const copy=response.clone();
 
-                cache.put(
-                  event.request,
-                  copy
-                );
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request,copy));
 
-              });
+            return response;
 
-            return networkResponse;
-
-          })
-
-          .catch(() =>
-            caches.match("./index.html")
-          );
+          });
 
       })
 
