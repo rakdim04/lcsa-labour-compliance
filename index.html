@@ -2,171 +2,204 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,viewport-fit=cover">
-
-<meta name="theme-color" content="#123b5d">
-
-<meta name="description"
-      content="LCSA - Labour Compliance & Strategy Advisor">
-
-<link rel="manifest" href="manifest.json">
-
-<title>LCSA | Labour Compliance & Strategy Advisor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12355b">
+<meta name="description" content="LCSA - Labour Compliance & Strategy Advisor">
+<title>LCSA v2.0 - Labour Compliance & Strategy Advisor</title>
 
 <style>
-
 :root{
-  --nav:#123b5d;
-  --accent:#d89b27;
-  --bg:#f4f6f8;
-  --card:#ffffff;
-  --text:#17212b;
+  --navy:#12355b;
+  --blue:#1769aa;
+  --light:#f4f7fb;
+  --white:#fff;
+  --text:#1f2937;
   --muted:#64748b;
-  --line:#dbe2e8;
-  --good:#16834b;
-  --warn:#b7791f;
-  --bad:#c53030;
+  --border:#d9e2ec;
+  --green:#15803d;
+  --yellow:#a16207;
+  --red:#b91c1c;
+  --orange:#c2410c;
+  --shadow:0 3px 12px rgba(15,23,42,.08);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--light);
   color:var(--text);
 }
 
 header{
-  background:linear-gradient(135deg,#123b5d,#1c628b);
-  color:#fff;
-  padding:18px 20px;
+  background:linear-gradient(135deg,#12355b,#1769aa);
+  color:white;
+  padding:16px;
   position:sticky;
   top:0;
-  z-index:5;
+  z-index:1000;
+  box-shadow:var(--shadow);
 }
 
-header h1{
-  margin:0;
-  font-size:22px;
+.header-title{
+  font-size:23px;
+  font-weight:bold;
 }
 
-header small{
-  opacity:.85;
+.header-sub{
+  font-size:13px;
+  opacity:.9;
+  margin-top:3px;
 }
 
 nav{
   display:flex;
-  gap:8px;
-  overflow:auto;
-  background:#0e2f49;
+  overflow-x:auto;
+  gap:6px;
   padding:8px;
+  background:#0d2947;
   position:sticky;
-  top:74px;
-  z-index:4;
+  top:78px;
+  z-index:999;
 }
 
 nav button{
   border:0;
-  background:transparent;
-  color:#dceaf4;
-  padding:10px 12px;
-  border-radius:8px;
+  background:#244d73;
+  color:#fff;
+  padding:9px 13px;
+  border-radius:7px;
   white-space:nowrap;
   cursor:pointer;
 }
 
 nav button.active,
 nav button:hover{
-  background:#2a6587;
-  color:#fff;
+  background:#fff;
+  color:var(--navy);
 }
 
 main{
-  max-width:1200px;
+  max-width:1400px;
   margin:auto;
   padding:18px;
 }
 
-.page{
-  display:none;
+.page{display:none}
+.page.active{display:block}
+
+h2{
+  margin-top:0;
+  color:var(--navy);
 }
 
-.page.active{
-  display:block;
+h3{
+  color:var(--navy);
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(210px,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:14px;
 }
 
-.card{
-  background:var(--card);
-  border:1px solid var(--line);
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:#fff;
+  border:1px solid var(--border);
   border-radius:12px;
   padding:16px;
-  box-shadow:0 2px 8px #00000008;
+  box-shadow:var(--shadow);
 }
 
-.metric{
+.stat .number{
   font-size:30px;
-  font-weight:700;
-  margin:7px 0;
+  font-weight:bold;
+  color:var(--navy);
 }
 
-.muted{
+.stat .label{
   color:var(--muted);
+  font-size:13px;
 }
 
-h2{
-  margin-top:4px;
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin:9px 0 5px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:7px;
+  padding:9px;
+  font-size:14px;
+  background:#fff;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  font-family:inherit;
 }
 
 .btn{
   border:0;
-  border-radius:8px;
-  padding:10px 14px;
+  border-radius:7px;
+  padding:9px 13px;
   cursor:pointer;
-  background:var(--nav);
+  font-weight:bold;
+  margin:3px;
+}
+
+.primary{
+  background:var(--navy);
   color:#fff;
 }
 
-.btn.alt{
-  background:#e9eef2;
-  color:#203040;
+.secondary{
+  background:#e8f0f8;
+  color:var(--navy);
 }
 
-.btn.gold{
-  background:var(--accent);
-  color:#17212b;
+.success{
+  background:#dcfce7;
+  color:var(--green);
 }
 
-input,
-select,
-textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:8px;
-  margin:5px 0 12px;
-  font:inherit;
+.warning{
+  background:#fef3c7;
+  color:var(--yellow);
 }
 
-textarea{
-  min-height:110px;
+.danger{
+  background:#fee2e2;
+  color:var(--red);
 }
 
-.row{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fit,minmax(180px,1fr));
-  gap:10px;
+.info{
+  background:#dbeafe;
+  color:#1d4ed8;
 }
 
 table{
@@ -175,69 +208,113 @@ table{
   background:#fff;
 }
 
-.tablewrap{
-  overflow:auto;
-  border:1px solid var(--line);
-  border-radius:10px;
-}
-
-th,
-td{
-  padding:10px;
-  border-bottom:1px solid var(--line);
+th,td{
+  border-bottom:1px solid var(--border);
+  padding:9px;
   text-align:left;
-  white-space:nowrap;
+  vertical-align:top;
+  font-size:13px;
 }
 
 th{
-  background:#eef3f6;
+  background:#eef4fa;
+  color:var(--navy);
+  position:sticky;
+  top:0;
+}
+
+.table-wrap{
+  overflow:auto;
+  max-height:620px;
+  border:1px solid var(--border);
+  border-radius:8px;
 }
 
 .badge{
   display:inline-block;
   padding:4px 8px;
-  border-radius:99px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.badge-green{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.badge-yellow{
+  background:#fef3c7;
+  color:#854d0e;
+}
+
+.badge-red{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.badge-blue{
+  background:#dbeafe;
+  color:#1e40af;
+}
+
+.badge-gray{
+  background:#e2e8f0;
+  color:#475569;
+}
+
+.code-card{
+  border-left:5px solid var(--blue);
+  background:#fff;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow);
+}
+
+.small{
   font-size:12px;
-  font-weight:600;
+  color:var(--muted);
 }
 
-.good{
-  background:#def7e8;
-  color:var(--good);
+.notice{
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  border-radius:8px;
+  padding:12px;
+  margin-bottom:15px;
 }
 
-.warn{
-  background:#fff3d6;
-  color:var(--warn);
+.success-box{
+  background:#f0fdf4;
+  border:1px solid #bbf7d0;
+  color:#166534;
+  border-radius:8px;
+  padding:12px;
+  margin-bottom:15px;
 }
 
-.bad{
-  background:#fde1e1;
-  color:var(--bad);
-}
-
-.toolbar{
+.actions{
   display:flex;
-  gap:8px;
   flex-wrap:wrap;
-  margin:10px 0;
+  gap:5px;
 }
 
-.check{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  padding:10px 0;
-  border-bottom:1px solid var(--line);
+.progress{
+  height:12px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.check input{
-  width:auto;
-  margin-top:4px;
+.progress-bar{
+  height:100%;
+  background:#1769aa;
 }
 
 .empty{
-  padding:30px;
+  padding:25px;
   text-align:center;
   color:var(--muted);
 }
@@ -245,699 +322,644 @@ th{
 footer{
   text-align:center;
   color:var(--muted);
-  padding:30px;
+  font-size:12px;
+  padding:25px;
+}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
 }
 
 @media(max-width:600px){
-
-  main{
-    padding:10px;
-  }
-
-  .metric{
-    font-size:25px;
-  }
-
-  header{
-    padding:14px;
-  }
-
-  .grid{
-    grid-template-columns:1fr 1fr;
-  }
-
+  .grid,.grid2{grid-template-columns:1fr}
+  main{padding:10px}
+  header{padding:12px}
+  .header-title{font-size:19px}
+  nav{top:68px}
+  th,td{font-size:12px}
 }
 
+/* PRINT */
 @media print{
-
-  nav,
-  .btn,
-  footer{
-    display:none !important;
-  }
-
-  header{
-    position:static;
-  }
-
-  .page{
-    display:none;
-  }
-
-  #reports{
-    display:block;
-  }
-
+  header,nav,.no-print{display:none!important}
+  body{background:white}
+  main{max-width:none;padding:0}
+  .card{box-shadow:none;border:1px solid #ccc}
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
-<h1>⚖️ LCSA</h1>
-
-<small>
-Labour Compliance & Strategy Advisor • India
-</small>
-
+  <div class="header-title">LCSA v2.0</div>
+  <div class="header-sub">Labour Compliance & Strategy Advisor</div>
 </header>
 
 <nav id="nav">
-
-<button data-page="dashboard"
-        class="active">
-Dashboard
-</button>
-
-<button data-page="compliance">
-Compliance
-</button>
-
-<button data-page="ccs">
-CCS / FR-SR
-</button>
-
-<button data-page="cases">
-Cases & Opinions
-</button>
-
-<button data-page="judgments">
-Judgment Cards
-</button>
-
-<button data-page="calendar">
-Calendar
-</button>
-
-<button data-page="reports">
-Reports
-</button>
-
-<button data-page="settings">
-Settings
-</button>
-
+  <button onclick="go('dashboard')" class="active">Dashboard</button>
+  <button onclick="go('establishment')">Establishment</button>
+  <button onclick="go('codes')">Labour Codes</button>
+  <button onclick="go('audit')">Compliance Audit</button>
+  <button onclick="go('rules')">CCS / FR-SR</button>
+  <button onclick="go('cases')">Legal Cases</button>
+  <button onclick="go('judgments')">Judgments</button>
+  <button onclick="go('calendar')">Calendar</button>
+  <button onclick="go('reports')">Reports</button>
+  <button onclick="go('settings')">Settings</button>
 </nav>
 
 <main>
 
-<!-- DASHBOARD -->
+<!-- ================= DASHBOARD ================= -->
 
-<section id="dashboard"
-         class="page active">
+<section id="dashboard" class="page active">
 
-<h2>Compliance Dashboard</h2>
+<h2>Executive Dashboard</h2>
 
 <div class="grid">
 
-<div class="card">
-
-<div class="muted">
-Total checklist items
+<div class="stat">
+<div class="number" id="statTotal">0</div>
+<div class="label">Total Audit Items</div>
 </div>
 
-<div class="metric"
-     id="mTotal">
-0
+<div class="stat">
+<div class="number" id="statCompliant">0</div>
+<div class="label">Compliant</div>
 </div>
 
+<div class="stat">
+<div class="number" id="statHigh">0</div>
+<div class="label">High Risk Open</div>
 </div>
 
-<div class="card">
-
-<div class="muted">
-Compliant
-</div>
-
-<div class="metric"
-     id="mGood">
-0
+<div class="stat">
+<div class="number" id="statCases">0</div>
+<div class="label">Open Legal Cases</div>
 </div>
 
 </div>
 
-<div class="card">
+<br>
 
-<div class="muted">
-Pending / Review
+<div class="grid">
+
+<div class="stat">
+<div class="number" id="statDeadlines">0</div>
+<div class="label">Upcoming Deadlines</div>
 </div>
 
-<div class="metric"
-     id="mPending">
-0
+<div class="stat">
+<div class="number" id="statJudgments">0</div>
+<div class="label">Judgment Cards</div>
 </div>
 
+<div class="stat">
+<div class="number" id="statRules">0</div>
+<div class="label">Rule Analysis Notes</div>
 </div>
 
-<div class="card">
-
-<div class="muted">
-High-risk cases
-</div>
-
-<div class="metric"
-     id="mRisk">
-0
-</div>
-
+<div class="stat">
+<div class="number" id="statPosture">0%</div>
+<div class="label">Compliance Posture</div>
 </div>
 
 </div>
-
-<div class="grid"
-     style="margin-top:14px">
 
 <div class="card">
+<h3>Compliance Posture</h3>
+<div class="progress">
+<div id="postureBar" class="progress-bar" style="width:0%"></div>
+</div>
+<p id="postureText" class="small">No audit data available.</p>
+</div>
 
+<div class="card">
 <h3>Quick Actions</h3>
-
-<div class="toolbar">
-
-<button class="btn"
-        onclick="go('compliance')">
-Run Audit
-</button>
-
-<button class="btn gold"
-        onclick="go('cases')">
-New Case
-</button>
-
-<button class="btn alt"
-        onclick="go('judgments')">
-Judgment Card
-</button>
-
+<div class="actions">
+<button class="btn primary" onclick="go('audit')">Open Compliance Audit</button>
+<button class="btn secondary" onclick="go('cases')">New Legal Case</button>
+<button class="btn secondary" onclick="go('calendar')">Add Deadline</button>
+<button class="btn secondary" onclick="go('judgments')">Add Judgment Card</button>
+<button class="btn secondary" onclick="go('reports')">Generate Report</button>
+</div>
 </div>
 
-</div>
-
-<div class="card">
-
-<h3>LCSA Method</h3>
-
-<p class="muted">
-
-Identify applicability →
-verify rule →
-check evidence →
-record status →
-assess risk →
-assign action →
-retain audit trail.
-
-</p>
-
-</div>
-
+<div class="notice">
+<strong>Important:</strong> LCSA is a compliance management and decision-support tool.
+Applicability, commencement, rules, notifications, exemptions, court orders and departmental instructions should be verified from the latest authoritative source before taking statutory or disciplinary action.
 </div>
 
 </section>
 
 
-<!-- COMPLIANCE -->
+<!-- ================= ESTABLISHMENT ================= -->
 
-<section id="compliance"
-         class="page">
+<section id="establishment" class="page">
 
-<h2>Labour Compliance Audit</h2>
+<h2>Establishment Profile</h2>
 
 <div class="card">
 
-<div class="row">
+<div class="grid2">
 
 <div>
-
-<label>Search</label>
-
-<input id="cSearch"
-       oninput="renderCompliance()"
-       placeholder="wages, EPFO, POSH...">
-
+<label>Organisation / Establishment Name</label>
+<input id="pName">
 </div>
 
 <div>
+<label>State / UT</label>
+<input id="pState">
+</div>
 
-<label>Status</label>
-
-<select id="cFilter"
-        onchange="renderCompliance()">
-
-<option value="ALL">
-All
-</option>
-
-<option>
-Compliant
-</option>
-
-<option>
-Pending
-</option>
-
-<option>
-Non-Compliant
-</option>
-
+<div>
+<label>Sector</label>
+<select id="pSector">
+<option>Government</option>
+<option>PSU</option>
+<option>Private</option>
+<option>Autonomous Body</option>
+<option>Other</option>
 </select>
+</div>
 
+<div>
+<label>Establishment Type</label>
+<input id="pType" placeholder="Factory / Office / Shop / Institution etc.">
+</div>
+
+<div>
+<label>Total Employees</label>
+<input id="pEmployees" type="number">
+</div>
+
+<div>
+<label>Contract Workers</label>
+<input id="pContract" type="number">
 </div>
 
 </div>
 
-<div class="toolbar">
+<label>Applicability / Special Notes</label>
+<textarea id="pNotes"></textarea>
 
-<button class="btn"
-        onclick="addCompliance()">
-
-Add checklist item
-
-</button>
-
-<button class="btn alt"
-        onclick="resetCompliance()">
-
-Reset demo data
-
-</button>
+<button class="btn primary" onclick="saveProfile()">Save Establishment Profile</button>
 
 </div>
 
-<div class="tablewrap">
+<div class="card">
+<h3>Preliminary Applicability Worksheet</h3>
 
 <table>
-
 <thead>
-
 <tr>
-
-<th>Area</th>
-<th>Requirement</th>
-<th>Evidence / Action</th>
-<th>Status</th>
-<th>Risk</th>
-
+<th>Framework</th>
+<th>Initial Check</th>
+<th>Verification Required</th>
 </tr>
-
 </thead>
-
-<tbody id="complianceBody">
+<tbody>
+<tr>
+<td>Code on Wages, 2019</td>
+<td><span class="badge badge-blue">Review</span></td>
+<td>Coverage, wage definitions, minimum wages, payment and deductions.</td>
+</tr>
+<tr>
+<td>Industrial Relations Code, 2020</td>
+<td><span class="badge badge-blue">Review</span></td>
+<td>Industrial establishment status, standing orders, disputes, unions and retrenchment requirements.</td>
+</tr>
+<tr>
+<td>Code on Social Security, 2020</td>
+<td><span class="badge badge-blue">Review</span></td>
+<td>EPF, ESI, gratuity, maternity and other applicable social-security provisions.</td>
+</tr>
+<tr>
+<td>OSH & Working Conditions Code, 2020</td>
+<td><span class="badge badge-blue">Review</span></td>
+<td>Establishment category, working conditions, safety, health, hours and contract labour.</td>
+</tr>
+<tr>
+<td>POSH</td>
+<td><span class="badge badge-blue">Review</span></td>
+<td>Applicability, Internal Committee, policy, awareness and annual reporting.</td>
+</tr>
 </tbody>
-
 </table>
 
 </div>
 
+</section>
+
+
+<!-- ================= LABOUR CODES ================= -->
+
+<section id="codes" class="page">
+
+<h2>Labour Codes Workspace</h2>
+
+<div class="notice">
+The four Labour Codes are shown as compliance frameworks. Before relying on any provision, verify the applicable commencement notification, Central/State Rules, amendments, exemptions and sector-specific requirements.
+</div>
+
+<div class="code-card">
+<h3>Code on Wages, 2019</h3>
+<p>Wages, minimum wages, payment of wages, deductions, bonus and related compliance controls.</p>
+<button class="btn primary" onclick="filterCode('Code on Wages')">Open Audit Items</button>
+</div>
+
+<div class="code-card">
+<h3>Industrial Relations Code, 2020</h3>
+<p>Industrial relations, trade unions, standing orders, disputes, strikes, retrenchment and closure-related controls.</p>
+<button class="btn primary" onclick="filterCode('Industrial Relations')">Open Audit Items</button>
+</div>
+
+<div class="code-card">
+<h3>Code on Social Security, 2020</h3>
+<p>EPF, ESI, gratuity, maternity benefit and other social-security compliance areas.</p>
+<button class="btn primary" onclick="filterCode('Social Security')">Open Audit Items</button>
+</div>
+
+<div class="code-card">
+<h3>OSH & Working Conditions Code, 2020</h3>
+<p>Occupational safety, health, working conditions, working hours, welfare and contract labour controls.</p>
+<button class="btn primary" onclick="filterCode('OSH')">Open Audit Items</button>
+</div>
+
+<div class="code-card">
+<h3>POSH / Workplace Compliance</h3>
+<p>Internal Committee, policy, complaint handling, awareness and reporting controls.</p>
+<button class="btn primary" onclick="filterCode('POSH')">Open Audit Items</button>
 </div>
 
 </section>
 
 
-<!-- CCS -->
+<!-- ================= AUDIT ================= -->
 
-<section id="ccs"
-         class="page">
+<section id="audit" class="page">
 
-<h2>
-CCS / FR-SR Reference Workspace
-</h2>
+<h2>Compliance Audit</h2>
+
+<div class="card no-print">
+
+<div class="grid2">
+
+<div>
+<label>Search</label>
+<input id="auditSearch" oninput="renderAudit()" placeholder="Search requirement, evidence, observation...">
+</div>
+
+<div>
+<label>Area</label>
+<select id="auditArea" onchange="renderAudit()">
+<option value="">All Areas</option>
+</select>
+</div>
+
+<div>
+<label>Status</label>
+<select id="auditStatus" onchange="renderAudit()">
+<option value="">All Status</option>
+<option>Compliant</option>
+<option>Pending</option>
+<option>Non-Compliant</option>
+<option>Not Applicable</option>
+</select>
+</div>
+
+<div>
+<label>Risk</label>
+<select id="auditRisk" onchange="renderAudit()">
+<option value="">All Risk</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+</div>
+
+</div>
+
+<div class="actions">
+<button class="btn primary" onclick="addAudit()">Add Audit Item</button>
+<button class="btn secondary" onclick="seedMore()">Load Expanded Checklist</button>
+<button class="btn warning" onclick="generateActions()">Generate Corrective Action List</button>
+</div>
+
+</div>
 
 <div class="card">
 
-<p class="muted">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Code / Area</th>
+<th>Requirement</th>
+<th>Evidence</th>
+<th>Risk</th>
+<th>Status</th>
+<th>Observation / Action</th>
+</tr>
+</thead>
 
-Use this workspace for fact-based rule analysis.
-Always verify the current rule/order applicable to
-the employee and date before final action.
+<tbody id="auditBody"></tbody>
 
-</p>
-
-<div class="row">
-
-<div>
-
-<label>
-Rule / Subject
-</label>
-
-<input id="ruleSubject"
-       placeholder="e.g. FR 22, LTC, CCS(CCA)">
-
+</table>
 </div>
 
-<div>
-
-<label>
-Issue
-</label>
-
-<input id="ruleIssue"
-       placeholder="Describe the issue">
-
-</div>
-
-</div>
-
-<label>Facts</label>
-
-<textarea id="ruleFacts"
-placeholder="Enter verified facts, dates and orders...">
-</textarea>
-
-<label>
-Questions to Verify
-</label>
-
-<textarea id="ruleQuestions"
-placeholder="List points requiring Establishment / Legal verification...">
-</textarea>
-
-<button class="btn"
-        onclick="saveRuleNote()">
-
-Save Analysis Note
-
-</button>
-
-</div>
-
-<div id="ruleNotes"
-     class="grid"
-     style="margin-top:14px">
 </div>
 
 </section>
 
 
-<!-- CASES -->
+<!-- ================= CCS ================= -->
 
-<section id="cases"
-         class="page">
+<section id="rules" class="page">
 
-<h2>
-Cases & Legal Opinions
-</h2>
+<h2>CCS / FR-SR Rule Analysis</h2>
 
 <div class="card">
 
-<div class="row">
+<div class="grid2">
 
 <div>
-
-<label>
-Employee / Case Title
-</label>
-
-<input id="caseTitle">
-
+<label>Subject / Rule</label>
+<input id="rSubject">
 </div>
 
 <div>
-
-<label>
-Reference No.
-</label>
-
-<input id="caseRef">
-
+<label>Reference</label>
+<input id="rReference" placeholder="Rule / OM / order / file reference">
 </div>
 
 </div>
-
-<label>Facts</label>
-
-<textarea id="caseFacts">
-</textarea>
-
-<label>
-Issue for Opinion
-</label>
-
-<textarea id="caseIssue">
-</textarea>
-
-<label>
-Documents / Rules to Verify
-</label>
-
-<textarea id="caseDocs">
-</textarea>
-
-<label>
-Proposed Action / Questions for Legal
-</label>
-
-<textarea id="caseAction">
-</textarea>
-
-<button class="btn"
-        onclick="saveCase()">
-
-Save Case
-
-</button>
-
-</div>
-
-<div id="caseList"
-     style="margin-top:14px">
-</div>
-
-</section>
-
-
-<!-- JUDGMENTS -->
-
-<section id="judgments"
-         class="page">
-
-<h2>
-Judgment Brief Card
-</h2>
-
-<div class="card">
-
-<div class="row">
-
-<div>
-
-<label>
-Case Name
-</label>
-
-<input id="jName">
-
-</div>
-
-<div>
-
-<label>
-Court / Date
-</label>
-
-<input id="jCourt">
-
-</div>
-
-</div>
-
-<label>Facts</label>
-
-<textarea id="jFacts">
-</textarea>
 
 <label>Issue</label>
+<textarea id="rIssue"></textarea>
 
-<textarea id="jIssue">
-</textarea>
+<label>Verified Facts</label>
+<textarea id="rFacts"></textarea>
 
-<label>
-Finding / Ratio
-</label>
+<label>Rule / Order References to Verify</label>
+<textarea id="rRules"></textarea>
 
-<textarea id="jFinding">
-</textarea>
+<label>Points Requiring Decision</label>
+<textarea id="rDecision"></textarea>
 
-<label>
-Final Outcome
-</label>
-
-<textarea id="jOutcome">
-</textarea>
-
-<label>
-Compliance Implication / Action
-</label>
-
-<textarea id="jAction">
-</textarea>
-
-<button class="btn"
-        onclick="saveJudgment()">
-
-Save Judgment Card
-
-</button>
+<button class="btn primary" onclick="saveRule()">Save Rule Analysis</button>
 
 </div>
 
-<div id="judgmentList"
-     style="margin-top:14px">
+<div class="card">
+<h3>Saved Rule Analysis</h3>
+<div id="rulesList"></div>
 </div>
 
 </section>
 
 
-<!-- CALENDAR -->
+<!-- ================= LEGAL CASES ================= -->
 
-<section id="calendar"
-         class="page">
+<section id="cases" class="page">
 
-<h2>
-Compliance Calendar
-</h2>
+<h2>Legal Cases & Legal Department Reference</h2>
 
 <div class="card">
 
-<div class="row">
+<div class="grid2">
 
 <div>
-
-<label>
-Compliance
-</label>
-
-<input id="calTitle"
-       placeholder="Monthly return / audit / filing">
-
+<label>Case / Employee Title</label>
+<input id="cTitle">
 </div>
 
 <div>
-
-<label>
-Due Date
-</label>
-
-<input id="calDate"
-       type="date">
-
+<label>Employee / File No.</label>
+<input id="cRef">
 </div>
 
 <div>
+<label>Priority</label>
+<select id="cPriority">
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+</div>
 
-<label>
-Responsible Officer
-</label>
-
-<input id="calOwner">
-
+<div>
+<label>Status</label>
+<select id="cStatus">
+<option>Open</option>
+<option>Under Examination</option>
+<option>Opinion Received</option>
+<option>Closed</option>
+</select>
 </div>
 
 </div>
 
-<button class="btn"
-        onclick="saveCalendar()">
+<label>Facts</label>
+<textarea id="cFacts"></textarea>
 
-Add Deadline
+<label>Legal Issue</label>
+<textarea id="cIssue"></textarea>
 
-</button>
+<label>Applicable Rules / Orders</label>
+<textarea id="cRules"></textarea>
+
+<label>Documents Available</label>
+<textarea id="cDocs"></textarea>
+
+<label>Specific Opinion Sought</label>
+<textarea id="cOpinion"></textarea>
+
+<button class="btn primary" onclick="saveCase()">Save Legal Case</button>
 
 </div>
 
-<div id="calendarList"
-     style="margin-top:14px">
+<div class="card">
+<h3>Case Register</h3>
+<div id="casesList"></div>
 </div>
 
 </section>
 
 
-<!-- REPORTS -->
+<!-- ================= JUDGMENTS ================= -->
 
-<section id="reports"
-         class="page">
+<section id="judgments" class="page">
 
-<h2>
-Reports
-</h2>
+<h2>Judgment Brief Cards</h2>
 
 <div class="card">
 
+<div class="grid2">
+
+<div>
+<label>Case Name</label>
+<input id="jName">
+</div>
+
+<div>
+<label>Court / Date</label>
+<input id="jCourt">
+</div>
+
+<div>
+<label>Subject / Rule</label>
+<input id="jSubject">
+</div>
+
+<div>
+<label>Source / Citation</label>
+<input id="jSource">
+</div>
+
+</div>
+
+<label>Facts</label>
+<textarea id="jFacts"></textarea>
+
+<label>Issue</label>
+<textarea id="jIssue"></textarea>
+
+<label>Finding / Ratio</label>
+<textarea id="jFinding"></textarea>
+
+<label>Main Outcome</label>
+<textarea id="jOutcome"></textarea>
+
+<label>Compliance Implication / Action</label>
+<textarea id="jAction"></textarea>
+
+<button class="btn primary" onclick="saveJudgment()">Save Judgment Card</button>
+
+</div>
+
+<div id="judgmentsList"></div>
+
+</section>
+
+
+<!-- ================= CALENDAR ================= -->
+
+<section id="calendar" class="page">
+
+<h2>Compliance Calendar</h2>
+
+<div class="card">
+
+<div class="grid2">
+
+<div>
+<label>Task / Compliance</label>
+<input id="dTask">
+</div>
+
+<div>
+<label>Due Date</label>
+<input id="dDate" type="date">
+</div>
+
+<div>
+<label>Responsible Officer / Owner</label>
+<input id="dOwner">
+</div>
+
+<div>
+<label>Status</label>
+<select id="dStatus">
+<option>Pending</option>
+<option>Completed</option>
+</select>
+</div>
+
+</div>
+
+<button class="btn primary" onclick="saveDeadline()">Add Deadline</button>
+
+</div>
+
+<div class="card">
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Due Date</th>
+<th>Owner</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="deadlineBody"></tbody>
+</table>
+</div>
+</div>
+
+</section>
+
+
+<!-- ================= REPORTS ================= -->
+
+<section id="reports" class="page">
+
+<h2>Management Reports</h2>
+
+<div class="card no-print">
+
+<button class="btn primary" onclick="buildReport()">Generate Compliance Report</button>
+<button class="btn secondary" onclick="window.print()">Print / Save PDF</button>
+
+</div>
+
+<div id="reportOutput"></div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section id="settings" class="page">
+
+<h2>Settings & Backup</h2>
+
+<div class="card">
+
+<h3>Data Backup</h3>
+
+<p class="small">
+All LCSA v2.0 data is stored locally in this browser unless you export it.
+Export the backup regularly.
+</p>
+
+<button class="btn primary" onclick="exportData()">Export Backup JSON</button>
+
+<input type="file" id="importFile" accept=".json" onchange="importData(event)">
+
+<br><br>
+
+<button class="btn danger" onclick="factoryReset()">Factory Reset</button>
+
+</div>
+
+<div class="card">
+<h3>About LCSA</h3>
 <p>
-Generate a printable management snapshot from
-current local data.
+LCSA – Labour Compliance & Strategy Advisor is intended to organise compliance
+requirements, audit evidence, legal issues, case references, judgments and
+management actions.
 </p>
 
-<button class="btn"
-        onclick="printReport()">
-
-Print / Save PDF
-
-</button>
-
-</div>
-
-<div id="reportPreview"
-     class="card"
-     style="margin-top:14px">
-</div>
-
-</section>
-
-
-<!-- SETTINGS -->
-
-<section id="settings"
-         class="page">
-
-<h2>
-Settings & Backup
-</h2>
-
-<div class="card">
-
-<p class="muted">
-
-Data is stored locally in this browser/device in
-v1.0. Use backup regularly.
-
+<p class="small">
+Always verify current statutory provisions, commencement notifications,
+rules, circulars, departmental orders and judicial developments before
+taking final action.
 </p>
-
-<div class="toolbar">
-
-<button class="btn"
-        onclick="exportData()">
-
-Export Backup
-
-</button>
-
-<button class="btn alt"
-        onclick="document.getElementById('importFile').click()">
-
-Import Backup
-
-</button>
-
-<input id="importFile"
-       type="file"
-       accept=".json"
-       hidden
-       onchange="importData(event)">
-
-</div>
-
-<button class="btn"
-        onclick="installApp()"
-        id="installBtn"
-        style="display:none">
-
-Install LCSA
-
-</button>
-
 </div>
 
 </section>
@@ -945,518 +967,761 @@ Install LCSA
 </main>
 
 <footer>
-
-LCSA v1.0 • Labour Compliance & Strategy Advisor
-
+LCSA v2.0 | Labour Compliance & Strategy Advisor
 </footer>
 
 
 <script>
 
-const KEY =
-"lcsa_v1_data";
+/* =========================================================
+   DATABASE
+========================================================= */
+
+const DB_KEY="LCSA_V2_DATABASE";
+
+const baseItems=[
+
+["Code on Wages","Wages","Verify applicable minimum wage requirements","Latest wage notification / payroll","High"],
+["Code on Wages","Wages","Verify wage structure and statutory definition of wages","Salary structure","High"],
+["Code on Wages","Wages","Verify timely payment of wages","Payroll / bank records","High"],
+["Code on Wages","Wages","Verify lawful deductions","Payroll deduction records","Medium"],
+["Code on Wages","Wages","Verify overtime wage controls","Attendance / OT records","High"],
+["Code on Wages","Bonus","Verify bonus eligibility and payment controls","Bonus records","Medium"],
+
+["Industrial Relations","Industrial Relations","Verify standing-order applicability","Establishment records","High"],
+["Industrial Relations","Industrial Relations","Verify certified/adopted standing orders where applicable","Standing orders","High"],
+["Industrial Relations","Industrial Relations","Verify grievance handling mechanism","Policy / grievance register","Medium"],
+["Industrial Relations","Trade Unions","Verify trade union recognition/records where applicable","Union records","Medium"],
+["Industrial Relations","Disputes","Verify industrial dispute handling procedure","Case / dispute records","High"],
+["Industrial Relations","Retrenchment","Verify retrenchment/closure controls where applicable","HR records / approvals","High"],
+
+["Social Security","EPFO","Verify EPF applicability","Registration / employee data","High"],
+["Social Security","EPFO","Verify EPF registration details","EPFO registration","High"],
+["Social Security","EPFO","Verify monthly contributions","EPF challans","High"],
+["Social Security","EPFO","Verify ECR / return compliance","ECR records","High"],
+["Social Security","ESIC","Verify ESI applicability","ESI registration","High"],
+["Social Security","ESIC","Verify ESI contributions","ESI challans","High"],
+["Social Security","Gratuity","Verify gratuity eligibility records","Service records","High"],
+["Social Security","Maternity","Verify maternity benefit controls where applicable","HR records","Medium"],
+
+["OSH","Working Hours","Verify working-hour controls","Attendance records","High"],
+["OSH","Working Hours","Verify weekly rest arrangements","Attendance / roster","High"],
+["OSH","Overtime","Verify overtime approval and payment","OT records","High"],
+["OSH","Safety","Verify workplace safety arrangements","Safety inspection records","High"],
+["OSH","Health","Verify occupational health requirements where applicable","Medical records","Medium"],
+["OSH","Welfare","Verify statutory welfare facilities","Inspection records","Medium"],
+["OSH","Contract Labour","Verify contractor compliance monitoring","Contractor records","High"],
+["OSH","Contract Labour","Verify contract labour records/licensing where applicable","Licence / agreement","High"],
+
+["POSH","POSH","Verify Internal Committee constitution where applicable","IC order","High"],
+["POSH","POSH","Verify POSH policy","Policy document","High"],
+["POSH","POSH","Verify awareness/training","Training records","Medium"],
+["POSH","POSH","Verify complaint register/confidential process","IC records","High"],
+["POSH","POSH","Verify annual reporting requirements","Annual report","Medium"],
+
+["Records","Records","Verify statutory registers","Registers","Medium"],
+["Records","Records","Verify statutory notices","Notices","Medium"],
+["Records","Records","Verify employee master data","HR records","Medium"],
+["Records","Records","Verify retention of compliance evidence","Record retention system","Medium"],
+["Records","Records","Verify inspection records","Inspection file","Medium"],
+
+["Contract Labour","Contract Labour","Verify contractor agreement","Agreement","High"],
+["Contract Labour","Contract Labour","Verify contractor licence where applicable","Licence","High"],
+["Contract Labour","Contract Labour","Verify wage records of contract workers","Wage records","High"],
+["Contract Labour","Contract Labour","Verify principal-employer monitoring","Inspection records","High"]
+
+];
+
+let db=loadDB();
 
 
-const seed = {
+function loadDB(){
 
-compliance:[
+try{
 
-{
-area:"Wages",
-req:"Verify wage payment, minimum wage and applicable wage records",
-evidence:"Wage register / payroll / applicable notification",
-status:"Pending",
-risk:"Medium"
-},
+const saved=localStorage.getItem(DB_KEY);
 
-{
-area:"Working Hours",
-req:"Verify working hours, weekly rest and overtime controls",
-evidence:"Attendance / OT records / approvals",
-status:"Pending",
-risk:"Medium"
-},
+if(saved){
 
-{
-area:"Social Security",
-req:"Verify EPFO / ESIC applicability and remittances",
-evidence:"Registration, challans, returns",
-status:"Pending",
-risk:"High"
-},
+const x=JSON.parse(saved);
 
-{
-area:"POSH",
-req:"Verify Internal Committee, policy, awareness and annual compliance",
-evidence:"IC order / policy / training / annual report",
-status:"Pending",
-risk:"High"
-},
-
-{
-area:"Contract Labour",
-req:"Verify contractor licences, wage records and principal-employer controls where applicable",
-evidence:"Agreements / licences / registers",
-status:"Pending",
-risk:"High"
-},
-
-{
-area:"Records",
-req:"Verify statutory registers, notices and retention requirements",
-evidence:"Registers / notices / digital records",
-status:"Pending",
-risk:"Medium"
-}
-
-],
-
-notes:[],
-cases:[],
-judgments:[],
-calendar:[]
-
+return {
+profile:x.profile||{},
+audit:x.audit||[],
+rules:x.rules||[],
+cases:x.cases||[],
+judgments:x.judgments||[],
+deadlines:x.deadlines||[]
 };
 
+}
 
-let db =
-JSON.parse(localStorage.getItem(KEY) || "null")
-|| structuredClone(seed);
+}catch(e){}
 
-
-function persist(){
-
-localStorage.setItem(
-KEY,
-JSON.stringify(db)
-);
-
-updateDashboard();
-renderAll();
+return {
+profile:{},
+audit:[],
+rules:[],
+cases:[],
+judgments:[],
+deadlines:[]
+};
 
 }
 
+
+function save(){
+
+localStorage.setItem(DB_KEY,JSON.stringify(db));
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function go(id){
 
-document
-.querySelectorAll(".page")
-.forEach(x =>
-x.classList.remove("active")
-);
+document.querySelectorAll(".page").forEach(x=>{
+x.classList.remove("active");
+});
 
-document
-.getElementById(id)
-.classList.add("active");
+document.getElementById(id).classList.add("active");
 
-document
-.querySelectorAll("nav button")
-.forEach(x =>
-x.classList.toggle(
-"active",
-x.dataset.page === id
-));
+document.querySelectorAll("nav button").forEach(x=>{
+x.classList.remove("active");
+});
 
-renderAll();
+const buttons=document.querySelectorAll("nav button");
 
-}
+buttons.forEach(x=>{
+if(x.getAttribute("onclick")===`go('${id}')`)
+x.classList.add("active");
+});
 
-
-document
-.querySelectorAll("nav button")
-.forEach(
-b =>
-b.onclick =
-() => go(b.dataset.page)
-);
-
-
-function updateDashboard(){
-
-let a =
-db.compliance;
-
-document.getElementById("mTotal")
-.textContent =
-a.length;
-
-document.getElementById("mGood")
-.textContent =
-a.filter(
-x => x.status === "Compliant"
-).length;
-
-document.getElementById("mPending")
-.textContent =
-a.filter(
-x => x.status !== "Compliant"
-).length;
-
-document.getElementById("mRisk")
-.textContent =
-a.filter(
-x =>
-x.risk === "High"
-&&
-x.status !== "Compliant"
-).length;
+if(id==="dashboard") updateDashboard();
+if(id==="audit") renderAudit();
+if(id==="rules") renderRules();
+if(id==="cases") renderCases();
+if(id==="judgments") renderJudgments();
+if(id==="calendar") renderDeadlines();
+if(id==="reports") buildReport();
 
 }
 
 
-function renderCompliance(){
+/* =========================================================
+   UTILITIES
+========================================================= */
 
-let q =
-(
-document.getElementById("cSearch")
-?.value || ""
-).toLowerCase();
+function esc(v){
 
-let f =
-document.getElementById("cFilter")
-?.value || "ALL";
-
-
-let rows =
-db.compliance.filter(
-
-x =>
-(
-f === "ALL"
-||
-x.status === f
-)
-&&
-JSON.stringify(x)
-.toLowerCase()
-.includes(q)
-
-);
-
-
-document.getElementById(
-"complianceBody"
-).innerHTML =
-
-rows.map(
-
-x => `
-
-<tr>
-
-<td>
-${esc(x.area)}
-</td>
-
-<td>
-${esc(x.req)}
-</td>
-
-<td>
-${esc(x.evidence)}
-</td>
-
-<td>
-
-<select
-onchange="setC(
-${db.compliance.indexOf(x)},
-this.value
-)">
-
-<option
-${x.status==="Compliant"?"selected":""}>
-Compliant
-</option>
-
-<option
-${x.status==="Pending"?"selected":""}>
-Pending
-</option>
-
-<option
-${x.status==="Non-Compliant"?"selected":""}>
-Non-Compliant
-</option>
-
-</select>
-
-</td>
-
-<td>
-
-<span class="badge
-${x.risk==="High"
-?"bad"
-:x.risk==="Medium"
-?"warn"
-:"good"}">
-
-${x.risk}
-
-</span>
-
-</td>
-
-</tr>
-
-`
-
-).join("")
-
-||
-
-`
-
-<tr>
-<td colspan="5"
-class="empty">
-
-No items found
-
-</td>
-</tr>
-
-`;
+return String(v??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
 
 }
 
 
-function setC(i,v){
+function val(id){
 
-db.compliance[i].status = v;
-
-persist();
+return document.getElementById(id).value.trim();
 
 }
 
 
-function addCompliance(){
+function badge(v){
 
-let area =
-prompt("Area");
+if(v==="Compliant"||v==="Completed")
+return `<span class="badge badge-green">${esc(v)}</span>`;
 
-if(!area)return;
+if(v==="Non-Compliant"||v==="High")
+return `<span class="badge badge-red">${esc(v)}</span>`;
 
-let req =
-prompt("Requirement");
+if(v==="Pending"||v==="Medium")
+return `<span class="badge badge-yellow">${esc(v)}</span>`;
 
-if(!req)return;
+if(v==="Low")
+return `<span class="badge badge-blue">${esc(v)}</span>`;
 
-db.compliance.push({
+return `<span class="badge badge-gray">${esc(v)}</span>`;
 
-area,
-req,
-evidence:"Evidence to verify",
+}
+
+
+/* =========================================================
+   INITIAL AUDIT DATA
+========================================================= */
+
+function initialiseAudit(){
+
+if(db.audit.length===0){
+
+baseItems.forEach((x,i)=>{
+
+db.audit.push({
+
+id:"A"+Date.now()+i,
+
+code:x[0],
+
+area:x[1],
+
+req:x[2],
+
+evidence:x[3],
+
+risk:x[4],
+
 status:"Pending",
-risk:"Medium"
+
+obs:""
 
 });
 
-persist();
+});
+
+save();
+
+}
 
 }
 
 
-function resetCompliance(){
+function populateAreas(){
 
-if(
-confirm(
-"Reset checklist to demo data?"
-)
-){
+const s=document.getElementById("auditArea");
 
-db.compliance =
-structuredClone(
-seed.compliance
+const current=s.value;
+
+const areas=[...new Set(db.audit.map(x=>x.area))].sort();
+
+s.innerHTML=`<option value="">All Areas</option>`+
+areas.map(x=>`<option>${esc(x)}</option>`).join("");
+
+s.value=current;
+
+}
+
+
+/* =========================================================
+   AUDIT
+========================================================= */
+
+function renderAudit(){
+
+populateAreas();
+
+const q=document.getElementById("auditSearch").value.toLowerCase();
+
+const area=document.getElementById("auditArea").value;
+
+const status=document.getElementById("auditStatus").value;
+
+const risk=document.getElementById("auditRisk").value;
+
+let arr=db.audit.filter(x=>{
+
+return (!q ||
+(x.req+x.evidence+x.obs+x.code+x.area).toLowerCase().includes(q))
+&&(!area||x.area===area)
+&&(!status||x.status===status)
+&&(!risk||x.risk===risk);
+
+});
+
+const body=document.getElementById("auditBody");
+
+if(!arr.length){
+
+body.innerHTML=`<tr><td colspan="6" class="empty">No audit items found.</td></tr>`;
+
+return;
+
+}
+
+body.innerHTML=arr.map(x=>`
+
+<tr>
+
+<td>
+<strong>${esc(x.code)}</strong><br>
+<span class="small">${esc(x.area)}</span>
+</td>
+
+<td>${esc(x.req)}</td>
+
+<td>${esc(x.evidence)}</td>
+
+<td>${badge(x.risk)}</td>
+
+<td>
+<select onchange="updateAudit('${x.id}','status',this.value)">
+<option ${x.status==="Pending"?"selected":""}>Pending</option>
+<option ${x.status==="Compliant"?"selected":""}>Compliant</option>
+<option ${x.status==="Non-Compliant"?"selected":""}>Non-Compliant</option>
+<option ${x.status==="Not Applicable"?"selected":""}>Not Applicable</option>
+</select>
+</td>
+
+<td>
+<textarea
+style="min-width:220px;min-height:60px"
+onchange="updateAudit('${x.id}','obs',this.value)"
+>${esc(x.obs)}</textarea>
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+function updateAudit(id,key,value){
+
+const x=db.audit.find(a=>a.id===id);
+
+if(x){
+
+x[key]=value;
+
+save();
+
+updateDashboard();
+
+}
+
+}
+
+
+function addAudit(){
+
+const id="A"+Date.now();
+
+db.audit.push({
+
+id,
+
+code:"Custom",
+
+area:"General",
+
+req:"Enter compliance requirement",
+
+evidence:"Enter evidence / record",
+
+risk:"Medium",
+
+status:"Pending",
+
+obs:""
+
+});
+
+save();
+
+renderAudit();
+
+}
+
+
+function seedMore(){
+
+const extra=[
+
+["Code on Wages","Wages","Verify wage slips contain required particulars","Wage slips","Medium"],
+["Code on Wages","Records","Verify wage records are maintained and accessible","Wage register","Medium"],
+["Industrial Relations","Grievance","Verify grievance committee/process where applicable","Grievance records","Medium"],
+["Industrial Relations","Discipline","Verify disciplinary procedure and documentation","Service records","High"],
+["Industrial Relations","Termination","Verify termination documentation","HR file","High"],
+["Social Security","EPFO","Verify UAN linkage and employee records","UAN data","Medium"],
+["Social Security","ESIC","Verify employee insurance numbers","ESI data","Medium"],
+["Social Security","Gratuity","Verify nomination records","Nomination forms","Medium"],
+["OSH","Safety","Verify emergency preparedness","Emergency plan","High"],
+["OSH","Safety","Verify fire safety arrangements","Fire records","High"],
+["OSH","Safety","Verify accident reporting controls","Accident register","High"],
+["OSH","Welfare","Verify drinking water facilities","Inspection record","Medium"],
+["OSH","Welfare","Verify first-aid facilities","Inspection record","Medium"],
+["OSH","Welfare","Verify sanitation facilities","Inspection record","Medium"],
+["POSH","POSH","Verify IC member details are current","IC order","Medium"],
+["POSH","POSH","Verify confidentiality controls","IC records","High"],
+["Records","Records","Verify digital backup of statutory records","Backup system","Low"],
+["Records","Records","Verify employee acknowledgements","HR records","Low"],
+["Contract Labour","Contract Labour","Verify contractor attendance records","Attendance","High"],
+["Contract Labour","Contract Labour","Verify contractor wage payment evidence","Bank / wage records","High"]
+
+];
+
+let n=0;
+
+extra.forEach((x,i)=>{
+
+const exists=db.audit.some(a=>a.req===x[2]);
+
+if(!exists){
+
+db.audit.push({
+
+id:"EX"+Date.now()+i,
+
+code:x[0],
+
+area:x[1],
+
+req:x[2],
+
+evidence:x[3],
+
+risk:x[4],
+
+status:"Pending",
+
+obs:""
+
+});
+
+n++;
+
+}
+
+});
+
+save();
+
+renderAudit();
+
+updateDashboard();
+
+alert(n+" additional checklist items loaded.");
+
+}
+
+
+function filterCode(code){
+
+go("audit");
+
+document.getElementById("auditSearch").value="";
+
+document.getElementById("auditStatus").value="";
+
+document.getElementById("auditRisk").value="";
+
+populateAreas();
+
+let found=db.audit.find(x=>x.code===code);
+
+if(found){
+
+document.getElementById("auditArea").value=found.area;
+
+}
+
+renderAudit();
+
+}
+
+
+/* =========================================================
+   CORRECTIVE ACTION
+========================================================= */
+
+function generateActions(){
+
+const open=db.audit.filter(x=>
+x.status==="Non-Compliant"||
+x.status==="Pending"
 );
 
-persist();
+let text="LCSA CORRECTIVE ACTION LIST\n\n";
 
-}
+open.forEach((x,i)=>{
 
-}
-
-
-function saveRuleNote(){
-
-db.notes.push({
-
-subject:val("ruleSubject"),
-issue:val("ruleIssue"),
-facts:val("ruleFacts"),
-questions:val("ruleQuestions"),
-date:new Date().toLocaleString()
+text+=
+(i+1)+". "+
+x.code+" / "+x.area+"\n"+
+"Requirement: "+x.req+"\n"+
+"Risk: "+x.risk+"\n"+
+"Observation: "+(x.obs||"To be verified")+"\n"+
+"Action: Verify requirement, collect evidence, identify responsible officer and close the audit observation.\n\n";
 
 });
 
-[
-"ruleSubject",
-"ruleIssue",
-"ruleFacts",
-"ruleQuestions"
-].forEach(clear);
-
-persist();
+downloadText("LCSA-Corrective-Actions.txt",text);
 
 }
 
 
-function renderNotes(){
+/* =========================================================
+   PROFILE
+========================================================= */
 
-document.getElementById(
-"ruleNotes"
-).innerHTML =
+function saveProfile(){
 
-db.notes.map(
+db.profile={
 
-(n,i) => `
+name:val("pName"),
+state:val("pState"),
+sector:val("pSector"),
+type:val("pType"),
+employees:val("pEmployees"),
+contract:val("pContract"),
+notes:val("pNotes")
+
+};
+
+save();
+
+alert("Establishment profile saved.");
+
+}
+
+
+function renderProfile(){
+
+const p=db.profile;
+
+document.getElementById("pName").value=p.name||"";
+document.getElementById("pState").value=p.state||"";
+document.getElementById("pSector").value=p.sector||"Government";
+document.getElementById("pType").value=p.type||"";
+document.getElementById("pEmployees").value=p.employees||"";
+document.getElementById("pContract").value=p.contract||"";
+document.getElementById("pNotes").value=p.notes||"";
+
+}
+
+
+/* =========================================================
+   CCS / FR-SR
+========================================================= */
+
+function saveRule(){
+
+db.rules.push({
+
+subject:val("rSubject"),
+reference:val("rReference"),
+issue:val("rIssue"),
+facts:val("rFacts"),
+rules:val("rRules"),
+decision:val("rDecision"),
+date:new Date().toLocaleDateString()
+
+});
+
+save();
+
+["rSubject","rReference","rIssue","rFacts","rRules","rDecision"]
+.forEach(id=>document.getElementById(id).value="");
+
+renderRules();
+
+updateDashboard();
+
+}
+
+
+function renderRules(){
+
+const el=document.getElementById("rulesList");
+
+if(!db.rules.length){
+
+el.innerHTML=`<div class="empty">No rule analysis saved.</div>`;
+
+return;
+
+}
+
+el.innerHTML=db.rules.map((x,i)=>`
 
 <div class="card">
 
-<b>
-${esc(n.subject)}
-</b>
+<h3>${esc(x.subject)}</h3>
 
-<p>
-${esc(n.issue)}
-</p>
+<div class="small">${esc(x.reference)} | ${esc(x.date)}</div>
 
-<p>
-${esc(n.facts)}
-</p>
+<p><strong>Issue:</strong><br>${esc(x.issue)}</p>
 
-<p class="muted">
-${esc(n.questions)}
-</p>
+<p><strong>Facts:</strong><br>${esc(x.facts)}</p>
 
-<button
-class="btn alt"
-onclick="
+<p><strong>Rules to Verify:</strong><br>${esc(x.rules)}</p>
 
-db.notes.splice(${i},1);
-persist();
+<p><strong>Decision Points:</strong><br>${esc(x.decision)}</p>
 
-">
-
-Delete
-
-</button>
+<button class="btn danger" onclick="deleteRule(${i})">Delete</button>
 
 </div>
 
-`
-
-).join("")
-
-||
-
-'<div class="empty">No analysis notes</div>';
+`).join("");
 
 }
 
+
+function deleteRule(i){
+
+if(confirm("Delete this rule analysis?")){
+
+db.rules.splice(i,1);
+
+save();
+
+renderRules();
+
+updateDashboard();
+
+}
+
+}
+
+
+/* =========================================================
+   LEGAL CASES
+========================================================= */
 
 function saveCase(){
 
 db.cases.push({
 
-title:val("caseTitle"),
-ref:val("caseRef"),
-facts:val("caseFacts"),
-issue:val("caseIssue"),
-docs:val("caseDocs"),
-action:val("caseAction"),
-date:new Date().toLocaleString()
+title:val("cTitle"),
+ref:val("cRef"),
+priority:val("cPriority"),
+status:val("cStatus"),
+facts:val("cFacts"),
+issue:val("cIssue"),
+rules:val("cRules"),
+docs:val("cDocs"),
+opinion:val("cOpinion"),
+date:new Date().toLocaleDateString()
 
 });
 
-[
-"caseTitle",
-"caseRef",
-"caseFacts",
-"caseIssue",
-"caseDocs",
-"caseAction"
-].forEach(clear);
+save();
 
-persist();
+["cTitle","cRef","cFacts","cIssue","cRules","cDocs","cOpinion"]
+.forEach(id=>document.getElementById(id).value="");
+
+renderCases();
+
+updateDashboard();
 
 }
 
 
 function renderCases(){
 
-document.getElementById(
-"caseList"
-).innerHTML =
+const el=document.getElementById("casesList");
 
-db.cases.map(
+if(!db.cases.length){
 
-(c,i) => `
+el.innerHTML=`<div class="empty">No legal cases recorded.</div>`;
+
+return;
+
+}
+
+el.innerHTML=db.cases.map((x,i)=>`
 
 <div class="card">
 
-<h3>
-${esc(c.title)}
-</h3>
-
-<span class="badge warn">
-${esc(c.ref || "No ref")}
-</span>
-
-<h4>Facts</h4>
+<h3>${esc(x.title)}</h3>
 
 <p>
-${esc(c.facts)}
+${badge(x.priority)}
+${badge(x.status)}
 </p>
 
-<h4>Issue</h4>
+<p><strong>Reference:</strong> ${esc(x.ref)}</p>
 
-<p>
-${esc(c.issue)}
-</p>
+<p><strong>Facts:</strong><br>${esc(x.facts)}</p>
 
-<h4>
-Documents / Verification
-</h4>
+<p><strong>Issue:</strong><br>${esc(x.issue)}</p>
 
-<p>
-${esc(c.docs)}
-</p>
+<p><strong>Rules:</strong><br>${esc(x.rules)}</p>
 
-<h4>
-Action / Legal Questions
-</h4>
+<p><strong>Documents:</strong><br>${esc(x.docs)}</p>
 
-<p>
-${esc(c.action)}
-</p>
+<p><strong>Opinion Sought:</strong><br>${esc(x.opinion)}</p>
 
-<button
-class="btn alt"
-onclick="
+<div class="actions">
 
-db.cases.splice(${i},1);
-persist();
+<button class="btn primary" onclick="draftCase(${i})">
+Legal Department Reference
+</button>
 
-">
-
+<button class="btn danger" onclick="deleteCase(${i})">
 Delete
-
 </button>
 
 </div>
 
-`
+</div>
 
-).join("")
-
-||
-
-'<div class="empty">No cases saved</div>';
+`).join("");
 
 }
 
+
+function draftCase(i){
+
+const c=db.cases[i];
+
+let text=`LEGAL DEPARTMENT REFERENCE
+
+Subject: Legal opinion regarding ${c.title}
+Reference: ${c.ref}
+
+Facts:
+${c.facts}
+
+Issue:
+${c.issue}
+
+Rules / Orders identified for verification:
+${c.rules}
+
+Documents:
+${c.docs}
+
+Specific opinion sought:
+${c.opinion}
+
+Submitted for examination and advice on the applicable rules/orders and consequential action.
+
+Note: The concerned administrative section should verify the latest applicable rules, orders, notifications and judicial directions before final action.
+`;
+
+downloadText("LCSA-Legal-Reference.txt",text);
+
+}
+
+
+function deleteCase(i){
+
+if(confirm("Delete this legal case?")){
+
+db.cases.splice(i,1);
+
+save();
+
+renderCases();
+
+updateDashboard();
+
+}
+
+}
+
+
+/* =========================================================
+   JUDGMENTS
+========================================================= */
 
 function saveJudgment(){
 
@@ -1464,459 +1729,552 @@ db.judgments.push({
 
 name:val("jName"),
 court:val("jCourt"),
+subject:val("jSubject"),
+source:val("jSource"),
 facts:val("jFacts"),
 issue:val("jIssue"),
 finding:val("jFinding"),
 outcome:val("jOutcome"),
-action:val("jAction")
+action:val("jAction"),
+date:new Date().toLocaleDateString()
 
 });
 
-[
-"jName",
-"jCourt",
-"jFacts",
-"jIssue",
-"jFinding",
-"jOutcome",
-"jAction"
-].forEach(clear);
+save();
 
-persist();
+["jName","jCourt","jSubject","jSource","jFacts","jIssue","jFinding","jOutcome","jAction"]
+.forEach(id=>document.getElementById(id).value="");
+
+renderJudgments();
+
+updateDashboard();
 
 }
 
 
 function renderJudgments(){
 
-document.getElementById(
-"judgmentList"
-).innerHTML =
+const el=document.getElementById("judgmentsList");
 
-db.judgments.map(
+if(!db.judgments.length){
 
-(j,i) => `
+el.innerHTML=`<div class="card empty">No judgment cards saved.</div>`;
+
+return;
+
+}
+
+el.innerHTML=db.judgments.map((x,i)=>`
 
 <div class="card">
 
-<h3>
-⚖️ ${esc(j.name)}
-</h3>
+<h3>${esc(x.name)}</h3>
 
-<p class="muted">
-${esc(j.court)}
-</p>
+<p class="small">${esc(x.court)} | ${esc(x.subject)}</p>
 
-<p>
-<b>Facts:</b>
-${esc(j.facts)}
-</p>
+<p><strong>Facts</strong><br>${esc(x.facts)}</p>
 
-<p>
-<b>Issue:</b>
-${esc(j.issue)}
-</p>
+<p><strong>Issue</strong><br>${esc(x.issue)}</p>
 
-<p>
-<b>Finding / Ratio:</b>
-${esc(j.finding)}
-</p>
+<p><strong>Finding / Ratio</strong><br>${esc(x.finding)}</p>
 
-<p>
-<b>Outcome:</b>
-${esc(j.outcome)}
-</p>
+<div class="success-box">
 
-<p>
-<b>Compliance Action:</b>
-${esc(j.action)}
-</p>
+<strong>Main Outcome</strong><br>
 
-<button
-class="btn alt"
-onclick="
-
-db.judgments.splice(${i},1);
-persist();
-
-">
-
-Delete
-
-</button>
+${esc(x.outcome)}
 
 </div>
 
-`
+<p><strong>Compliance Implication</strong><br>${esc(x.action)}</p>
 
-).join("")
+<p class="small">Source: ${esc(x.source)}</p>
 
-||
+<button class="btn danger" onclick="deleteJudgment(${i})">Delete</button>
 
-'<div class="empty">No judgment cards</div>';
+</div>
+
+`).join("");
 
 }
 
 
-function saveCalendar(){
+function deleteJudgment(i){
 
-db.calendar.push({
+if(confirm("Delete this judgment card?")){
 
-title:val("calTitle"),
-date:val("calDate"),
-owner:val("calOwner")
+db.judgments.splice(i,1);
+
+save();
+
+renderJudgments();
+
+updateDashboard();
+
+}
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+function saveDeadline(){
+
+if(!val("dTask")||!val("dDate")){
+
+alert("Enter task and due date.");
+
+return;
+
+}
+
+db.deadlines.push({
+
+task:val("dTask"),
+date:val("dDate"),
+owner:val("dOwner"),
+status:val("dStatus")
 
 });
 
-[
-"calTitle",
-"calDate",
-"calOwner"
-].forEach(clear);
+save();
 
-persist();
+["dTask","dDate","dOwner"]
+.forEach(id=>document.getElementById(id).value="");
 
-}
+renderDeadlines();
 
-
-function renderCalendar(){
-
-let a =
-[...db.calendar]
-.sort(
-(x,y) =>
-x.date.localeCompare(y.date)
-);
-
-
-document.getElementById(
-"calendarList"
-).innerHTML =
-
-a.map(
-
-(c,i) => `
-
-<div class="card">
-
-<b>
-${esc(c.title)}
-</b>
-
-<p>
-
-Due:
-${esc(c.date)}
-
-•
-
-Owner:
-${esc(c.owner)}
-
-</p>
-
-<button
-class="btn alt"
-onclick="
-
-db.calendar.splice(
-${db.calendar.indexOf(c)},
-1
-);
-
-persist();
-
-">
-
-Delete
-
-</button>
-
-</div>
-
-`
-
-).join("")
-
-||
-
-'<div class="empty">No deadlines</div>';
-
-}
-
-
-function renderReport(){
-
-document.getElementById(
-"reportPreview"
-).innerHTML = `
-
-<h3>
-LCSA Compliance Snapshot
-</h3>
-
-<p>
-Generated:
-<b>
-${new Date().toLocaleString()}
-</b>
-</p>
-
-<p>
-
-Total Items:
-<b>
-${db.compliance.length}
-</b>
-
-|
-
-Compliant:
-<b>
-${db.compliance.filter(
-x=>x.status==="Compliant"
-).length}
-</b>
-
-|
-
-Pending / Non-Compliant:
-<b>
-${db.compliance.filter(
-x=>x.status!=="Compliant"
-).length}
-</b>
-
-|
-
-High Risk Open:
-<b>
-${db.compliance.filter(
-x =>
-x.risk==="High"
-&&
-x.status!=="Compliant"
-).length}
-</b>
-
-</p>
-
-<p>
-
-Cases:
-${db.cases.length}
-
-|
-
-Judgment Cards:
-${db.judgments.length}
-
-|
-
-Calendar Items:
-${db.calendar.length}
-
-</p>
-
-`;
-
-}
-
-
-function renderAll(){
-
-renderCompliance();
-renderNotes();
-renderCases();
-renderJudgments();
-renderCalendar();
-renderReport();
 updateDashboard();
 
 }
 
 
-function val(id){
+function renderDeadlines(){
 
-return document
-.getElementById(id)
-.value
-.trim();
+const body=document.getElementById("deadlineBody");
 
-}
+if(!db.deadlines.length){
 
+body.innerHTML=`<tr><td colspan="5" class="empty">No deadlines recorded.</td></tr>`;
 
-function clear(id){
-
-document
-.getElementById(id)
-.value = "";
+return;
 
 }
 
-
-function esc(s){
-
-return String(s ?? "")
-.replace(
-/[&<>"']/g,
-m => ({
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[m])
-
+const arr=[...db.deadlines].sort((a,b)=>
+a.date.localeCompare(b.date)
 );
 
+body.innerHTML=arr.map((x,i)=>`
+
+<tr>
+
+<td>${esc(x.task)}</td>
+
+<td>${esc(x.date)}</td>
+
+<td>${esc(x.owner)}</td>
+
+<td>${badge(x.status)}</td>
+
+<td>
+
+<select onchange="updateDeadline(${i},this.value)">
+
+<option ${x.status==="Pending"?"selected":""}>Pending</option>
+
+<option ${x.status==="Completed"?"selected":""}>Completed</option>
+
+</select>
+
+<button class="btn danger" onclick="deleteDeadline(${i})">Delete</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
 }
 
+
+function updateDeadline(i,status){
+
+db.deadlines[i].status=status;
+
+save();
+
+renderDeadlines();
+
+updateDashboard();
+
+}
+
+
+function deleteDeadline(i){
+
+if(confirm("Delete this deadline?")){
+
+db.deadlines.splice(i,1);
+
+save();
+
+renderDeadlines();
+
+updateDashboard();
+
+}
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+const total=db.audit.length;
+
+const compliant=db.audit.filter(x=>x.status==="Compliant").length;
+
+const high=db.audit.filter(x=>
+x.risk==="High" &&
+x.status!=="Compliant" &&
+x.status!=="Not Applicable"
+).length;
+
+const openCases=db.cases.filter(x=>x.status!=="Closed").length;
+
+const deadlines=db.deadlines.filter(x=>x.status!=="Completed").length;
+
+document.getElementById("statTotal").textContent=total;
+
+document.getElementById("statCompliant").textContent=compliant;
+
+document.getElementById("statHigh").textContent=high;
+
+document.getElementById("statCases").textContent=openCases;
+
+document.getElementById("statDeadlines").textContent=deadlines;
+
+document.getElementById("statJudgments").textContent=db.judgments.length;
+
+document.getElementById("statRules").textContent=db.rules.length;
+
+let applicable=db.audit.filter(x=>x.status!=="Not Applicable").length;
+
+let posture=applicable?
+Math.round(compliant/applicable*100):0;
+
+document.getElementById("statPosture").textContent=posture+"%";
+
+document.getElementById("postureBar").style.width=posture+"%";
+
+document.getElementById("postureText").textContent=
+posture+"% of applicable audit items are marked compliant.";
+
+}
+
+
+/* =========================================================
+   REPORT
+========================================================= */
+
+function buildReport(){
+
+const high=db.audit.filter(x=>
+x.risk==="High" &&
+x.status!=="Compliant" &&
+x.status!=="Not Applicable"
+);
+
+const pending=db.audit.filter(x=>
+x.status==="Pending"
+);
+
+const non=db.audit.filter(x=>
+x.status==="Non-Compliant"
+);
+
+let html=`
+
+<div class="card">
+
+<h2>LCSA Compliance Management Report</h2>
+
+<p><strong>Establishment:</strong> ${esc(db.profile.name||"Not entered")}</p>
+
+<p><strong>State:</strong> ${esc(db.profile.state||"Not entered")}</p>
+
+<p><strong>Sector:</strong> ${esc(db.profile.sector||"Not entered")}</p>
+
+<p><strong>Report Date:</strong> ${new Date().toLocaleDateString()}</p>
+
+</div>
+
+<div class="grid">
+
+<div class="stat">
+<div class="number">${db.audit.length}</div>
+<div class="label">Audit Items</div>
+</div>
+
+<div class="stat">
+<div class="number">${high.length}</div>
+<div class="label">High Risk Open</div>
+</div>
+
+<div class="stat">
+<div class="number">${pending.length}</div>
+<div class="label">Pending</div>
+</div>
+
+<div class="stat">
+<div class="number">${non.length}</div>
+<div class="label">Non-Compliant</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>High-Risk Open Items</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Area</th>
+<th>Requirement</th>
+<th>Risk</th>
+<th>Status</th>
+<th>Observation</th>
+</tr>
+</thead>
+
+<tbody>
+
+${high.length?
+
+high.map(x=>`
+
+<tr>
+<td>${esc(x.area)}</td>
+<td>${esc(x.req)}</td>
+<td>${badge(x.risk)}</td>
+<td>${badge(x.status)}</td>
+<td>${esc(x.obs)}</td>
+</tr>
+
+`).join("")
+
+:
+
+`<tr><td colspan="5" class="empty">No high-risk open items.</td></tr>`
+
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>Upcoming / Open Compliance Deadlines</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Task</th>
+<th>Due Date</th>
+<th>Owner</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+${db.deadlines.length?
+
+db.deadlines.map(x=>`
+
+<tr>
+<td>${esc(x.task)}</td>
+<td>${esc(x.date)}</td>
+<td>${esc(x.owner)}</td>
+<td>${badge(x.status)}</td>
+</tr>
+
+`).join("")
+
+:
+
+`<tr><td colspan="4" class="empty">No deadlines.</td></tr>`
+
+}
+
+</tbody>
+
+</table>
+
+</div>
+
+`;
+
+document.getElementById("reportOutput").innerHTML=html;
+
+}
+
+
+/* =========================================================
+   BACKUP
+========================================================= */
 
 function exportData(){
 
-let blob =
-new Blob(
-[
-JSON.stringify(
-db,
-null,
-2
-)
-],
-{
-type:"application/json"
-}
+const text=JSON.stringify(db,null,2);
+
+downloadText(
+"LCSA-v2.0-Backup-"+new Date().toISOString().slice(0,10)+".json",
+text
 );
 
-let a =
-document.createElement("a");
-
-a.href =
-URL.createObjectURL(blob);
-
-a.download =
-"LCSA-backup-"
-+
-new Date()
-.toISOString()
-.slice(0,10)
-+
-".json";
-
-a.click();
-
 }
 
 
-function importData(e){
+function importData(event){
 
-let f =
-e.target.files[0];
+const file=event.target.files[0];
 
-if(!f)return;
+if(!file)return;
 
-let r =
-new FileReader();
+const reader=new FileReader();
 
-r.onload = () => {
+reader.onload=function(e){
 
 try{
 
-db =
-JSON.parse(
-r.result
-);
+const imported=JSON.parse(e.target.result);
 
-persist();
+if(!imported||
+typeof imported!=="object"||
+!Array.isArray(imported.audit)
+){
 
-alert(
-"Backup imported successfully."
-);
+throw new Error("Invalid LCSA backup");
 
 }
 
-catch{
+db=imported;
 
-alert(
-"Invalid backup file."
-);
+save();
+
+renderAll();
+
+alert("Backup restored successfully.");
+
+}catch(err){
+
+alert("Invalid LCSA backup file.");
 
 }
 
 };
 
-r.readAsText(f);
+reader.readAsText(file);
 
 }
 
 
-function printReport(){
+function factoryReset(){
 
-renderReport();
+if(!confirm(
+"WARNING: This will permanently delete all locally stored LCSA data. Continue?"
+))return;
 
-go("reports");
+localStorage.removeItem(DB_KEY);
 
-window.print();
-
-}
-
-
-let deferredPrompt;
-
-
-window.addEventListener(
-"beforeinstallprompt",
-e => {
-
-e.preventDefault();
-
-deferredPrompt = e;
-
-document.getElementById(
-"installBtn"
-).style.display =
-"inline-block";
-
-});
-
-
-async function installApp(){
-
-if(deferredPrompt){
-
-deferredPrompt.prompt();
-
-await deferredPrompt.userChoice;
-
-deferredPrompt = null;
-
-}
+location.reload();
 
 }
 
 
-if(
-"serviceWorker"
-in navigator
-){
+/* =========================================================
+   DOWNLOAD
+========================================================= */
 
-window.addEventListener(
-"load",
-() => {
+function downloadText(filename,text){
 
-navigator.serviceWorker.register(
-"service-worker.js"
-);
+const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
 
-});
+const url=URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download=filename;
+
+document.body.appendChild(a);
+
+a.click();
+
+a.remove();
+
+URL.revokeObjectURL(url);
 
 }
 
+
+/* =========================================================
+   INITIALISE
+========================================================= */
+
+function renderAll(){
+
+renderProfile();
+
+renderAudit();
+
+renderRules();
+
+renderCases();
+
+renderJudgments();
+
+renderDeadlines();
+
+updateDashboard();
+
+}
+
+
+initialiseAudit();
 
 renderAll();
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if("serviceWorker" in navigator){
+
+window.addEventListener("load",()=>{
+
+navigator.serviceWorker.register("./service-worker.js")
+.then(()=>console.log("LCSA service worker registered"))
+.catch(err=>console.log("Service worker error",err));
+
+});
+
+}
 
 </script>
 
