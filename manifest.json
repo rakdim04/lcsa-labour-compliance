@@ -1,10 +1,19 @@
 {
   "name": "LCSA - Labour Compliance & Strategy Advisor",
   "short_name": "LCSA",
+  "description": "Labour Compliance & Strategy Advisor for HR, Labour Codes, CCS/FR-SR, legal cases and compliance audits.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f4f6f8",
-  "theme_color": "#123b5d",
-  "description": "India labour compliance, CCS/FR-SR, legal case and compliance management workspace.",
-  "icons": []
+  "background_color": "#f4f7fb",
+  "theme_color": "#12355b",
+  "orientation": "any",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='90' fill='%2312355b'/%3E%3Ctext x='256' y='300' text-anchor='middle' font-size='180' font-family='Arial' font-weight='bold' fill='white'%3EL%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
