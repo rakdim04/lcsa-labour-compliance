@@ -2,109 +2,158 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta name="theme-color" content="#12355b">
-<meta name="description" content="LCSA - Labour Compliance & Strategy Advisor">
-<title>LCSA v2.0 - Labour Compliance & Strategy Advisor</title>
+<meta name="description"
+      content="LCSA - Labour Compliance & Strategy Advisor">
+<link rel="manifest" href="manifest.json">
+<title>LCSA v3.0 - Labour Compliance & Strategy Advisor</title>
 
 <style>
 :root{
   --navy:#12355b;
-  --blue:#1769aa;
+  --blue:#1d4e89;
   --light:#f4f7fb;
-  --white:#fff;
-  --text:#1f2937;
-  --muted:#64748b;
-  --border:#d9e2ec;
-  --green:#15803d;
-  --yellow:#a16207;
-  --red:#b91c1c;
-  --orange:#c2410c;
-  --shadow:0 3px 12px rgba(15,23,42,.08);
+  --white:#ffffff;
+  --green:#18794e;
+  --yellow:#a66b00;
+  --red:#b42318;
+  --border:#d8e0ea;
+  --text:#182230;
+  --muted:#667085;
+  --shadow:0 3px 14px rgba(0,0,0,.08);
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
-body{
+html,body{
   margin:0;
+  padding:0;
   font-family:Arial,Helvetica,sans-serif;
   background:var(--light);
   color:var(--text);
 }
 
-header{
-  background:linear-gradient(135deg,#12355b,#1769aa);
-  color:white;
-  padding:16px;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:var(--shadow);
+button,
+input,
+select,
+textarea{
+  font:inherit;
 }
 
-.header-title{
-  font-size:23px;
-  font-weight:bold;
-}
-
-.header-sub{
-  font-size:13px;
-  opacity:.9;
-  margin-top:3px;
-}
-
-nav{
-  display:flex;
-  overflow-x:auto;
-  gap:6px;
-  padding:8px;
-  background:#0d2947;
-  position:sticky;
-  top:78px;
-  z-index:999;
-}
-
-nav button{
-  border:0;
-  background:#244d73;
-  color:#fff;
-  padding:9px 13px;
-  border-radius:7px;
-  white-space:nowrap;
+button{
   cursor:pointer;
 }
 
-nav button.active,
-nav button:hover{
-  background:#fff;
-  color:var(--navy);
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:var(--navy);
+  color:white;
+  padding:12px 14px;
+  box-shadow:var(--shadow);
 }
 
-main{
-  max-width:1400px;
+.topbar-inner{
+  max-width:1500px;
   margin:auto;
-  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.page{display:none}
-.page.active{display:block}
+.logo{
+  font-size:20px;
+  font-weight:800;
+}
+
+.logo small{
+  display:block;
+  font-size:11px;
+  opacity:.8;
+  margin-top:2px;
+}
+
+.menu-btn{
+  background:#ffffff20;
+  border:1px solid #ffffff40;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+.layout{
+  max-width:1500px;
+  margin:auto;
+  display:flex;
+  min-height:calc(100vh - 65px);
+}
+
+.sidebar{
+  width:245px;
+  background:#fff;
+  border-right:1px solid var(--border);
+  padding:12px;
+  position:sticky;
+  top:65px;
+  height:calc(100vh - 65px);
+  overflow-y:auto;
+}
+
+.sidebar button{
+  width:100%;
+  text-align:left;
+  background:white;
+  border:0;
+  padding:10px 11px;
+  margin-bottom:4px;
+  border-radius:7px;
+  color:var(--text);
+}
+
+.sidebar button:hover,
+.sidebar button.active{
+  background:#eaf2fb;
+  color:var(--blue);
+  font-weight:700;
+}
+
+.main{
+  flex:1;
+  padding:18px;
+  min-width:0;
+}
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+h1{
+  margin:0 0 6px;
+  font-size:25px;
+}
 
 h2{
+  font-size:19px;
   margin-top:0;
-  color:var(--navy);
 }
 
 h3{
-  color:var(--navy);
+  font-size:16px;
 }
 
-.card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:16px;
-  margin-bottom:16px;
-  box-shadow:var(--shadow);
+.subtitle{
+  color:var(--muted);
+  margin-bottom:18px;
 }
 
 .grid{
@@ -119,39 +168,91 @@ h3{
   gap:14px;
 }
 
-.stat{
-  background:#fff;
+.card{
+  background:white;
   border:1px solid var(--border);
   border-radius:12px;
-  padding:16px;
+  padding:15px;
   box-shadow:var(--shadow);
+  margin-bottom:15px;
 }
 
-.stat .number{
-  font-size:30px;
-  font-weight:bold;
+.stat{
+  font-size:28px;
+  font-weight:800;
   color:var(--navy);
 }
 
-.stat .label{
+.stat-label{
   color:var(--muted);
   font-size:13px;
+  margin-top:4px;
+}
+
+.badge{
+  display:inline-block;
+  border-radius:20px;
+  padding:4px 9px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.green{
+  background:#e7f6ee;
+  color:var(--green);
+}
+
+.yellow{
+  background:#fff4d6;
+  color:var(--yellow);
+}
+
+.red{
+  background:#fdecea;
+  color:var(--red);
+}
+
+.blue{
+  background:#e8f1fb;
+  color:var(--blue);
+}
+
+.gray{
+  background:#eef1f4;
+  color:#4b5563;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.field.full{
+  grid-column:1/-1;
 }
 
 label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin:9px 0 5px;
+  font-size:12px;
+  font-weight:700;
+  color:#475467;
 }
 
-input,select,textarea{
+input,
+select,
+textarea{
   width:100%;
-  border:1px solid #cbd5e1;
+  border:1px solid var(--border);
   border-radius:7px;
   padding:9px;
-  font-size:14px;
-  background:#fff;
+  background:white;
+  color:var(--text);
 }
 
 textarea{
@@ -159,965 +260,1766 @@ textarea{
   resize:vertical;
 }
 
-button{
-  font-family:inherit;
-}
-
 .btn{
   border:0;
-  border-radius:7px;
   padding:9px 13px;
-  cursor:pointer;
-  font-weight:bold;
-  margin:3px;
-}
-
-.primary{
+  border-radius:7px;
   background:var(--navy);
-  color:#fff;
+  color:white;
+  font-weight:700;
+  margin:4px 3px 4px 0;
 }
 
-.secondary{
-  background:#e8f0f8;
+.btn:hover{
+  opacity:.9;
+}
+
+.btn.secondary{
+  background:#e9eef5;
   color:var(--navy);
 }
 
-.success{
-  background:#dcfce7;
-  color:var(--green);
+.btn.green{
+  background:var(--green);
+  color:white;
 }
 
-.warning{
-  background:#fef3c7;
-  color:var(--yellow);
+.btn.red{
+  background:var(--red);
+  color:white;
 }
 
-.danger{
-  background:#fee2e2;
-  color:var(--red);
+.btn.yellow{
+  background:#a66b00;
+  color:white;
 }
 
-.info{
-  background:#dbeafe;
-  color:#1d4ed8;
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:12px;
+}
+
+.table-wrap{
+  overflow-x:auto;
 }
 
 table{
   width:100%;
   border-collapse:collapse;
-  background:#fff;
+  font-size:12px;
 }
 
-th,td{
+th,
+td{
+  padding:8px;
   border-bottom:1px solid var(--border);
-  padding:9px;
   text-align:left;
   vertical-align:top;
-  font-size:13px;
 }
 
 th{
-  background:#eef4fa;
-  color:var(--navy);
+  background:#f1f5f9;
   position:sticky;
   top:0;
+  z-index:1;
 }
 
-.table-wrap{
-  overflow:auto;
-  max-height:620px;
+.search{
+  max-width:500px;
+}
+
+.source-card,
+.judgment-card,
+.framework-card{
   border:1px solid var(--border);
-  border-radius:8px;
-}
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.badge-green{
-  background:#dcfce7;
-  color:#166534;
-}
-
-.badge-yellow{
-  background:#fef3c7;
-  color:#854d0e;
-}
-
-.badge-red{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.badge-blue{
-  background:#dbeafe;
-  color:#1e40af;
-}
-
-.badge-gray{
-  background:#e2e8f0;
-  color:#475569;
-}
-
-.code-card{
-  border-left:5px solid var(--blue);
+  border-radius:10px;
+  padding:13px;
+  margin-bottom:10px;
   background:#fff;
-  padding:15px;
-  border-radius:8px;
-  margin-bottom:12px;
-  box-shadow:var(--shadow);
+}
+
+.source-title{
+  font-size:16px;
+  font-weight:800;
+  color:var(--navy);
 }
 
 .small{
-  font-size:12px;
+  font-size:11px;
   color:var(--muted);
+}
+
+.mono{
+  font-family:monospace;
 }
 
 .notice{
-  background:#fff7ed;
-  border:1px solid #fed7aa;
-  color:#9a3412;
-  border-radius:8px;
-  padding:12px;
-  margin-bottom:15px;
+  border-left:4px solid var(--blue);
+  padding:10px 12px;
+  background:#eef5fc;
+  margin-bottom:12px;
 }
 
-.success-box{
-  background:#f0fdf4;
-  border:1px solid #bbf7d0;
-  color:#166534;
-  border-radius:8px;
-  padding:12px;
-  margin-bottom:15px;
+.warning{
+  border-left:4px solid #c27b00;
+  padding:10px 12px;
+  background:#fff8e8;
+  margin-bottom:12px;
 }
 
-.actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-}
-
-.progress{
-  height:12px;
-  background:#e2e8f0;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  background:#1769aa;
+.danger{
+  border-left:4px solid var(--red);
+  padding:10px 12px;
+  background:#fff0ef;
+  margin-bottom:12px;
 }
 
 .empty{
-  padding:25px;
+  padding:30px;
   text-align:center;
   color:var(--muted);
 }
 
-footer{
+.progress{
+  height:9px;
+  border-radius:20px;
+  background:#e7edf3;
+  overflow:hidden;
+}
+
+.progress > div{
+  height:100%;
+  background:var(--blue);
+}
+
+.footer{
+  margin-top:30px;
+  padding:15px;
   text-align:center;
   color:var(--muted);
-  font-size:12px;
-  padding:25px;
+  font-size:11px;
 }
 
-@media(max-width:900px){
-  .grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1000px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
-@media(max-width:600px){
-  .grid,.grid2{grid-template-columns:1fr}
-  main{padding:10px}
-  header{padding:12px}
-  .header-title{font-size:19px}
-  nav{top:68px}
-  th,td{font-size:12px}
-}
+@media(max-width:760px){
+  .sidebar{
+    position:fixed;
+    left:-260px;
+    top:65px;
+    z-index:900;
+    transition:.25s;
+    box-shadow:var(--shadow);
+  }
 
-/* PRINT */
-@media print{
-  header,nav,.no-print{display:none!important}
-  body{background:white}
-  main{max-width:none;padding:0}
-  .card{box-shadow:none;border:1px solid #ccc}
+  .sidebar.open{
+    left:0;
+  }
+
+  .main{
+    padding:12px;
+  }
+
+  .grid,
+  .grid2,
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  h1{
+    font-size:21px;
+  }
+
+  .table-wrap{
+    font-size:11px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-title">LCSA v2.0</div>
-  <div class="header-sub">Labour Compliance & Strategy Advisor</div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">
+      LCSA v3.0
+      <small>Labour Compliance & Strategy Advisor</small>
+    </div>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+  </div>
 </header>
 
-<nav id="nav">
-  <button onclick="go('dashboard')" class="active">Dashboard</button>
-  <button onclick="go('establishment')">Establishment</button>
-  <button onclick="go('codes')">Labour Codes</button>
-  <button onclick="go('audit')">Compliance Audit</button>
-  <button onclick="go('rules')">CCS / FR-SR</button>
-  <button onclick="go('cases')">Legal Cases</button>
-  <button onclick="go('judgments')">Judgments</button>
-  <button onclick="go('calendar')">Calendar</button>
-  <button onclick="go('reports')">Reports</button>
-  <button onclick="go('settings')">Settings</button>
-</nav>
+<div class="layout">
 
-<main>
+<aside id="sidebar" class="sidebar">
 
-<!-- ================= DASHBOARD ================= -->
+  <button data-page="dashboard" onclick="go('dashboard')">🏠 Dashboard</button>
 
-<section id="dashboard" class="page active">
+  <button data-page="establishment" onclick="go('establishment')">
+    🏢 Establishment
+  </button>
 
-<h2>Executive Dashboard</h2>
+  <button data-page="sources" onclick="go('sources')">
+    📚 Source Library
+  </button>
+
+  <button data-page="framework" onclick="go('framework')">
+    🧩 Compliance Framework
+  </button>
+
+  <button data-page="audit" onclick="go('audit')">
+    ✅ Compliance Audit
+  </button>
+
+  <button data-page="labourcodes" onclick="go('labourcodes')">
+    ⚖ Labour Codes
+  </button>
+
+  <button data-page="frsr" onclick="go('frsr')">
+    📘 FR & SR
+  </button>
+
+  <button data-page="ccs" onclick="go('ccs')">
+    🏛 CCS / DoPT / DoE
+  </button>
+
+  <button data-page="judgments" onclick="go('judgments')">
+    ⚖ Judgments
+  </button>
+
+  <button data-page="cases" onclick="go('cases')">
+    🧑‍⚖ Legal Cases
+  </button>
+
+  <button data-page="epfo" onclick="go('epfo')">
+    🟢 EPFO
+  </button>
+
+  <button data-page="esic" onclick="go('esic')">
+    🔵 ESIC
+  </button>
+
+  <button data-page="states" onclick="go('states')">
+    🇮🇳 State Labour Departments
+  </button>
+
+  <button data-page="calendar" onclick="go('calendar')">
+    📅 Compliance Calendar
+  </button>
+
+  <button data-page="reports" onclick="go('reports')">
+    📊 Reports
+  </button>
+
+  <button data-page="settings" onclick="go('settings')">
+    ⚙ Settings
+  </button>
+
+</aside>
+
+<main class="main">
+
+<!-- DASHBOARD -->
+
+<section id="page-dashboard" class="page active">
+
+<h1>LCSA Dashboard</h1>
+<div class="subtitle">
+  Labour, service law, compliance, judicial and regulatory knowledge base
+</div>
+
+<div class="notice">
+  <b>Source-driven compliance:</b>
+  Every important compliance requirement should be traceable to an Act,
+  Code, Rule, notification, circular, order, judgment or other authoritative
+  source.
+</div>
 
 <div class="grid">
 
-<div class="stat">
-<div class="number" id="statTotal">0</div>
-<div class="label">Total Audit Items</div>
+<div class="card">
+  <div class="stat" id="statSources">0</div>
+  <div class="stat-label">Sources</div>
 </div>
 
-<div class="stat">
-<div class="number" id="statCompliant">0</div>
-<div class="label">Compliant</div>
+<div class="card">
+  <div class="stat" id="statFramework">0</div>
+  <div class="stat-label">Framework Controls</div>
 </div>
 
-<div class="stat">
-<div class="number" id="statHigh">0</div>
-<div class="label">High Risk Open</div>
+<div class="card">
+  <div class="stat" id="statAudit">0</div>
+  <div class="stat-label">Audit Items</div>
 </div>
 
-<div class="stat">
-<div class="number" id="statCases">0</div>
-<div class="label">Open Legal Cases</div>
+<div class="card">
+  <div class="stat" id="statJudgments">0</div>
+  <div class="stat-label">Judgments / Orders</div>
+</div>
+
+</div>
+
+<div class="grid2">
+
+<div class="card">
+<h2>Compliance Status</h2>
+
+<div>
+  Completed:
+  <b id="dashCompleted">0</b>
+</div>
+
+<div class="progress">
+  <div id="dashProgress" style="width:0%"></div>
+</div>
+
+<br>
+
+<div>
+  Pending:
+  <b id="dashPending">0</b>
+</div>
+
+<div>
+  High Risk:
+  <b id="dashHigh">0</b>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Knowledge Base</h2>
+
+<ul>
+<li>Four Labour Codes</li>
+<li>FR & SR</li>
+<li>CCS / DoPT / DoE</li>
+<li>EPFO circulars & orders</li>
+<li>ESIC circulars & orders</li>
+<li>Supreme Court / High Courts</li>
+<li>CAT / CGIT / Industrial Tribunals</li>
+<li>State & UT Labour Departments</li>
+<li>POSH and related case law</li>
+</ul>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Source → Rule → Compliance → Evidence</h2>
+
+<div class="table-wrap">
+<table>
+<tr>
+<th>Stage</th>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>Source</td>
+<td>Authoritative Act, Code, Rule, notification, circular, order or judgment</td>
+</tr>
+<tr>
+<td>Provision</td>
+<td>Section / Rule / paragraph / direction</td>
+</tr>
+<tr>
+<td>Requirement</td>
+<td>What the employer / department must do</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Register, return, order, record, approval or document</td>
+</tr>
+<tr>
+<td>Audit</td>
+<td>Compliant / Partially Compliant / Non-Compliant / N.A.</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>Corrective action, owner and due date</td>
+</tr>
+</table>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ESTABLISHMENT -->
+
+<section id="page-establishment" class="page">
+
+<h1>Establishment Profile</h1>
+<div class="subtitle">
+  Maintain the organisation profile used for applicability assessment.
+</div>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div class="field">
+<label>Organisation / Establishment Name</label>
+<input id="profileName">
+</div>
+
+<div class="field">
+<label>Organisation Type</label>
+<select id="profileType">
+<option>Private Establishment</option>
+<option>Central Government</option>
+<option>State Government</option>
+<option>PSU</option>
+<option>Autonomous Body</option>
+<option>Society / Trust</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field">
+<label>State / UT</label>
+<select id="profileState"></select>
+</div>
+
+<div class="field">
+<label>District</label>
+<input id="profileDistrict">
+</div>
+
+<div class="field">
+<label>Total Employees</label>
+<input id="profileEmployees" type="number">
+</div>
+
+<div class="field">
+<label>Contract Workers</label>
+<input id="profileContract" type="number">
+</div>
+
+<div class="field">
+<label>Women Employees</label>
+<input id="profileWomen" type="number">
+</div>
+
+<div class="field">
+<label>Nature of Activity</label>
+<input id="profileActivity">
+</div>
+
+<div class="field">
+<label>Factory / Establishment Registration No.</label>
+<input id="profileRegistration">
+</div>
+
+<div class="field">
+<label>EPFO Code</label>
+<input id="profileEPFO">
+</div>
+
+<div class="field">
+<label>ESIC Code</label>
+<input id="profileESIC">
+</div>
+
+<div class="field">
+<label>POSH IC Constituted?</label>
+<select id="profilePOSH">
+<option>Yes</option>
+<option>No</option>
+<option>Not Applicable</option>
+</select>
 </div>
 
 </div>
 
 <br>
 
-<div class="grid">
+<button class="btn" onclick="saveProfile()">Save Profile</button>
 
-<div class="stat">
-<div class="number" id="statDeadlines">0</div>
-<div class="label">Upcoming Deadlines</div>
-</div>
-
-<div class="stat">
-<div class="number" id="statJudgments">0</div>
-<div class="label">Judgment Cards</div>
-</div>
-
-<div class="stat">
-<div class="number" id="statRules">0</div>
-<div class="label">Rule Analysis Notes</div>
-</div>
-
-<div class="stat">
-<div class="number" id="statPosture">0%</div>
-<div class="label">Compliance Posture</div>
-</div>
-
-</div>
-
-<div class="card">
-<h3>Compliance Posture</h3>
-<div class="progress">
-<div id="postureBar" class="progress-bar" style="width:0%"></div>
-</div>
-<p id="postureText" class="small">No audit data available.</p>
-</div>
-
-<div class="card">
-<h3>Quick Actions</h3>
-<div class="actions">
-<button class="btn primary" onclick="go('audit')">Open Compliance Audit</button>
-<button class="btn secondary" onclick="go('cases')">New Legal Case</button>
-<button class="btn secondary" onclick="go('calendar')">Add Deadline</button>
-<button class="btn secondary" onclick="go('judgments')">Add Judgment Card</button>
-<button class="btn secondary" onclick="go('reports')">Generate Report</button>
-</div>
-</div>
-
-<div class="notice">
-<strong>Important:</strong> LCSA is a compliance management and decision-support tool.
-Applicability, commencement, rules, notifications, exemptions, court orders and departmental instructions should be verified from the latest authoritative source before taking statutory or disciplinary action.
 </div>
 
 </section>
 
 
-<!-- ================= ESTABLISHMENT ================= -->
+<!-- SOURCE LIBRARY -->
 
-<section id="establishment" class="page">
+<section id="page-sources" class="page">
 
-<h2>Establishment Profile</h2>
+<h1>National Source Library</h1>
+
+<div class="subtitle">
+  Central and State labour sources, service rules, circulars, orders,
+  judgments and tribunal decisions.
+</div>
+
+<div class="warning">
+  <b>Verification rule:</b>
+  A source should not be treated as legally current merely because it is
+  stored in LCSA. Check amendment, repeal, supersession, stay, appeal and
+  subsequent judicial status.
+</div>
 
 <div class="card">
 
-<div class="grid2">
+<h2>Add Source</h2>
 
-<div>
-<label>Organisation / Establishment Name</label>
-<input id="pName">
+<div class="form-grid">
+
+<div class="field">
+<label>Source Category</label>
+<select id="srcCategory"></select>
 </div>
 
-<div>
+<div class="field">
+<label>Jurisdiction</label>
+<select id="srcJurisdiction"></select>
+</div>
+
+<div class="field">
 <label>State / UT</label>
-<input id="pState">
+<select id="srcState"></select>
 </div>
 
-<div>
-<label>Sector</label>
-<select id="pSector">
-<option>Government</option>
-<option>PSU</option>
-<option>Private</option>
-<option>Autonomous Body</option>
-<option>Other</option>
+<div class="field">
+<label>Authority / Court</label>
+<input id="srcAuthority">
+</div>
+
+<div class="field">
+<label>Source Type</label>
+<select id="srcType"></select>
+</div>
+
+<div class="field">
+<label>Title</label>
+<input id="srcTitle">
+</div>
+
+<div class="field">
+<label>Reference / Number</label>
+<input id="srcReference">
+</div>
+
+<div class="field">
+<label>Document Date</label>
+<input id="srcDate" type="date">
+</div>
+
+<div class="field">
+<label>Effective Date</label>
+<input id="srcEffectiveDate" type="date">
+</div>
+
+<div class="field">
+<label>Status</label>
+<select id="srcStatus"></select>
+</div>
+
+<div class="field full">
+<label>Official URL</label>
+<input id="srcURL" placeholder="https://...">
+</div>
+
+<div class="field full">
+<label>Summary / Notes</label>
+<textarea id="srcSummary"></textarea>
+</div>
+
+<div class="field">
+<label>Applicable Law / Code</label>
+<input id="srcLaw">
+</div>
+
+<div class="field">
+<label>Section / Rule / Paragraph</label>
+<input id="srcProvision">
+</div>
+
+<div class="field full">
+<label>Compliance Implication</label>
+<textarea id="srcImplication"></textarea>
+</div>
+
+<div class="field full">
+<label>Upload Source Document</label>
+<input id="srcFile" type="file"
+       accept=".pdf,.doc,.docx,.txt,.rtf,.html">
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="saveSource()">Save Source</button>
+<button class="btn secondary" onclick="clearSourceForm()">Clear</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Search Source Library</h2>
+
+<div class="toolbar">
+
+<input class="search"
+       id="sourceSearch"
+       placeholder="Search title, authority, section, case, subject..."
+       oninput="renderSources()">
+
+<select id="sourceCategoryFilter"
+        onchange="renderSources()">
+<option value="">All Categories</option>
+</select>
+
+<select id="sourceStatusFilter"
+        onchange="renderSources()">
+<option value="">All Status</option>
+</select>
+
+</div>
+
+<div id="sourceList"></div>
+
+</div>
+
+</section>
+
+
+<!-- FRAMEWORK -->
+
+<section id="page-framework" class="page">
+
+<h1>Compliance Framework Builder</h1>
+
+<div class="subtitle">
+  Convert authoritative sources into auditable compliance controls.
+</div>
+
+<div class="card">
+
+<div class="toolbar">
+<button class="btn" onclick="seedFramework()">
+Load Core Labour Code Framework
+</button>
+
+<button class="btn" onclick="seedFRFramework()">
+Load FR & SR Framework
+</button>
+
+<button class="btn" onclick="buildAuditFromFramework()">
+Build Audit from Framework
+</button>
+
+<button class="btn secondary" onclick="exportFramework()">
+Export Framework
+</button>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Add Framework Control</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Area</label>
+<input id="fwArea">
+</div>
+
+<div class="field">
+<label>Code / Rule</label>
+<input id="fwCode">
+</div>
+
+<div class="field">
+<label>Chapter</label>
+<input id="fwChapter">
+</div>
+
+<div class="field">
+<label>Section / Rule</label>
+<input id="fwSection">
+</div>
+
+<div class="field full">
+<label>Compliance Requirement</label>
+<textarea id="fwRequirement"></textarea>
+</div>
+
+<div class="field">
+<label>Applicability</label>
+<input id="fwApplicability">
+</div>
+
+<div class="field">
+<label>Evidence</label>
+<input id="fwEvidence">
+</div>
+
+<div class="field">
+<label>Frequency</label>
+<input id="fwFrequency">
+</div>
+
+<div class="field">
+<label>Due Date</label>
+<input id="fwDueDate">
+</div>
+
+<div class="field">
+<label>Responsible Function</label>
+<input id="fwResponsible">
+</div>
+
+<div class="field">
+<label>Risk</label>
+<select id="fwRisk">
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
 </select>
 </div>
 
-<div>
-<label>Establishment Type</label>
-<input id="pType" placeholder="Factory / Office / Shop / Institution etc.">
-</div>
-
-<div>
-<label>Total Employees</label>
-<input id="pEmployees" type="number">
-</div>
-
-<div>
-<label>Contract Workers</label>
-<input id="pContract" type="number">
+<div class="field">
+<label>Source Reference</label>
+<input id="fwSource">
 </div>
 
 </div>
 
-<label>Applicability / Special Notes</label>
-<textarea id="pNotes"></textarea>
+<br>
 
-<button class="btn primary" onclick="saveProfile()">Save Establishment Profile</button>
+<button class="btn" onclick="saveFrameworkItem()">
+Save Framework Control
+</button>
 
 </div>
 
 <div class="card">
-<h3>Preliminary Applicability Worksheet</h3>
 
-<table>
-<thead>
-<tr>
-<th>Framework</th>
-<th>Initial Check</th>
-<th>Verification Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Code on Wages, 2019</td>
-<td><span class="badge badge-blue">Review</span></td>
-<td>Coverage, wage definitions, minimum wages, payment and deductions.</td>
-</tr>
-<tr>
-<td>Industrial Relations Code, 2020</td>
-<td><span class="badge badge-blue">Review</span></td>
-<td>Industrial establishment status, standing orders, disputes, unions and retrenchment requirements.</td>
-</tr>
-<tr>
-<td>Code on Social Security, 2020</td>
-<td><span class="badge badge-blue">Review</span></td>
-<td>EPF, ESI, gratuity, maternity and other applicable social-security provisions.</td>
-</tr>
-<tr>
-<td>OSH & Working Conditions Code, 2020</td>
-<td><span class="badge badge-blue">Review</span></td>
-<td>Establishment category, working conditions, safety, health, hours and contract labour.</td>
-</tr>
-<tr>
-<td>POSH</td>
-<td><span class="badge badge-blue">Review</span></td>
-<td>Applicability, Internal Committee, policy, awareness and annual reporting.</td>
-</tr>
-</tbody>
-</table>
+<h2>Framework Controls</h2>
 
-</div>
+<div class="toolbar">
+<input class="search"
+       id="frameworkSearch"
+       placeholder="Search framework..."
+       oninput="renderFramework()">
 
-</section>
-
-
-<!-- ================= LABOUR CODES ================= -->
-
-<section id="codes" class="page">
-
-<h2>Labour Codes Workspace</h2>
-
-<div class="notice">
-The four Labour Codes are shown as compliance frameworks. Before relying on any provision, verify the applicable commencement notification, Central/State Rules, amendments, exemptions and sector-specific requirements.
-</div>
-
-<div class="code-card">
-<h3>Code on Wages, 2019</h3>
-<p>Wages, minimum wages, payment of wages, deductions, bonus and related compliance controls.</p>
-<button class="btn primary" onclick="filterCode('Code on Wages')">Open Audit Items</button>
-</div>
-
-<div class="code-card">
-<h3>Industrial Relations Code, 2020</h3>
-<p>Industrial relations, trade unions, standing orders, disputes, strikes, retrenchment and closure-related controls.</p>
-<button class="btn primary" onclick="filterCode('Industrial Relations')">Open Audit Items</button>
-</div>
-
-<div class="code-card">
-<h3>Code on Social Security, 2020</h3>
-<p>EPF, ESI, gratuity, maternity benefit and other social-security compliance areas.</p>
-<button class="btn primary" onclick="filterCode('Social Security')">Open Audit Items</button>
-</div>
-
-<div class="code-card">
-<h3>OSH & Working Conditions Code, 2020</h3>
-<p>Occupational safety, health, working conditions, working hours, welfare and contract labour controls.</p>
-<button class="btn primary" onclick="filterCode('OSH')">Open Audit Items</button>
-</div>
-
-<div class="code-card">
-<h3>POSH / Workplace Compliance</h3>
-<p>Internal Committee, policy, complaint handling, awareness and reporting controls.</p>
-<button class="btn primary" onclick="filterCode('POSH')">Open Audit Items</button>
-</div>
-
-</section>
-
-
-<!-- ================= AUDIT ================= -->
-
-<section id="audit" class="page">
-
-<h2>Compliance Audit</h2>
-
-<div class="card no-print">
-
-<div class="grid2">
-
-<div>
-<label>Search</label>
-<input id="auditSearch" oninput="renderAudit()" placeholder="Search requirement, evidence, observation...">
-</div>
-
-<div>
-<label>Area</label>
-<select id="auditArea" onchange="renderAudit()">
+<select id="frameworkAreaFilter"
+        onchange="renderFramework()">
 <option value="">All Areas</option>
 </select>
 </div>
 
-<div>
-<label>Status</label>
-<select id="auditStatus" onchange="renderAudit()">
+<div id="frameworkList"></div>
+
+</div>
+
+</section>
+
+
+<!-- AUDIT -->
+
+<section id="page-audit" class="page">
+
+<h1>Compliance Audit</h1>
+
+<div class="subtitle">
+  Risk-based audit generated from the compliance framework.
+</div>
+
+<div class="card">
+
+<div class="toolbar">
+<input class="search"
+       id="auditSearch"
+       placeholder="Search audit item..."
+       oninput="renderAudit()">
+
+<select id="auditStatusFilter"
+        onchange="renderAudit()">
 <option value="">All Status</option>
-<option>Compliant</option>
 <option>Pending</option>
+<option>Compliant</option>
+<option>Partially Compliant</option>
 <option>Non-Compliant</option>
 <option>Not Applicable</option>
 </select>
-</div>
 
-<div>
-<label>Risk</label>
-<select id="auditRisk" onchange="renderAudit()">
+<select id="auditRiskFilter"
+        onchange="renderAudit()">
 <option value="">All Risk</option>
 <option>High</option>
 <option>Medium</option>
 <option>Low</option>
 </select>
-</div>
 
 </div>
 
-<div class="actions">
-<button class="btn primary" onclick="addAudit()">Add Audit Item</button>
-<button class="btn secondary" onclick="seedMore()">Load Expanded Checklist</button>
-<button class="btn warning" onclick="generateActions()">Generate Corrective Action List</button>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Code / Area</th>
-<th>Requirement</th>
-<th>Evidence</th>
-<th>Risk</th>
-<th>Status</th>
-<th>Observation / Action</th>
-</tr>
-</thead>
-
-<tbody id="auditBody"></tbody>
-
-</table>
-</div>
+<div id="auditList"></div>
 
 </div>
 
 </section>
 
 
-<!-- ================= CCS ================= -->
+<!-- LABOUR CODES -->
 
-<section id="rules" class="page">
+<section id="page-labourcodes" class="page">
 
-<h2>CCS / FR-SR Rule Analysis</h2>
+<h1>Four Labour Codes</h1>
 
-<div class="card">
+<div class="notice">
+The LCSA source structure treats the four Labour Codes as the primary
+central labour-law framework.
+</div>
 
 <div class="grid2">
 
-<div>
-<label>Subject / Rule</label>
-<input id="rSubject">
+<div class="card">
+<h2>Code on Wages, 2019</h2>
+<p>
+Wages, minimum wages, payment of wages, bonus, equal remuneration and
+related compliance controls.
+</p>
+<button class="btn" onclick="filterFramework('Code on Wages, 2019')">
+Open Framework
+</button>
 </div>
 
-<div>
-<label>Reference</label>
-<input id="rReference" placeholder="Rule / OM / order / file reference">
+<div class="card">
+<h2>Industrial Relations Code, 2020</h2>
+<p>
+Industrial relations, standing orders, trade unions, disputes,
+retrenchment and related controls.
+</p>
+<button class="btn" onclick="filterFramework('Industrial Relations Code, 2020')">
+Open Framework
+</button>
 </div>
 
+<div class="card">
+<h2>Code on Social Security, 2020</h2>
+<p>
+Social security, EPF, ESI, gratuity, maternity, unorganised,
+gig and platform worker framework.
+</p>
+<button class="btn" onclick="filterFramework('Code on Social Security, 2020')">
+Open Framework
+</button>
 </div>
 
-<label>Issue</label>
-<textarea id="rIssue"></textarea>
-
-<label>Verified Facts</label>
-<textarea id="rFacts"></textarea>
-
-<label>Rule / Order References to Verify</label>
-<textarea id="rRules"></textarea>
-
-<label>Points Requiring Decision</label>
-<textarea id="rDecision"></textarea>
-
-<button class="btn primary" onclick="saveRule()">Save Rule Analysis</button>
+<div class="card">
+<h2>OSH & Working Conditions Code, 2020</h2>
+<p>
+Occupational safety, health, working conditions, contract labour,
+inter-State migrant workers and related controls.
+</p>
+<button class="btn" onclick="filterFramework('OSH & Working Conditions Code, 2020')">
+Open Framework
+</button>
+</div>
 
 </div>
 
 <div class="card">
-<h3>Saved Rule Analysis</h3>
-<div id="rulesList"></div>
-</div>
 
-</section>
+<h2>Source Status</h2>
 
-
-<!-- ================= LEGAL CASES ================= -->
-
-<section id="cases" class="page">
-
-<h2>Legal Cases & Legal Department Reference</h2>
-
-<div class="card">
-
-<div class="grid2">
-
-<div>
-<label>Case / Employee Title</label>
-<input id="cTitle">
-</div>
-
-<div>
-<label>Employee / File No.</label>
-<input id="cRef">
-</div>
-
-<div>
-<label>Priority</label>
-<select id="cPriority">
-<option>High</option>
-<option>Medium</option>
-<option>Low</option>
-</select>
-</div>
-
-<div>
-<label>Status</label>
-<select id="cStatus">
-<option>Open</option>
-<option>Under Examination</option>
-<option>Opinion Received</option>
-<option>Closed</option>
-</select>
-</div>
-
-</div>
-
-<label>Facts</label>
-<textarea id="cFacts"></textarea>
-
-<label>Legal Issue</label>
-<textarea id="cIssue"></textarea>
-
-<label>Applicable Rules / Orders</label>
-<textarea id="cRules"></textarea>
-
-<label>Documents Available</label>
-<textarea id="cDocs"></textarea>
-
-<label>Specific Opinion Sought</label>
-<textarea id="cOpinion"></textarea>
-
-<button class="btn primary" onclick="saveCase()">Save Legal Case</button>
-
-</div>
-
-<div class="card">
-<h3>Case Register</h3>
-<div id="casesList"></div>
-</div>
-
-</section>
-
-
-<!-- ================= JUDGMENTS ================= -->
-
-<section id="judgments" class="page">
-
-<h2>Judgment Brief Cards</h2>
-
-<div class="card">
-
-<div class="grid2">
-
-<div>
-<label>Case Name</label>
-<input id="jName">
-</div>
-
-<div>
-<label>Court / Date</label>
-<input id="jCourt">
-</div>
-
-<div>
-<label>Subject / Rule</label>
-<input id="jSubject">
-</div>
-
-<div>
-<label>Source / Citation</label>
-<input id="jSource">
-</div>
-
-</div>
-
-<label>Facts</label>
-<textarea id="jFacts"></textarea>
-
-<label>Issue</label>
-<textarea id="jIssue"></textarea>
-
-<label>Finding / Ratio</label>
-<textarea id="jFinding"></textarea>
-
-<label>Main Outcome</label>
-<textarea id="jOutcome"></textarea>
-
-<label>Compliance Implication / Action</label>
-<textarea id="jAction"></textarea>
-
-<button class="btn primary" onclick="saveJudgment()">Save Judgment Card</button>
-
-</div>
-
-<div id="judgmentsList"></div>
-
-</section>
-
-
-<!-- ================= CALENDAR ================= -->
-
-<section id="calendar" class="page">
-
-<h2>Compliance Calendar</h2>
-
-<div class="card">
-
-<div class="grid2">
-
-<div>
-<label>Task / Compliance</label>
-<input id="dTask">
-</div>
-
-<div>
-<label>Due Date</label>
-<input id="dDate" type="date">
-</div>
-
-<div>
-<label>Responsible Officer / Owner</label>
-<input id="dOwner">
-</div>
-
-<div>
-<label>Status</label>
-<select id="dStatus">
-<option>Pending</option>
-<option>Completed</option>
-</select>
-</div>
-
-</div>
-
-<button class="btn primary" onclick="saveDeadline()">Add Deadline</button>
-
-</div>
-
-<div class="card">
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th>Due Date</th>
-<th>Owner</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="deadlineBody"></tbody>
-</table>
-</div>
-</div>
-
-</section>
-
-
-<!-- ================= REPORTS ================= -->
-
-<section id="reports" class="page">
-
-<h2>Management Reports</h2>
-
-<div class="card no-print">
-
-<button class="btn primary" onclick="buildReport()">Generate Compliance Report</button>
-<button class="btn secondary" onclick="window.print()">Print / Save PDF</button>
-
-</div>
-
-<div id="reportOutput"></div>
-
-</section>
-
-
-<!-- ================= SETTINGS ================= -->
-
-<section id="settings" class="page">
-
-<h2>Settings & Backup</h2>
-
-<div class="card">
-
-<h3>Data Backup</h3>
-
-<p class="small">
-All LCSA v2.0 data is stored locally in this browser unless you export it.
-Export the backup regularly.
+<p>
+The four Labour Codes were announced as implemented from
+21 November 2025 by the Ministry of Labour & Employment. 3
 </p>
 
-<button class="btn primary" onclick="exportData()">Export Backup JSON</button>
+<p>
+Rules and implementation material can involve both Central and State
+rule-making because labour is a Concurrent List subject. The Ministry
+has described Central and State rule-making roles in its implementation
+material. 4
+</p>
 
-<input type="file" id="importFile" accept=".json" onchange="importData(event)">
+</div>
+
+</section>
+
+
+<!-- FR SR -->
+
+<section id="page-frsr" class="page">
+
+<h1>Fundamental Rules & Supplementary Rules</h1>
+
+<div class="subtitle">
+  FR & SR source and compliance framework for Government service matters.
+</div>
+
+<div class="notice">
+  The official DoPT FR&SR compilation is seeded as the principal source
+  record. Individual provisions should be checked against subsequent
+  amendments, Ministry of Finance / Department of Expenditure orders and
+  applicable departmental instructions.
+</div>
+
+<div class="card">
+
+<h2>FR & SR Knowledge Areas</h2>
+
+<div class="grid2">
+
+<div>FR 3 / Definitions</div>
+<div>FR 7 / Interpretation</div>
+<div>FR 9 / Definitions</div>
+<div>FR 10 / Service rules</div>
+<div>FR 11 / Whole time of Government servant</div>
+<div>FR 22 / Fixation of pay</div>
+<div>FR 22(I)(a)(1)</div>
+<div>FR 22(I)(a)(2)</div>
+<div>FR 22(I)(a)(3)</div>
+<div>FR 22-B</div>
+<div>FR 23</div>
+<div>FR 24 / Increment</div>
+<div>FR 26 / Counting of service</div>
+<div>FR 27 / Relaxation</div>
+<div>FR 49 / Combination of appointments</div>
+<div>FR 53 / Subsistence allowance</div>
+<div>FR 54 / Reinstatement</div>
+<div>FR 54-B</div>
+<div>FR 56 / Retirement</div>
+<div>SR / Joining Time</div>
+<div>SR / Transfer</div>
+<div>SR / Travelling Allowance</div>
+<div>SR / Allowances</div>
+
+</div>
+
+<br>
+
+<button class="btn"
+onclick="filterFramework('FR & SR')">
+Open FR & SR Framework
+</button>
+
+</div>
+
+</section>
+
+
+<!-- CCS -->
+
+<section id="page-ccs" class="page">
+
+<h1>CCS / DoPT / DoE Knowledge Base</h1>
+
+<div class="grid2">
+
+<div class="card">
+<h3>CCS (Conduct) Rules</h3>
+<p>Conduct, integrity, conflict of interest and disciplinary conduct.</p>
+</div>
+
+<div class="card">
+<h3>CCS (CCA) Rules</h3>
+<p>Disciplinary proceedings, penalties, suspension, appeal and revision.</p>
+</div>
+
+<div class="card">
+<h3>CCS (Leave) Rules</h3>
+<p>Leave entitlement, sanction, joining and related matters.</p>
+</div>
+
+<div class="card">
+<h3>CCS (LTC) Rules</h3>
+<p>LTC eligibility, block, claim, journey and settlement.</p>
+</div>
+
+<div class="card">
+<h3>CCS Pension Rules</h3>
+<p>Retirement, pension, family pension and death benefits.</p>
+</div>
+
+<div class="card">
+<h3>MACP / Pay Rules</h3>
+<p>Promotion, financial upgradation and pay fixation.</p>
+</div>
+
+<div class="card">
+<h3>DoPT OMs</h3>
+<p>Government instructions and clarifications.</p>
+</div>
+
+<div class="card">
+<h3>Department of Expenditure</h3>
+<p>Financial rules, pay and allowance instructions.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- JUDGMENTS -->
+
+<section id="page-judgments" class="page">
+
+<h1>Judgments & Tribunal Decisions</h1>
+
+<div class="subtitle">
+  Judicial repository with legal principle, outcome and compliance impact.
+</div>
+
+<div class="card">
+
+<h2>Add Judgment / Tribunal Order</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Court / Tribunal</label>
+<select id="jCourt"></select>
+</div>
+
+<div class="field">
+<label>Jurisdiction / State</label>
+<select id="jState"></select>
+</div>
+
+<div class="field">
+<label>Case Name</label>
+<input id="jCaseName">
+</div>
+
+<div class="field">
+<label>Case Number</label>
+<input id="jCaseNumber">
+</div>
+
+<div class="field">
+<label>Petitioner / Appellant</label>
+<input id="jPetitioner">
+</div>
+
+<div class="field">
+<label>Respondent</label>
+<input id="jRespondent">
+</div>
+
+<div class="field">
+<label>Judgment / Order Date</label>
+<input id="jDate" type="date">
+</div>
+
+<div class="field">
+<label>Bench</label>
+<input id="jBench">
+</div>
+
+<div class="field">
+<label>Applicable Act / Code</label>
+<input id="jLaw">
+</div>
+
+<div class="field">
+<label>Section / Rule</label>
+<input id="jSection">
+</div>
+
+<div class="field full">
+<label>Facts</label>
+<textarea id="jFacts"></textarea>
+</div>
+
+<div class="field full">
+<label>Issue</label>
+<textarea id="jIssue"></textarea>
+</div>
+
+<div class="field full">
+<label>Finding</label>
+<textarea id="jFinding"></textarea>
+</div>
+
+<div class="field full">
+<label>Ratio / Legal Principle</label>
+<textarea id="jRatio"></textarea>
+</div>
+
+<div class="field full">
+<label>Final Outcome</label>
+<textarea id="jOutcome"></textarea>
+</div>
+
+<div class="field full">
+<label>Compliance Implication</label>
+<textarea id="jImplication"></textarea>
+</div>
+
+<div class="field">
+<label>Judicial Status</label>
+<select id="jStatus"></select>
+</div>
+
+<div class="field full">
+<label>Official Source URL</label>
+<input id="jURL">
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="saveJudgment()">
+Save Judgment
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Search Judicial Repository</h2>
+
+<input class="search"
+       id="judgmentSearch"
+       placeholder="Case, court, law, section, subject..."
+       oninput="renderJudgments()">
+
+<div id="judgmentList"></div>
+
+</div>
+
+</section>
+
+
+<!-- LEGAL CASES -->
+
+<section id="page-cases" class="page">
+
+<h1>Legal Cases / Advice</h1>
+
+<div class="card">
+
+<h2>Create Legal Department Reference</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Subject</label>
+<input id="caseTitle">
+</div>
+
+<div class="field">
+<label>Reference</label>
+<input id="caseRef">
+</div>
+
+<div class="field full">
+<label>Facts</label>
+<textarea id="caseFacts"></textarea>
+</div>
+
+<div class="field full">
+<label>Issue for Opinion</label>
+<textarea id="caseIssue"></textarea>
+</div>
+
+<div class="field full">
+<label>Rules / Orders Identified</label>
+<textarea id="caseRules"></textarea>
+</div>
+
+<div class="field full">
+<label>Documents</label>
+<textarea id="caseDocs"></textarea>
+</div>
+
+<div class="field full">
+<label>Specific Opinion Sought</label>
+<textarea id="caseOpinion"></textarea>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="generateLegalReference()">
+Generate Legal Reference
+</button>
+
+</div>
+
+</section>
+
+
+<!-- EPFO -->
+
+<section id="page-epfo" class="page">
+
+<h1>EPFO Source Repository</h1>
+
+<div class="notice">
+Store EPFO circulars, office orders, instructions, notifications,
+clarifications and relevant adjudication material here.
+</div>
+
+<div class="card">
+
+<h2>EPFO Source Types</h2>
+
+<ul>
+<li>EPFO Circulars</li>
+<li>EPFO Office Orders</li>
+<li>EPFO Instructions</li>
+<li>EPF Scheme material</li>
+<li>EPS material</li>
+<li>EDLI material</li>
+<li>Compliance / ECR instructions</li>
+<li>Inspection / enforcement instructions</li>
+<li>Exemption related orders</li>
+<li>EPFO adjudication / proceedings</li>
+<li>CGIT EPF appeals</li>
+<li>High Court / Supreme Court EPF cases</li>
+</ul>
+
+<p>
+EPFO maintains official employer/member and proceeding portals; these
+should be treated as authoritative operational sources where applicable.
+</p>
+
+<button class="btn"
+onclick="openSourceCategory('EPFO')">
+Open EPFO Sources
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ESIC -->
+
+<section id="page-esic" class="page">
+
+<h1>ESIC Source Repository</h1>
+
+<div class="notice">
+Store ESIC circulars, office orders, notifications, instructions,
+HR/service orders and relevant judicial decisions.
+</div>
+
+<div class="card">
+
+<h2>ESIC Source Types</h2>
+
+<ul>
+<li>ESIC Circulars</li>
+<li>Office Orders</li>
+<li>Notifications</li>
+<li>Instructions</li>
+<li>Contribution / coverage instructions</li>
+<li>Medical administration orders</li>
+<li>Employer compliance instructions</li>
+<li>Recovery / enforcement orders</li>
+<li>Judicial decisions</li>
+</ul>
+
+<p>
+The official ESIC site provides a circular/order archive with filters
+for branch, office, date and subject. 5
+</p>
+
+<button class="btn"
+onclick="openSourceCategory('ESIC')">
+Open ESIC Sources
+</button>
+
+</div>
+
+</section>
+
+
+<!-- STATES -->
+
+<section id="page-states" class="page">
+
+<h1>State & UT Labour Departments</h1>
+
+<div class="subtitle">
+  Maintain State/UT-specific Labour Code rules, notifications, licences,
+  returns, circulars and orders.
+</div>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div class="field">
+<label>Select State / UT</label>
+<select id="stateRepositorySelect"
+        onchange="renderStateSources()"></select>
+</div>
+
+<div class="field">
+<label>Source Category</label>
+<select id="stateSourceCategory"
+        onchange="renderStateSources()">
+<option value="">All</option>
+<option>Labour Code Rules</option>
+<option>Notification</option>
+<option>Circular</option>
+<option>Order</option>
+<option>Licence</option>
+<option>Return</option>
+<option>Inspection</option>
+<option>Other</option>
+</select>
+</div>
+
+</div>
+
+<div id="stateSources"></div>
+
+</div>
+
+</section>
+
+
+<!-- CALENDAR -->
+
+<section id="page-calendar" class="page">
+
+<h1>Compliance Calendar</h1>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div class="field">
+<label>Compliance</label>
+<input id="calTitle">
+</div>
+
+<div class="field">
+<label>Due Date</label>
+<input id="calDate" type="date">
+</div>
+
+<div class="field">
+<label>Responsible Person / Department</label>
+<input id="calOwner">
+</div>
+
+<div class="field">
+<label>Source</label>
+<input id="calSource">
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" onclick="saveCalendar()">
+Add Compliance
+</button>
+
+</div>
+
+<div class="card">
+
+<div id="calendarList"></div>
+
+</div>
+
+</section>
+
+
+<!-- REPORTS -->
+
+<section id="page-reports" class="page">
+
+<h1>Reports</h1>
+
+<div class="grid2">
+
+<div class="card">
+
+<h2>Compliance Summary</h2>
+
+<button class="btn"
+onclick="generateComplianceReport()">
+Generate Report
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Source Register</h2>
+
+<button class="btn"
+onclick="exportSources()">
+Export Source Register
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Full LCSA Backup</h2>
+
+<button class="btn"
+onclick="exportDatabase()">
+Export Backup
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Restore Backup</h2>
+
+<input type="file"
+       accept=".json"
+       onchange="importDatabase(event)">
+
+</div>
+
+</div>
+
+<div class="card">
+<pre id="reportOutput"
+     style="white-space:pre-wrap"></pre>
+</div>
+
+</section>
+
+
+<!-- SETTINGS -->
+
+<section id="page-settings" class="page">
+
+<h1>Settings</h1>
+
+<div class="card">
+
+<h2>Data Management</h2>
+
+<button class="btn"
+onclick="exportDatabase()">
+Export Complete Backup
+</button>
+
+<br>
+
+<input type="file"
+       accept=".json"
+       onchange="importDatabase(event)">
 
 <br><br>
 
-<button class="btn danger" onclick="factoryReset()">Factory Reset</button>
+<button class="btn red"
+onclick="factoryReset()">
+Factory Reset
+</button>
 
 </div>
 
 <div class="card">
-<h3>About LCSA</h3>
-<p>
-LCSA – Labour Compliance & Strategy Advisor is intended to organise compliance
-requirements, audit evidence, legal issues, case references, judgments and
-management actions.
-</p>
 
-<p class="small">
-Always verify current statutory provisions, commencement notifications,
-rules, circulars, departmental orders and judicial developments before
-taking final action.
-</p>
+<h2>LCSA Verification Policy</h2>
+
+<ul>
+<li>Use authoritative government / court sources.</li>
+<li>Record source date and effective date.</li>
+<li>Record amendments and supersession.</li>
+<li>Record judicial stay / appeal status.</li>
+<li>Do not treat explanatory notes as statutory provisions.</li>
+<li>Verify current law before issuing final compliance advice.</li>
+</ul>
+
 </div>
 
 </section>
 
-</main>
 
-<footer>
-LCSA v2.0 | Labour Compliance & Strategy Advisor
-</footer>
+<div class="footer">
+LCSA v3.0 • Labour Compliance & Strategy Advisor<br>
+Source-driven compliance management system
+</div>
+
+</main>
+</div>
 
 
 <script>
 
 /* =========================================================
+   LCSA v3.0 DATABASE
+========================================================= */
+
+const DB_KEY = "LCSA_V3_DATABASE";
+
+const STATES = [
+"Andhra Pradesh",
+"Arunachal Pradesh",
+"Assam",
+"Bihar",
+"Chhattisgarh",
+"Goa",
+"Gujarat",
+"Haryana",
+"Himachal Pradesh",
+"Jharkhand",
+"Karnataka",
+"Kerala",
+"Madhya Pradesh",
+"Maharashtra",
+"Manipur",
+"Meghalaya",
+"Mizoram",
+"Nagaland",
+"Odisha",
+"Punjab",
+"Rajasthan",
+"Sikkim",
+"Tamil Nadu",
+"Telangana",
+"Tripura",
+"Uttar Pradesh",
+"Uttarakhand",
+"West Bengal",
+"Andaman and Nicobar Islands",
+"Chandigarh",
+"Dadra and Nagar Haveli and Daman and Diu",
+"Delhi",
+"Jammu and Kashmir",
+"Ladakh",
+"Lakshadweep",
+"Puducherry"
+];
+
+const SOURCE_CATEGORIES = [
+"Labour Code",
+"Labour Code Rules",
+"Central Labour Department",
+"State Labour Department",
+"EPFO",
+"ESIC",
+"FR & SR",
+"CCS Rules",
+"DoPT",
+"Department of Expenditure",
+"Supreme Court",
+"High Court",
+"Court of District / Labour Jurisdiction",
+"CAT",
+"Labour Court",
+"Industrial Tribunal",
+"CGIT",
+"EPFO Tribunal / Appellate Authority",
+"ESIC Tribunal / Appellate Authority",
+"POSH",
+"Other Tribunal",
+"Other"
+];
+
+const SOURCE_TYPES = [
+"Act",
+"Code",
+"Rule",
+"Notification",
+"Circular",
+"Office Order",
+"Office Memorandum",
+"Instruction",
+"Clarification",
+"Guideline",
+"Judgment",
+"Tribunal Decision",
+"Order",
+"Scheme",
+"Manual",
+"Other"
+];
+
+const SOURCE_STATUS = [
+"Current / Verified",
+"Current - Verify Latest Amendment",
+"Amended",
+"Superseded",
+"Repealed",
+"Stayed",
+"Appeal Pending",
+"Overruled",
+"Modified",
+"Status Requires Verification"
+];
+
+const COURTS = [
+"Supreme Court of India",
+"Delhi High Court",
+"Allahabad High Court",
+"Bombay High Court",
+"Calcutta High Court",
+"Madras High Court",
+"Karnataka High Court",
+"Kerala High Court",
+"Punjab & Haryana High Court",
+"Rajasthan High Court",
+"Madhya Pradesh High Court",
+"Gujarat High Court",
+"Telangana High Court",
+"Andhra Pradesh High Court",
+"Patna High Court",
+"Jharkhand High Court",
+"Chhattisgarh High Court",
+"Odisha High Court",
+"Uttarakhand High Court",
+"Himachal Pradesh High Court",
+"Jammu & Kashmir and Ladakh High Court",
+"CAT",
+"CGIT",
+"Labour Court",
+"Industrial Tribunal",
+"EPFO Tribunal / Appellate Authority",
+"ESIC Tribunal / Appellate Authority",
+"Other"
+];
+
+const JUDICIAL_STATUS = [
+"Current / Good Law",
+"Appeal Pending",
+"Stayed",
+"Modified",
+"Overruled",
+"Distinguished",
+"Superseded",
+"Status Requires Verification"
+];
+
+let db = loadDB();
+
+
+/* =========================================================
    DATABASE
 ========================================================= */
 
-const DB_KEY="LCSA_V2_DATABASE";
+function defaultDB(){
 
-const baseItems=[
+return {
 
-["Code on Wages","Wages","Verify applicable minimum wage requirements","Latest wage notification / payroll","High"],
-["Code on Wages","Wages","Verify wage structure and statutory definition of wages","Salary structure","High"],
-["Code on Wages","Wages","Verify timely payment of wages","Payroll / bank records","High"],
-["Code on Wages","Wages","Verify lawful deductions","Payroll deduction records","Medium"],
-["Code on Wages","Wages","Verify overtime wage controls","Attendance / OT records","High"],
-["Code on Wages","Bonus","Verify bonus eligibility and payment controls","Bonus records","Medium"],
+version:"3.0",
 
-["Industrial Relations","Industrial Relations","Verify standing-order applicability","Establishment records","High"],
-["Industrial Relations","Industrial Relations","Verify certified/adopted standing orders where applicable","Standing orders","High"],
-["Industrial Relations","Industrial Relations","Verify grievance handling mechanism","Policy / grievance register","Medium"],
-["Industrial Relations","Trade Unions","Verify trade union recognition/records where applicable","Union records","Medium"],
-["Industrial Relations","Disputes","Verify industrial dispute handling procedure","Case / dispute records","High"],
-["Industrial Relations","Retrenchment","Verify retrenchment/closure controls where applicable","HR records / approvals","High"],
+profile:{},
 
-["Social Security","EPFO","Verify EPF applicability","Registration / employee data","High"],
-["Social Security","EPFO","Verify EPF registration details","EPFO registration","High"],
-["Social Security","EPFO","Verify monthly contributions","EPF challans","High"],
-["Social Security","EPFO","Verify ECR / return compliance","ECR records","High"],
-["Social Security","ESIC","Verify ESI applicability","ESI registration","High"],
-["Social Security","ESIC","Verify ESI contributions","ESI challans","High"],
-["Social Security","Gratuity","Verify gratuity eligibility records","Service records","High"],
-["Social Security","Maternity","Verify maternity benefit controls where applicable","HR records","Medium"],
+sources:[],
 
-["OSH","Working Hours","Verify working-hour controls","Attendance records","High"],
-["OSH","Working Hours","Verify weekly rest arrangements","Attendance / roster","High"],
-["OSH","Overtime","Verify overtime approval and payment","OT records","High"],
-["OSH","Safety","Verify workplace safety arrangements","Safety inspection records","High"],
-["OSH","Health","Verify occupational health requirements where applicable","Medical records","Medium"],
-["OSH","Welfare","Verify statutory welfare facilities","Inspection records","Medium"],
-["OSH","Contract Labour","Verify contractor compliance monitoring","Contractor records","High"],
-["OSH","Contract Labour","Verify contract labour records/licensing where applicable","Licence / agreement","High"],
+framework:[],
 
-["POSH","POSH","Verify Internal Committee constitution where applicable","IC order","High"],
-["POSH","POSH","Verify POSH policy","Policy document","High"],
-["POSH","POSH","Verify awareness/training","Training records","Medium"],
-["POSH","POSH","Verify complaint register/confidential process","IC records","High"],
-["POSH","POSH","Verify annual reporting requirements","Annual report","Medium"],
+audit:[],
 
-["Records","Records","Verify statutory registers","Registers","Medium"],
-["Records","Records","Verify statutory notices","Notices","Medium"],
-["Records","Records","Verify employee master data","HR records","Medium"],
-["Records","Records","Verify retention of compliance evidence","Record retention system","Medium"],
-["Records","Records","Verify inspection records","Inspection file","Medium"],
+judgments:[],
 
-["Contract Labour","Contract Labour","Verify contractor agreement","Agreement","High"],
-["Contract Labour","Contract Labour","Verify contractor licence where applicable","Licence","High"],
-["Contract Labour","Contract Labour","Verify wage records of contract workers","Wage records","High"],
-["Contract Labour","Contract Labour","Verify principal-employer monitoring","Inspection records","High"]
+cases:[],
 
-];
+calendar:[],
 
-let db=loadDB();
+stateSources:[]
+
+};
+
+}
 
 
 function loadDB(){
 
 try{
 
-const saved=localStorage.getItem(DB_KEY);
+const x = localStorage.getItem(DB_KEY);
 
-if(saved){
+if(!x) return defaultDB();
 
-const x=JSON.parse(saved);
+const d = JSON.parse(x);
 
-return {
-profile:x.profile||{},
-audit:x.audit||[],
-rules:x.rules||[],
-cases:x.cases||[],
-judgments:x.judgments||[],
-deadlines:x.deadlines||[]
-};
+return Object.assign(defaultDB(),d);
+
+}catch(e){
+
+console.error(e);
+
+return defaultDB();
 
 }
-
-}catch(e){}
-
-return {
-profile:{},
-audit:[],
-rules:[],
-cases:[],
-judgments:[],
-deadlines:[]
-};
 
 }
 
 
-function save(){
+function saveDB(){
 
 localStorage.setItem(DB_KEY,JSON.stringify(db));
 
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function go(id){
-
-document.querySelectorAll(".page").forEach(x=>{
-x.classList.remove("active");
-});
-
-document.getElementById(id).classList.add("active");
-
-document.querySelectorAll("nav button").forEach(x=>{
-x.classList.remove("active");
-});
-
-const buttons=document.querySelectorAll("nav button");
-
-buttons.forEach(x=>{
-if(x.getAttribute("onclick")===`go('${id}')`)
-x.classList.add("active");
-});
-
-if(id==="dashboard") updateDashboard();
-if(id==="audit") renderAudit();
-if(id==="rules") renderRules();
-if(id==="cases") renderCases();
-if(id==="judgments") renderJudgments();
-if(id==="calendar") renderDeadlines();
-if(id==="reports") buildReport();
+updateDashboard();
 
 }
 
 
 /* =========================================================
-   UTILITIES
+   GENERAL UI
 ========================================================= */
+
+function go(page){
+
+document.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+const target=document.getElementById("page-"+page);
+
+if(target) target.classList.add("active");
+
+document.querySelectorAll(".sidebar button")
+.forEach(x=>x.classList.remove("active"));
+
+const btn=document.querySelector(
+'.sidebar button[data-page="'+page+'"]'
+);
+
+if(btn) btn.classList.add("active");
+
+if(window.innerWidth<760){
+
+document.getElementById("sidebar")
+.classList.remove("open");
+
+}
+
+renderAll();
+
+}
+
+
+function toggleMenu(){
+
+document.getElementById("sidebar")
+.classList.toggle("open");
+
+}
+
 
 function esc(v){
 
-return String(v??"")
+return String(v ?? "")
 .replace(/&/g,"&amp;")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;")
@@ -1127,332 +2029,106 @@ return String(v??"")
 }
 
 
-function val(id){
+function id(){
 
-return document.getElementById(id).value.trim();
-
-}
-
-
-function badge(v){
-
-if(v==="Compliant"||v==="Completed")
-return `<span class="badge badge-green">${esc(v)}</span>`;
-
-if(v==="Non-Compliant"||v==="High")
-return `<span class="badge badge-red">${esc(v)}</span>`;
-
-if(v==="Pending"||v==="Medium")
-return `<span class="badge badge-yellow">${esc(v)}</span>`;
-
-if(v==="Low")
-return `<span class="badge badge-blue">${esc(v)}</span>`;
-
-return `<span class="badge badge-gray">${esc(v)}</span>`;
+return Date.now().toString(36)+
+Math.random().toString(36).slice(2,7);
 
 }
 
 
-/* =========================================================
-   INITIAL AUDIT DATA
-========================================================= */
+function badge(status){
 
-function initialiseAudit(){
+let cls="gray";
 
-if(db.audit.length===0){
+if(
+status==="Compliant" ||
+status==="Current / Verified" ||
+status==="Current / Good Law"
+) cls="green";
 
-baseItems.forEach((x,i)=>{
+if(
+status==="Pending" ||
+status==="Current - Verify Latest Amendment" ||
+status==="Status Requires Verification"
+) cls="yellow";
 
-db.audit.push({
+if(
+status==="Non-Compliant" ||
+status==="Repealed" ||
+status==="Overruled" ||
+status==="Stayed"
+) cls="red";
 
-id:"A"+Date.now()+i,
+if(
+status==="Partially Compliant" ||
+status==="Appeal Pending" ||
+status==="Modified"
+) cls="blue";
 
-code:x[0],
-
-area:x[1],
-
-req:x[2],
-
-evidence:x[3],
-
-risk:x[4],
-
-status:"Pending",
-
-obs:""
-
-});
-
-});
-
-save();
-
-}
-
-}
-
-
-function populateAreas(){
-
-const s=document.getElementById("auditArea");
-
-const current=s.value;
-
-const areas=[...new Set(db.audit.map(x=>x.area))].sort();
-
-s.innerHTML=`<option value="">All Areas</option>`+
-areas.map(x=>`<option>${esc(x)}</option>`).join("");
-
-s.value=current;
+return '<span class="badge '+cls+'">'+esc(status)+'</span>';
 
 }
 
 
 /* =========================================================
-   AUDIT
+   SELECT INITIALISATION
 ========================================================= */
 
-function renderAudit(){
+function fillSelect(idName,arr,includeBlank=true){
 
-populateAreas();
+const el=document.getElementById(idName);
 
-const q=document.getElementById("auditSearch").value.toLowerCase();
+if(!el) return;
 
-const area=document.getElementById("auditArea").value;
+let html=includeBlank
+?'<option value="">Select</option>'
+:"";
 
-const status=document.getElementById("auditStatus").value;
-
-const risk=document.getElementById("auditRisk").value;
-
-let arr=db.audit.filter(x=>{
-
-return (!q ||
-(x.req+x.evidence+x.obs+x.code+x.area).toLowerCase().includes(q))
-&&(!area||x.area===area)
-&&(!status||x.status===status)
-&&(!risk||x.risk===risk);
-
+arr.forEach(x=>{
+html+=`<option value="${esc(x)}">${esc(x)}</option>`;
 });
 
-const body=document.getElementById("auditBody");
-
-if(!arr.length){
-
-body.innerHTML=`<tr><td colspan="6" class="empty">No audit items found.</td></tr>`;
-
-return;
-
-}
-
-body.innerHTML=arr.map(x=>`
-
-<tr>
-
-<td>
-<strong>${esc(x.code)}</strong><br>
-<span class="small">${esc(x.area)}</span>
-</td>
-
-<td>${esc(x.req)}</td>
-
-<td>${esc(x.evidence)}</td>
-
-<td>${badge(x.risk)}</td>
-
-<td>
-<select onchange="updateAudit('${x.id}','status',this.value)">
-<option ${x.status==="Pending"?"selected":""}>Pending</option>
-<option ${x.status==="Compliant"?"selected":""}>Compliant</option>
-<option ${x.status==="Non-Compliant"?"selected":""}>Non-Compliant</option>
-<option ${x.status==="Not Applicable"?"selected":""}>Not Applicable</option>
-</select>
-</td>
-
-<td>
-<textarea
-style="min-width:220px;min-height:60px"
-onchange="updateAudit('${x.id}','obs',this.value)"
->${esc(x.obs)}</textarea>
-</td>
-
-</tr>
-
-`).join("");
+el.innerHTML=html;
 
 }
 
 
-function updateAudit(id,key,value){
-
-const x=db.audit.find(a=>a.id===id);
-
-if(x){
-
-x[key]=value;
-
-save();
-
-updateDashboard();
-
-}
-
-}
-
-
-function addAudit(){
-
-const id="A"+Date.now();
-
-db.audit.push({
-
-id,
-
-code:"Custom",
-
-area:"General",
-
-req:"Enter compliance requirement",
-
-evidence:"Enter evidence / record",
-
-risk:"Medium",
-
-status:"Pending",
-
-obs:""
-
-});
-
-save();
-
-renderAudit();
-
-}
-
-
-function seedMore(){
-
-const extra=[
-
-["Code on Wages","Wages","Verify wage slips contain required particulars","Wage slips","Medium"],
-["Code on Wages","Records","Verify wage records are maintained and accessible","Wage register","Medium"],
-["Industrial Relations","Grievance","Verify grievance committee/process where applicable","Grievance records","Medium"],
-["Industrial Relations","Discipline","Verify disciplinary procedure and documentation","Service records","High"],
-["Industrial Relations","Termination","Verify termination documentation","HR file","High"],
-["Social Security","EPFO","Verify UAN linkage and employee records","UAN data","Medium"],
-["Social Security","ESIC","Verify employee insurance numbers","ESI data","Medium"],
-["Social Security","Gratuity","Verify nomination records","Nomination forms","Medium"],
-["OSH","Safety","Verify emergency preparedness","Emergency plan","High"],
-["OSH","Safety","Verify fire safety arrangements","Fire records","High"],
-["OSH","Safety","Verify accident reporting controls","Accident register","High"],
-["OSH","Welfare","Verify drinking water facilities","Inspection record","Medium"],
-["OSH","Welfare","Verify first-aid facilities","Inspection record","Medium"],
-["OSH","Welfare","Verify sanitation facilities","Inspection record","Medium"],
-["POSH","POSH","Verify IC member details are current","IC order","Medium"],
-["POSH","POSH","Verify confidentiality controls","IC records","High"],
-["Records","Records","Verify digital backup of statutory records","Backup system","Low"],
-["Records","Records","Verify employee acknowledgements","HR records","Low"],
-["Contract Labour","Contract Labour","Verify contractor attendance records","Attendance","High"],
-["Contract Labour","Contract Labour","Verify contractor wage payment evidence","Bank / wage records","High"]
-
-];
-
-let n=0;
-
-extra.forEach((x,i)=>{
-
-const exists=db.audit.some(a=>a.req===x[2]);
-
-if(!exists){
-
-db.audit.push({
-
-id:"EX"+Date.now()+i,
-
-code:x[0],
-
-area:x[1],
-
-req:x[2],
-
-evidence:x[3],
-
-risk:x[4],
-
-status:"Pending",
-
-obs:""
-
-});
-
-n++;
-
-}
-
-});
-
-save();
-
-renderAudit();
-
-updateDashboard();
-
-alert(n+" additional checklist items loaded.");
-
-}
-
-
-function filterCode(code){
-
-go("audit");
-
-document.getElementById("auditSearch").value="";
-
-document.getElementById("auditStatus").value="";
-
-document.getElementById("auditRisk").value="";
-
-populateAreas();
-
-let found=db.audit.find(x=>x.code===code);
-
-if(found){
-
-document.getElementById("auditArea").value=found.area;
-
-}
-
-renderAudit();
-
-}
-
-
-/* =========================================================
-   CORRECTIVE ACTION
-========================================================= */
-
-function generateActions(){
-
-const open=db.audit.filter(x=>
-x.status==="Non-Compliant"||
-x.status==="Pending"
+function initSelects(){
+
+fillSelect("profileState",STATES,false);
+
+fillSelect("srcCategory",SOURCE_CATEGORIES,false);
+fillSelect("srcJurisdiction",[
+"Central",
+"All India",
+"State / UT"
+],false);
+
+fillSelect("srcState",STATES,true);
+fillSelect("srcType",SOURCE_TYPES,false);
+fillSelect("srcStatus",SOURCE_STATUS,false);
+
+const catFilter=document.getElementById(
+"sourceCategoryFilter"
 );
 
-let text="LCSA CORRECTIVE ACTION LIST\n\n";
-
-open.forEach((x,i)=>{
-
-text+=
-(i+1)+". "+
-x.code+" / "+x.area+"\n"+
-"Requirement: "+x.req+"\n"+
-"Risk: "+x.risk+"\n"+
-"Observation: "+(x.obs||"To be verified")+"\n"+
-"Action: Verify requirement, collect evidence, identify responsible officer and close the audit observation.\n\n";
-
+SOURCE_CATEGORIES.forEach(x=>{
+catFilter.innerHTML+=
+`<option value="${esc(x)}">${esc(x)}</option>`;
 });
 
-downloadText("LCSA-Corrective-Actions.txt",text);
+SOURCE_STATUS.forEach(x=>{
+document.getElementById("sourceStatusFilter")
+.innerHTML+=
+`<option value="${esc(x)}">${esc(x)}</option>`;
+});
+
+fillSelect("jCourt",COURTS,false);
+fillSelect("jState",STATES,true);
+fillSelect("jStatus",JUDICIAL_STATUS,false);
+
+fillSelect("stateRepositorySelect",STATES,false);
 
 }
 
@@ -1465,17 +2141,22 @@ function saveProfile(){
 
 db.profile={
 
-name:val("pName"),
-state:val("pState"),
-sector:val("pSector"),
-type:val("pType"),
-employees:val("pEmployees"),
-contract:val("pContract"),
-notes:val("pNotes")
+name:document.getElementById("profileName").value,
+type:document.getElementById("profileType").value,
+state:document.getElementById("profileState").value,
+district:document.getElementById("profileDistrict").value,
+employees:document.getElementById("profileEmployees").value,
+contract:document.getElementById("profileContract").value,
+women:document.getElementById("profileWomen").value,
+activity:document.getElementById("profileActivity").value,
+registration:document.getElementById("profileRegistration").value,
+epfo:document.getElementById("profileEPFO").value,
+esic:document.getElementById("profileESIC").value,
+posh:document.getElementById("profilePOSH").value
 
 };
 
-save();
+saveDB();
 
 alert("Establishment profile saved.");
 
@@ -1484,183 +2165,658 @@ alert("Establishment profile saved.");
 
 function renderProfile(){
 
-const p=db.profile;
+const p=db.profile||{};
 
-document.getElementById("pName").value=p.name||"";
-document.getElementById("pState").value=p.state||"";
-document.getElementById("pSector").value=p.sector||"Government";
-document.getElementById("pType").value=p.type||"";
-document.getElementById("pEmployees").value=p.employees||"";
-document.getElementById("pContract").value=p.contract||"";
-document.getElementById("pNotes").value=p.notes||"";
+const map={
+
+profileName:p.name,
+profileType:p.type,
+profileState:p.state,
+profileDistrict:p.district,
+profileEmployees:p.employees,
+profileContract:p.contract,
+profileWomen:p.women,
+profileActivity:p.activity,
+profileRegistration:p.registration,
+profileEPFO:p.epfo,
+profileESIC:p.esic,
+profilePOSH:p.posh
+
+};
+
+Object.keys(map).forEach(k=>{
+
+const e=document.getElementById(k);
+
+if(e && map[k]!==undefined) e.value=map[k];
+
+});
 
 }
 
 
 /* =========================================================
-   CCS / FR-SR
+   SOURCES
 ========================================================= */
 
-function saveRule(){
+async function saveSource(){
 
-db.rules.push({
+const fileEl=document.getElementById("srcFile");
 
-subject:val("rSubject"),
-reference:val("rReference"),
-issue:val("rIssue"),
-facts:val("rFacts"),
-rules:val("rRules"),
-decision:val("rDecision"),
-date:new Date().toLocaleDateString()
+let fileMeta=null;
 
-});
+if(fileEl.files.length){
 
-save();
+const f=fileEl.files[0];
 
-["rSubject","rReference","rIssue","rFacts","rRules","rDecision"]
-.forEach(id=>document.getElementById(id).value="");
+fileMeta={
+name:f.name,
+type:f.type,
+size:f.size,
+lastModified:f.lastModified
+};
 
-renderRules();
+}
 
-updateDashboard();
+const source={
+
+id:"SRC-"+id(),
+
+category:document.getElementById("srcCategory").value,
+
+jurisdiction:
+document.getElementById("srcJurisdiction").value,
+
+state:
+document.getElementById("srcState").value,
+
+authority:
+document.getElementById("srcAuthority").value,
+
+type:
+document.getElementById("srcType").value,
+
+title:
+document.getElementById("srcTitle").value,
+
+reference:
+document.getElementById("srcReference").value,
+
+documentDate:
+document.getElementById("srcDate").value,
+
+effectiveDate:
+document.getElementById("srcEffectiveDate").value,
+
+status:
+document.getElementById("srcStatus").value,
+
+officialUrl:
+document.getElementById("srcURL").value,
+
+summary:
+document.getElementById("srcSummary").value,
+
+law:
+document.getElementById("srcLaw").value,
+
+provision:
+document.getElementById("srcProvision").value,
+
+implication:
+document.getElementById("srcImplication").value,
+
+file:fileMeta,
+
+createdAt:new Date().toISOString(),
+
+lastVerified:"",
+
+keywords:[]
+
+};
+
+db.sources.push(source);
+
+saveDB();
+
+clearSourceForm();
+
+alert(
+"Source saved.\n\n"+
+"Important: The document metadata is saved in LCSA. "+
+"To preserve the actual PDF/file across devices, use the source file "+
+"together with your LCSA backup or add a future server/cloud document store."
+);
+
+renderSources();
 
 }
 
 
-function renderRules(){
+function clearSourceForm(){
 
-const el=document.getElementById("rulesList");
+[
+"srcAuthority",
+"srcTitle",
+"srcReference",
+"srcDate",
+"srcEffectiveDate",
+"srcURL",
+"srcSummary",
+"srcLaw",
+"srcProvision",
+"srcImplication"
+].forEach(x=>{
+const e=document.getElementById(x);
+if(e) e.value="";
+});
 
-if(!db.rules.length){
+document.getElementById("srcFile").value="";
 
-el.innerHTML=`<div class="empty">No rule analysis saved.</div>`;
+}
+
+
+function renderSources(){
+
+const list=document.getElementById("sourceList");
+
+if(!list) return;
+
+const q=
+(document.getElementById("sourceSearch").value||"")
+.toLowerCase();
+
+const cat=
+document.getElementById("sourceCategoryFilter").value;
+
+const status=
+document.getElementById("sourceStatusFilter").value;
+
+const arr=db.sources.filter(s=>{
+
+const text=JSON.stringify(s).toLowerCase();
+
+return
+(!q || text.includes(q)) &&
+(!cat || s.category===cat) &&
+(!status || s.status===status);
+
+});
+
+if(!arr.length){
+
+list.innerHTML=
+'<div class="empty">No source records found.</div>';
 
 return;
 
 }
 
-el.innerHTML=db.rules.map((x,i)=>`
+list.innerHTML=arr.map(s=>`
 
-<div class="card">
+<div class="source-card">
 
-<h3>${esc(x.subject)}</h3>
-
-<div class="small">${esc(x.reference)} | ${esc(x.date)}</div>
-
-<p><strong>Issue:</strong><br>${esc(x.issue)}</p>
-
-<p><strong>Facts:</strong><br>${esc(x.facts)}</p>
-
-<p><strong>Rules to Verify:</strong><br>${esc(x.rules)}</p>
-
-<p><strong>Decision Points:</strong><br>${esc(x.decision)}</p>
-
-<button class="btn danger" onclick="deleteRule(${i})">Delete</button>
-
+<div class="source-title">
+${esc(s.title||"Untitled Source")}
 </div>
 
-`).join("");
+<div class="small">
+${esc(s.category)} •
+${esc(s.type)} •
+${esc(s.authority)}
+</div>
 
-}
+<br>
 
-
-function deleteRule(i){
-
-if(confirm("Delete this rule analysis?")){
-
-db.rules.splice(i,1);
-
-save();
-
-renderRules();
-
-updateDashboard();
-
-}
-
-}
-
-
-/* =========================================================
-   LEGAL CASES
-========================================================= */
-
-function saveCase(){
-
-db.cases.push({
-
-title:val("cTitle"),
-ref:val("cRef"),
-priority:val("cPriority"),
-status:val("cStatus"),
-facts:val("cFacts"),
-issue:val("cIssue"),
-rules:val("cRules"),
-docs:val("cDocs"),
-opinion:val("cOpinion"),
-date:new Date().toLocaleDateString()
-
-});
-
-save();
-
-["cTitle","cRef","cFacts","cIssue","cRules","cDocs","cOpinion"]
-.forEach(id=>document.getElementById(id).value="");
-
-renderCases();
-
-updateDashboard();
-
-}
-
-
-function renderCases(){
-
-const el=document.getElementById("casesList");
-
-if(!db.cases.length){
-
-el.innerHTML=`<div class="empty">No legal cases recorded.</div>`;
-
-return;
-
-}
-
-el.innerHTML=db.cases.map((x,i)=>`
-
-<div class="card">
-
-<h3>${esc(x.title)}</h3>
+${badge(s.status)}
 
 <p>
-${badge(x.priority)}
-${badge(x.status)}
+<b>Reference:</b> ${esc(s.reference||"-")}<br>
+<b>Date:</b> ${esc(s.documentDate||"-")}<br>
+<b>Effective:</b> ${esc(s.effectiveDate||"-")}<br>
+<b>Law:</b> ${esc(s.law||"-")}<br>
+<b>Provision:</b> ${esc(s.provision||"-")}
 </p>
 
-<p><strong>Reference:</strong> ${esc(x.ref)}</p>
+<p>
+${esc(s.summary||"")}
+</p>
 
-<p><strong>Facts:</strong><br>${esc(x.facts)}</p>
+${
+s.officialUrl
+?
+`<a href="${esc(s.officialUrl)}"
+target="_blank"
+rel="noopener">
+Open Official Source
+</a>`
+:""
+}
 
-<p><strong>Issue:</strong><br>${esc(x.issue)}</p>
+<br><br>
 
-<p><strong>Rules:</strong><br>${esc(x.rules)}</p>
+${
+s.file
+?
+`<span class="badge blue">
+Document: ${esc(s.file.name)}
+</span>`
+:""
+}
 
-<p><strong>Documents:</strong><br>${esc(x.docs)}</p>
+<br>
 
-<p><strong>Opinion Sought:</strong><br>${esc(x.opinion)}</p>
-
-<div class="actions">
-
-<button class="btn primary" onclick="draftCase(${i})">
-Legal Department Reference
-</button>
-
-<button class="btn danger" onclick="deleteCase(${i})">
+<button class="btn red"
+onclick="deleteSource('${s.id}')">
 Delete
 </button>
 
 </div>
 
+`).join("");
+
+}
+
+
+function deleteSource(sourceId){
+
+if(!confirm("Delete this source?")) return;
+
+db.sources=db.sources.filter(x=>x.id!==sourceId);
+
+saveDB();
+
+renderSources();
+
+}
+
+
+/* =========================================================
+   SOURCE SEEDING
+========================================================= */
+
+function addSeedSource(source){
+
+const exists=db.sources.some(
+x=>x.title===source.title &&
+x.reference===source.reference
+);
+
+if(!exists){
+
+db.sources.push({
+
+id:"SRC-"+id(),
+
+createdAt:new Date().toISOString(),
+
+lastVerified:"",
+
+keywords:[],
+
+...source
+
+});
+
+}
+
+}
+
+
+function seedOfficialSources(){
+
+addSeedSource({
+
+category:"Labour Code",
+jurisdiction:"All India",
+state:"",
+authority:"Ministry of Labour & Employment",
+type:"Code",
+title:"Code on Wages, 2019",
+reference:"Act No. 29 of 2019",
+status:"Current - Verify Latest Amendment",
+law:"Code on Wages, 2019",
+provision:"",
+officialUrl:"https://labour.gov.in/",
+summary:
+"Primary source record for Code on Wages framework."
+
+});
+
+addSeedSource({
+
+category:"Labour Code",
+jurisdiction:"All India",
+state:"",
+authority:"Ministry of Labour & Employment",
+type:"Code",
+title:"Industrial Relations Code, 2020",
+reference:"Act No. 35 of 2020",
+status:"Current - Verify Latest Amendment",
+law:"Industrial Relations Code, 2020",
+officialUrl:"https://labour.gov.in/",
+summary:
+"Primary source record for Industrial Relations framework."
+
+});
+
+addSeedSource({
+
+category:"Labour Code",
+jurisdiction:"All India",
+state:"",
+authority:"Ministry of Labour & Employment",
+type:"Code",
+title:"Code on Social Security, 2020",
+reference:"Act No. 36 of 2020",
+status:"Current - Verify Latest Amendment",
+law:"Code on Social Security, 2020",
+officialUrl:"https://labour.gov.in/",
+summary:
+"Primary source record for Social Security framework."
+
+});
+
+addSeedSource({
+
+category:"Labour Code",
+jurisdiction:"All India",
+state:"",
+authority:"Ministry of Labour & Employment",
+type:"Code",
+title:"Occupational Safety, Health and Working Conditions Code, 2020",
+reference:"Act No. 37 of 2020",
+status:"Current - Verify Latest Amendment",
+law:
+"Occupational Safety, Health and Working Conditions Code, 2020",
+officialUrl:"https://labour.gov.in/",
+summary:
+"Primary source record for OSH and working conditions framework."
+
+});
+
+addSeedSource({
+
+category:"FR & SR",
+jurisdiction:"Central",
+state:"",
+authority:"Department of Personnel & Training",
+type:"Manual",
+title:"Compilation of Fundamental Rules & Supplementary Rules",
+reference:"Official FR & SR Compilation",
+status:"Current - Verify Latest Amendment",
+law:"FR & SR",
+officialUrl:
+"https://dopt.gov.in/sites/default/files/Compilation_FR_SR_English_2.pdf",
+summary:
+"Primary FR & SR reference source. Verify subsequent amendments/orders."
+
+});
+
+addSeedSource({
+
+category:"EPFO",
+jurisdiction:"Central",
+state:"",
+authority:"Employees' Provident Fund Organisation",
+type:"Circular",
+title:"EPFO Circular / Office Order Repository",
+reference:"Official EPFO Repository",
+status:"Current - Verify Latest Amendment",
+officialUrl:
+"https://www.epfindia.gov.in/",
+summary:
+"Official repository for EPFO circulars, orders and instructions."
+
+});
+
+addSeedSource({
+
+category:"ESIC",
+jurisdiction:"Central",
+state:"",
+authority:"Employees' State Insurance Corporation",
+type:"Circular",
+title:"ESIC Circular / Order Repository",
+reference:"Official ESIC Repository",
+status:"Current - Verify Latest Amendment",
+officialUrl:
+"https://www.esic.gov.in/circulars",
+summary:
+"Official repository for ESIC circulars, instructions and orders."
+
+});
+
+addSeedSource({
+
+category:"Central Labour Department",
+jurisdiction:"Central",
+state:"",
+authority:"Ministry of Labour & Employment",
+type:"Other",
+title:"Ministry of Labour & Employment Source Repository",
+reference:"Official Website",
+status:"Current - Verify Latest Amendment",
+officialUrl:
+"https://labour.gov.in/",
+summary:
+"Central labour legislation, notifications, implementation material and announcements."
+
+});
+
+addSeedSource({
+
+category:"CGIT",
+jurisdiction:"Central",
+state:"",
+authority:"Central Government Industrial Tribunal",
+type:"Order",
+title:"CGIT Cause List / Order Repository",
+reference:"Official CGIT Portal",
+status:"Current - Verify Latest Amendment",
+officialUrl:
+"https://apps.labour.gov.in/cgit/",
+summary:
+"Repository for CGIT case information, cause lists and available orders."
+
+});
+
+addSeedSource({
+
+category:"DoPT",
+jurisdiction:"Central",
+state:"",
+authority:"Department of Personnel & Training",
+type:"Office Memorandum",
+title:"DoPT Office Memorandum Repository",
+reference:"Official DoPT Website",
+status:"Current - Verify Latest Amendment",
+officialUrl:
+"https://dopt.gov.in/",
+summary:
+"Central Government service rules, OMs and personnel instructions."
+
+});
+
+saveDB();
+
+}
+
+
+/* =========================================================
+   FRAMEWORK
+========================================================= */
+
+function saveFrameworkItem(){
+
+const item={
+
+id:"FW-"+id(),
+
+area:document.getElementById("fwArea").value,
+
+code:document.getElementById("fwCode").value,
+
+chapter:document.getElementById("fwChapter").value,
+
+section:document.getElementById("fwSection").value,
+
+requirement:document.getElementById("fwRequirement").value,
+
+applicability:document.getElementById("fwApplicability").value,
+
+evidence:document.getElementById("fwEvidence").value,
+
+frequency:document.getElementById("fwFrequency").value,
+
+dueDate:document.getElementById("fwDueDate").value,
+
+responsible:document.getElementById("fwResponsible").value,
+
+risk:document.getElementById("fwRisk").value,
+
+source:document.getElementById("fwSource").value,
+
+status:"Pending",
+
+observation:"",
+
+action:""
+
+};
+
+db.framework.push(item);
+
+saveDB();
+
+[
+"fwArea",
+"fwCode",
+"fwChapter",
+"fwSection",
+"fwRequirement",
+"fwApplicability",
+"fwEvidence",
+"fwFrequency",
+"fwDueDate",
+"fwResponsible",
+"fwSource"
+].forEach(x=>document.getElementById(x).value="");
+
+renderFramework();
+
+}
+
+
+function renderFramework(){
+
+const list=document.getElementById("frameworkList");
+
+if(!list) return;
+
+const q=
+(document.getElementById("frameworkSearch").value||"")
+.toLowerCase();
+
+const area=
+document.getElementById("frameworkAreaFilter").value;
+
+const arr=db.framework.filter(x=>{
+
+const text=JSON.stringify(x).toLowerCase();
+
+return
+(!q || text.includes(q)) &&
+(!area || x.area===area);
+
+});
+
+const areas=[
+...new Set(db.framework.map(x=>x.area).filter(Boolean))
+];
+
+const filter=document.getElementById(
+"frameworkAreaFilter"
+);
+
+const old=filter.value;
+
+filter.innerHTML='<option value="">All Areas</option>';
+
+areas.forEach(a=>{
+filter.innerHTML+=
+`<option value="${esc(a)}">${esc(a)}</option>`;
+});
+
+filter.value=old;
+
+if(!arr.length){
+
+list.innerHTML=
+'<div class="empty">No framework controls.</div>';
+
+return;
+
+}
+
+list.innerHTML=arr.map(x=>`
+
+<div class="framework-card">
+
+<b>${esc(x.area)}</b>
+
+<div class="small">
+${esc(x.code)} |
+${esc(x.chapter)} |
+${esc(x.section)}
+</div>
+
+<p>
+${esc(x.requirement)}
+</p>
+
+<table>
+
+<tr>
+<td><b>Applicability</b></td>
+<td>${esc(x.applicability)}</td>
+</tr>
+
+<tr>
+<td><b>Evidence</b></td>
+<td>${esc(x.evidence)}</td>
+</tr>
+
+<tr>
+<td><b>Frequency</b></td>
+<td>${esc(x.frequency)}</td>
+</tr>
+
+<tr>
+<td><b>Responsible</b></td>
+<td>${esc(x.responsible)}</td>
+</tr>
+
+<tr>
+<td><b>Risk</b></td>
+<td>${badge(x.risk)}</td>
+</tr>
+
+<tr>
+<td><b>Source</b></td>
+<td>${esc(x.source)}</td>
+</tr>
+
+</table>
+
+<br>
+
+<button class="btn red"
+onclick="deleteFramework('${x.id}')">
+Delete
+</button>
+
 </div>
 
 `).join("");
@@ -1668,53 +2824,619 @@ Delete
 }
 
 
-function draftCase(i){
+function deleteFramework(fid){
 
-const c=db.cases[i];
+if(!confirm("Delete framework control?")) return;
 
-let text=`LEGAL DEPARTMENT REFERENCE
+db.framework=db.framework.filter(x=>x.id!==fid);
 
-Subject: Legal opinion regarding ${c.title}
-Reference: ${c.ref}
+saveDB();
 
-Facts:
-${c.facts}
-
-Issue:
-${c.issue}
-
-Rules / Orders identified for verification:
-${c.rules}
-
-Documents:
-${c.docs}
-
-Specific opinion sought:
-${c.opinion}
-
-Submitted for examination and advice on the applicable rules/orders and consequential action.
-
-Note: The concerned administrative section should verify the latest applicable rules, orders, notifications and judicial directions before final action.
-`;
-
-downloadText("LCSA-Legal-Reference.txt",text);
+renderFramework();
 
 }
 
 
-function deleteCase(i){
+function seedFramework(){
 
-if(confirm("Delete this legal case?")){
+const controls=[
 
-db.cases.splice(i,1);
+[
+"Code on Wages, 2019",
+"Code on Wages, 2019",
+"Definitions",
+"Applicability",
+"Determine whether the establishment and workers fall within the applicable wage-law framework.",
+"Establishment / employee profile",
+"Applicability assessment",
+"Initial + change based",
+"",
+"HR / Compliance",
+"High"
+],
 
-save();
+[
+"Code on Wages, 2019",
+"Code on Wages, 2019",
+"Minimum Wages",
+"Minimum wages",
+"Ensure applicable employees receive wages not below the prescribed minimum wage.",
+"Applicable establishment / employee category",
+"Payroll records",
+"Monthly",
+"Payroll cycle",
+"HR / Payroll",
+"High"
+],
 
-renderCases();
+[
+"Code on Wages, 2019",
+"Code on Wages, 2019",
+"Payment of Wages",
+"Wage payment",
+"Ensure wages are calculated and paid within the applicable statutory framework.",
+"Covered employees",
+"Salary register / bank records",
+"Monthly",
+"Applicable wage period",
+"Payroll",
+"High"
+],
 
-updateDashboard();
+[
+"Code on Wages, 2019",
+"Code on Wages, 2019",
+"Bonus",
+"Bonus",
+"Assess statutory bonus applicability and maintain supporting records.",
+"Covered establishments",
+"Bonus calculation / payment records",
+"Annual",
+"Applicable statutory timeline",
+"HR / Payroll",
+"High"
+],
+
+[
+"Industrial Relations Code, 2020",
+"Industrial Relations Code, 2020",
+"Standing Orders",
+"Standing Orders",
+"Determine applicability and maintain standing orders where required.",
+"Applicable establishment",
+"Certified standing orders",
+"Change based",
+"",
+"HR / IR",
+"High"
+],
+
+[
+"Industrial Relations Code, 2020",
+"Industrial Relations Code, 2020",
+"Trade Unions",
+"Trade union matters",
+"Maintain records and process recognised union / worker representation matters in accordance with applicable provisions.",
+"Applicable establishment",
+"Union records / correspondence",
+"Event based",
+"",
+"IR",
+"Medium"
+],
+
+[
+"Industrial Relations Code, 2020",
+"Industrial Relations Code, 2020",
+"Industrial Disputes",
+"Dispute management",
+"Maintain appropriate records and follow statutory procedure for industrial disputes.",
+"Establishments covered",
+"Notices / proceedings",
+"Event based",
+"",
+"IR / Legal",
+"High"
+],
+
+[
+"Code on Social Security, 2020",
+"Code on Social Security, 2020",
+"Social Security",
+"Registration / coverage",
+"Assess applicable social security coverage and registration requirements.",
+"Applicable establishment",
+"Registration certificate",
+"Initial + change based",
+"",
+"HR / Compliance",
+"High"
+],
+
+[
+"Code on Social Security, 2020",
+"Code on Social Security, 2020",
+"EPF",
+"Provident Fund",
+"Verify applicable provident fund compliance, contributions and records.",
+"Covered establishment",
+"EPF records / ECR / challans",
+"Monthly",
+"Statutory due date",
+"Payroll",
+"High"
+],
+
+[
+"Code on Social Security, 2020",
+"Code on Social Security, 2020",
+"ESI",
+"Employees' State Insurance",
+"Verify applicable ESI coverage, contribution and records.",
+"Covered establishment",
+"ESI records / challans",
+"Monthly",
+"Statutory due date",
+"Payroll",
+"High"
+],
+
+[
+"Code on Social Security, 2020",
+"Code on Social Security, 2020",
+"Gratuity",
+"Gratuity",
+"Assess gratuity eligibility, calculation and settlement requirements.",
+"Eligible employees",
+"Service record / calculation",
+"Event based",
+"Applicable date",
+"HR",
+"High"
+],
+
+[
+"OSH & Working Conditions Code, 2020",
+"OSH & Working Conditions Code, 2020",
+"Occupational Safety",
+"Safety",
+"Maintain applicable occupational safety and health controls.",
+"Applicable workplace",
+"Safety records / inspections",
+"Periodic",
+"",
+"EHS / HR",
+"High"
+],
+
+[
+"OSH & Working Conditions Code, 2020",
+"OSH & Working Conditions Code, 2020",
+"Working Conditions",
+"Working conditions",
+"Verify working conditions, welfare and statutory workplace requirements.",
+"Applicable workplace",
+"Registers / facilities",
+"Periodic",
+"",
+"HR / Admin",
+"High"
+],
+
+[
+"OSH & Working Conditions Code, 2020",
+"OSH & Working Conditions Code, 2020",
+"Contract Labour",
+"Contract labour",
+"Assess contractor and contract-labour compliance requirements.",
+"Applicable establishment",
+"Contractor licence / records",
+"Monthly / periodic",
+"",
+"HR / Contract",
+"High"
+]
+
+];
+
+controls.forEach(c=>{
+
+const exists=db.framework.some(
+x=>x.code===c[1] &&
+x.chapter===c[2] &&
+x.section===c[3]
+);
+
+if(!exists){
+
+db.framework.push({
+
+id:"FW-"+id(),
+
+area:c[0],
+code:c[1],
+chapter:c[2],
+section:c[3],
+requirement:c[4],
+applicability:c[5],
+evidence:c[6],
+frequency:c[7],
+dueDate:c[8],
+responsible:c[9],
+risk:c[10],
+source:c[1],
+status:"Pending",
+observation:"",
+action:""
+
+});
 
 }
+
+});
+
+saveDB();
+
+renderFramework();
+
+alert("Core Labour Code framework loaded.");
+
+}
+
+
+function seedFRFramework(){
+
+const controls=[
+
+[
+"FR & SR",
+"FR & SR",
+"FR 7",
+"Interpretation",
+"Verify whether the applicable rule requires consultation or approval of the competent authority.",
+"Government service",
+"Approval / consultation record",
+"Event based",
+"",
+"Administration",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 22",
+"Pay fixation",
+"Verify pay fixation on promotion, appointment, transfer or other applicable event.",
+"Government servant",
+"Pay fixation statement / order",
+"Event based",
+"Order date",
+"Establishment / Accounts",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 24",
+"Increment",
+"Verify entitlement, withholding and drawal of increment under applicable rules.",
+"Government servant",
+"Service book / pay record",
+"Annual / event based",
+"Increment date",
+"Accounts / HR",
+"Medium"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 26",
+"Counting of service",
+"Verify qualifying service for applicable service benefits.",
+"Government servant",
+"Service book",
+"Event based",
+"",
+"HR",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 27",
+"Relaxation",
+"Record competent authority approval wherever relaxation of rules is involved.",
+"Cases requiring relaxation",
+"Approval / sanction",
+"Event based",
+"",
+"Competent Authority",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 49",
+"Additional charge",
+"Verify authority, duration and applicable conditions for combination of appointments / additional charge.",
+"Government service",
+"Office order / charge arrangement",
+"Event based",
+"",
+"Administration",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 53",
+"Subsistence allowance",
+"Verify suspension-related pay and allowances under applicable provisions.",
+"Suspended employee",
+"Suspension order / pay record",
+"Monthly",
+"Pay cycle",
+"HR / Accounts",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 54 / 54-B",
+"Reinstatement",
+"Verify treatment of pay, allowances and period on reinstatement.",
+"Reinstated employee",
+"Reinstatement order / speaking order",
+"Event based",
+"",
+"HR / Accounts",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"FR 56",
+"Retirement",
+"Verify retirement age, extension and retirement processing requirements.",
+"Government servant",
+"Service record / retirement order",
+"Event based",
+"Retirement date",
+"HR",
+"High"
+],
+
+[
+"FR & SR",
+"FR & SR",
+"Supplementary Rules",
+"Joining Time",
+"Verify entitlement, admissibility and joining-time treatment on transfer.",
+"Transferred employee",
+"Transfer / joining report",
+"Event based",
+"Joining date",
+"HR",
+"Medium"
+]
+
+];
+
+controls.forEach(c=>{
+
+db.framework.push({
+
+id:"FW-"+id(),
+
+area:c[0],
+code:c[1],
+chapter:c[2],
+section:c[3],
+requirement:c[4],
+applicability:c[5],
+evidence:c[6],
+frequency:c[7],
+dueDate:c[8],
+responsible:c[9],
+risk:c[10],
+source:"FR & SR Official Compilation",
+status:"Pending",
+observation:"",
+action:""
+
+});
+
+});
+
+saveDB();
+
+renderFramework();
+
+alert("FR & SR framework loaded.");
+
+}
+
+
+/* =========================================================
+   AUDIT
+========================================================= */
+
+function buildAuditFromFramework(){
+
+db.audit=db.framework.map(f=>({
+
+id:"AUD-"+id(),
+
+frameworkId:f.id,
+
+area:f.area,
+
+code:f.code,
+
+section:f.section,
+
+requirement:f.requirement,
+
+evidence:f.evidence,
+
+frequency:f.frequency,
+
+responsible:f.responsible,
+
+risk:f.risk,
+
+status:"Pending",
+
+observation:"",
+
+action:"",
+
+dueDate:f.dueDate,
+
+createdAt:new Date().toISOString()
+
+}));
+
+saveDB();
+
+renderAudit();
+
+alert(
+db.audit.length+
+" audit controls generated from framework."
+);
+
+}
+
+
+function renderAudit(){
+
+const list=document.getElementById("auditList");
+
+if(!list) return;
+
+const q=
+(document.getElementById("auditSearch").value||"")
+.toLowerCase();
+
+const status=
+document.getElementById("auditStatusFilter").value;
+
+const risk=
+document.getElementById("auditRiskFilter").value;
+
+const arr=db.audit.filter(x=>{
+
+const text=JSON.stringify(x).toLowerCase();
+
+return
+(!q || text.includes(q)) &&
+(!status || x.status===status) &&
+(!risk || x.risk===risk);
+
+});
+
+if(!arr.length){
+
+list.innerHTML=
+'<div class="empty">No audit items.</div>';
+
+return;
+
+}
+
+list.innerHTML=arr.map(x=>`
+
+<div class="framework-card">
+
+<div>
+<b>${esc(x.area)}</b>
+${badge(x.risk)}
+${badge(x.status)}
+</div>
+
+<div class="small">
+${esc(x.code)} |
+${esc(x.section)}
+</div>
+
+<p>${esc(x.requirement)}</p>
+
+<div class="form-grid">
+
+<div>
+<label>Status</label>
+<select onchange="updateAudit('${x.id}',this.value)">
+<option ${x.status==="Pending"?"selected":""}>Pending</option>
+<option ${x.status==="Compliant"?"selected":""}>Compliant</option>
+<option ${x.status==="Partially Compliant"?"selected":""}>Partially Compliant</option>
+<option ${x.status==="Non-Compliant"?"selected":""}>Non-Compliant</option>
+<option ${x.status==="Not Applicable"?"selected":""}>Not Applicable</option>
+</select>
+</div>
+
+<div>
+<label>Due Date</label>
+<input type="date"
+value="${esc(x.dueDate||"")}"
+onchange="updateAuditField('${x.id}','dueDate',this.value)">
+</div>
+
+<div class="field full">
+<label>Observation</label>
+<textarea
+onchange="updateAuditField('${x.id}','observation',this.value)"
+>${esc(x.observation)}</textarea>
+</div>
+
+<div class="field full">
+<label>Corrective Action</label>
+<textarea
+onchange="updateAuditField('${x.id}','action',this.value)"
+>${esc(x.action)}</textarea>
+</div>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+function updateAudit(aid,status){
+
+const x=db.audit.find(a=>a.id===aid);
+
+if(!x) return;
+
+x.status=status;
+
+saveDB();
+
+renderAudit();
+
+}
+
+
+function updateAuditField(aid,field,value){
+
+const x=db.audit.find(a=>a.id===aid);
+
+if(!x) return;
+
+x[field]=value;
+
+saveDB();
 
 }
 
@@ -1725,72 +3447,142 @@ updateDashboard();
 
 function saveJudgment(){
 
-db.judgments.push({
+const j={
 
-name:val("jName"),
-court:val("jCourt"),
-subject:val("jSubject"),
-source:val("jSource"),
-facts:val("jFacts"),
-issue:val("jIssue"),
-finding:val("jFinding"),
-outcome:val("jOutcome"),
-action:val("jAction"),
-date:new Date().toLocaleDateString()
+id:"J-"+id(),
 
-});
+court:document.getElementById("jCourt").value,
 
-save();
+state:document.getElementById("jState").value,
 
-["jName","jCourt","jSubject","jSource","jFacts","jIssue","jFinding","jOutcome","jAction"]
-.forEach(id=>document.getElementById(id).value="");
+caseName:document.getElementById("jCaseName").value,
+
+caseNumber:document.getElementById("jCaseNumber").value,
+
+petitioner:document.getElementById("jPetitioner").value,
+
+respondent:document.getElementById("jRespondent").value,
+
+date:document.getElementById("jDate").value,
+
+bench:document.getElementById("jBench").value,
+
+law:document.getElementById("jLaw").value,
+
+section:document.getElementById("jSection").value,
+
+facts:document.getElementById("jFacts").value,
+
+issue:document.getElementById("jIssue").value,
+
+finding:document.getElementById("jFinding").value,
+
+ratio:document.getElementById("jRatio").value,
+
+outcome:document.getElementById("jOutcome").value,
+
+implication:document.getElementById("jImplication").value,
+
+status:document.getElementById("jStatus").value,
+
+url:document.getElementById("jURL").value,
+
+createdAt:new Date().toISOString()
+
+};
+
+db.judgments.push(j);
+
+saveDB();
+
+alert("Judgment saved.");
 
 renderJudgments();
-
-updateDashboard();
 
 }
 
 
 function renderJudgments(){
 
-const el=document.getElementById("judgmentsList");
+const list=document.getElementById("judgmentList");
 
-if(!db.judgments.length){
+if(!list) return;
 
-el.innerHTML=`<div class="card empty">No judgment cards saved.</div>`;
+const q=
+(document.getElementById("judgmentSearch").value||"")
+.toLowerCase();
+
+const arr=db.judgments.filter(j=>
+JSON.stringify(j).toLowerCase().includes(q)
+);
+
+if(!arr.length){
+
+list.innerHTML=
+'<div class="empty">No judgments found.</div>';
 
 return;
 
 }
 
-el.innerHTML=db.judgments.map((x,i)=>`
+list.innerHTML=arr.map(j=>`
 
-<div class="card">
+<div class="judgment-card">
 
-<h3>${esc(x.name)}</h3>
+<h3>${esc(j.caseName)}</h3>
 
-<p class="small">${esc(x.court)} | ${esc(x.subject)}</p>
-
-<p><strong>Facts</strong><br>${esc(x.facts)}</p>
-
-<p><strong>Issue</strong><br>${esc(x.issue)}</p>
-
-<p><strong>Finding / Ratio</strong><br>${esc(x.finding)}</p>
-
-<div class="success-box">
-
-<strong>Main Outcome</strong><br>
-
-${esc(x.outcome)}
-
+<div class="small">
+${esc(j.court)} |
+${esc(j.caseNumber)} |
+${esc(j.date)}
 </div>
 
-<p><strong>Compliance Implication</strong><br>${esc(x.action)}</p>
+<br>
 
-<p class="small">Source: ${esc(x.source)}</p>
+${badge(j.status)}
 
-<button class="btn danger" onclick="deleteJudgment(${i})">Delete</button>
+<p>
+<b>Law:</b> ${esc(j.law)}<br>
+<b>Section:</b> ${esc(j.section)}
+</p>
+
+<p>
+<b>Issue:</b><br>
+${esc(j.issue)}
+</p>
+
+<p>
+<b>Legal Principle:</b><br>
+${esc(j.ratio)}
+</p>
+
+<p>
+<b>Outcome:</b><br>
+${esc(j.outcome)}
+</p>
+
+<p>
+<b>Compliance Implication:</b><br>
+${esc(j.implication)}
+</p>
+
+${
+j.url
+?
+`<a href="${esc(j.url)}"
+target="_blank"
+rel="noopener">
+Official Source
+</a>`
+:""
+}
+
+<br><br>
+
+<button class="btn red"
+onclick="deleteJudgment('${j.id}')">
+Delete
+</button>
 
 </div>
 
@@ -1799,19 +3591,80 @@ ${esc(x.outcome)}
 }
 
 
-function deleteJudgment(i){
+function deleteJudgment(jid){
 
-if(confirm("Delete this judgment card?")){
+if(!confirm("Delete judgment?")) return;
 
-db.judgments.splice(i,1);
+db.judgments=db.judgments.filter(x=>x.id!==jid);
 
-save();
+saveDB();
 
 renderJudgments();
 
-updateDashboard();
-
 }
+
+
+/* =========================================================
+   LEGAL DEPARTMENT REFERENCE
+========================================================= */
+
+function generateLegalReference(){
+
+const title=document.getElementById("caseTitle").value;
+
+const ref=document.getElementById("caseRef").value;
+
+const facts=document.getElementById("caseFacts").value;
+
+const issue=document.getElementById("caseIssue").value;
+
+const rules=document.getElementById("caseRules").value;
+
+const docs=document.getElementById("caseDocs").value;
+
+const opinion=document.getElementById("caseOpinion").value;
+
+const text=`LEGAL DEPARTMENT REFERENCE
+
+Subject: Legal opinion regarding ${title}
+
+Reference: ${ref}
+
+1. FACTS
+
+${facts}
+
+2. ISSUE FOR OPINION
+
+${issue}
+
+3. RULES / ORDERS IDENTIFIED
+
+${rules}
+
+4. DOCUMENTS AVAILABLE
+
+${docs}
+
+5. SPECIFIC OPINION SOUGHT
+
+${opinion}
+
+The Legal Department is requested to examine the matter with reference
+to the applicable statutory provisions, rules, Government orders,
+departmental instructions and binding judicial decisions.
+
+The concerned administrative section should verify the latest applicable
+law, amendment, notification, circular, judicial status and competent
+authority instructions before taking final action.
+
+Submitted for examination and advice.
+`;
+
+downloadText(
+"LCSA-Legal-Department-Reference.txt",
+text
+);
 
 }
 
@@ -1820,368 +3673,351 @@ updateDashboard();
    CALENDAR
 ========================================================= */
 
-function saveDeadline(){
+function saveCalendar(){
 
-if(!val("dTask")||!val("dDate")){
+const item={
 
-alert("Enter task and due date.");
+id:"CAL-"+id(),
+
+title:document.getElementById("calTitle").value,
+
+date:document.getElementById("calDate").value,
+
+owner:document.getElementById("calOwner").value,
+
+source:document.getElementById("calSource").value,
+
+status:"Pending"
+
+};
+
+db.calendar.push(item);
+
+saveDB();
+
+renderCalendar();
+
+}
+
+
+function renderCalendar(){
+
+const list=document.getElementById("calendarList");
+
+if(!list) return;
+
+if(!db.calendar.length){
+
+list.innerHTML=
+'<div class="empty">No compliance dates.</div>';
 
 return;
 
 }
 
-db.deadlines.push({
+const arr=[...db.calendar]
+.sort((a,b)=>a.date.localeCompare(b.date));
 
-task:val("dTask"),
-date:val("dDate"),
-owner:val("dOwner"),
-status:val("dStatus")
+list.innerHTML=arr.map(x=>`
 
-});
+<div class="source-card">
 
-save();
+<b>${esc(x.title)}</b>
 
-["dTask","dDate","dOwner"]
-.forEach(id=>document.getElementById(id).value="");
+<p>
+Due: <b>${esc(x.date)}</b><br>
+Owner: ${esc(x.owner)}<br>
+Source: ${esc(x.source)}
+</p>
 
-renderDeadlines();
+${badge(x.status)}
 
-updateDashboard();
+<br>
 
-}
+<button class="btn green"
+onclick="completeCalendar('${x.id}')">
+Mark Complete
+</button>
 
+<button class="btn red"
+onclick="deleteCalendar('${x.id}')">
+Delete
+</button>
 
-function renderDeadlines(){
-
-const body=document.getElementById("deadlineBody");
-
-if(!db.deadlines.length){
-
-body.innerHTML=`<tr><td colspan="5" class="empty">No deadlines recorded.</td></tr>`;
-
-return;
-
-}
-
-const arr=[...db.deadlines].sort((a,b)=>
-a.date.localeCompare(b.date)
-);
-
-body.innerHTML=arr.map((x,i)=>`
-
-<tr>
-
-<td>${esc(x.task)}</td>
-
-<td>${esc(x.date)}</td>
-
-<td>${esc(x.owner)}</td>
-
-<td>${badge(x.status)}</td>
-
-<td>
-
-<select onchange="updateDeadline(${i},this.value)">
-
-<option ${x.status==="Pending"?"selected":""}>Pending</option>
-
-<option ${x.status==="Completed"?"selected":""}>Completed</option>
-
-</select>
-
-<button class="btn danger" onclick="deleteDeadline(${i})">Delete</button>
-
-</td>
-
-</tr>
+</div>
 
 `).join("");
 
 }
 
 
-function updateDeadline(i,status){
+function completeCalendar(cid){
 
-db.deadlines[i].status=status;
+const x=db.calendar.find(x=>x.id===cid);
 
-save();
+if(!x) return;
 
-renderDeadlines();
+x.status="Completed";
 
-updateDashboard();
+saveDB();
 
-}
-
-
-function deleteDeadline(i){
-
-if(confirm("Delete this deadline?")){
-
-db.deadlines.splice(i,1);
-
-save();
-
-renderDeadlines();
-
-updateDashboard();
+renderCalendar();
 
 }
+
+
+function deleteCalendar(cid){
+
+db.calendar=db.calendar.filter(x=>x.id!==cid);
+
+saveDB();
+
+renderCalendar();
 
 }
 
 
 /* =========================================================
-   DASHBOARD
+   STATE SOURCES
 ========================================================= */
 
-function updateDashboard(){
+function renderStateSources(){
 
-const total=db.audit.length;
+const state=document.getElementById(
+"stateRepositorySelect"
+).value;
 
-const compliant=db.audit.filter(x=>x.status==="Compliant").length;
+const category=document.getElementById(
+"stateSourceCategory"
+).value;
 
-const high=db.audit.filter(x=>
-x.risk==="High" &&
-x.status!=="Compliant" &&
-x.status!=="Not Applicable"
-).length;
+const list=document.getElementById("stateSources");
 
-const openCases=db.cases.filter(x=>x.status!=="Closed").length;
-
-const deadlines=db.deadlines.filter(x=>x.status!=="Completed").length;
-
-document.getElementById("statTotal").textContent=total;
-
-document.getElementById("statCompliant").textContent=compliant;
-
-document.getElementById("statHigh").textContent=high;
-
-document.getElementById("statCases").textContent=openCases;
-
-document.getElementById("statDeadlines").textContent=deadlines;
-
-document.getElementById("statJudgments").textContent=db.judgments.length;
-
-document.getElementById("statRules").textContent=db.rules.length;
-
-let applicable=db.audit.filter(x=>x.status!=="Not Applicable").length;
-
-let posture=applicable?
-Math.round(compliant/applicable*100):0;
-
-document.getElementById("statPosture").textContent=posture+"%";
-
-document.getElementById("postureBar").style.width=posture+"%";
-
-document.getElementById("postureText").textContent=
-posture+"% of applicable audit items are marked compliant.";
-
-}
-
-
-/* =========================================================
-   REPORT
-========================================================= */
-
-function buildReport(){
-
-const high=db.audit.filter(x=>
-x.risk==="High" &&
-x.status!=="Compliant" &&
-x.status!=="Not Applicable"
+const arr=db.sources.filter(s=>
+s.jurisdiction==="State / UT" &&
+(!state || s.state===state) &&
+(!category || s.type===category)
 );
 
-const pending=db.audit.filter(x=>
-x.status==="Pending"
-);
+if(!arr.length){
 
-const non=db.audit.filter(x=>
-x.status==="Non-Compliant"
-);
+list.innerHTML=`
 
-let html=`
+<div class="empty">
 
-<div class="card">
+No State/UT source records stored for
 
-<h2>LCSA Compliance Management Report</h2>
+<b>${esc(state)}</b>.
 
-<p><strong>Establishment:</strong> ${esc(db.profile.name||"Not entered")}</p>
+<br><br>
 
-<p><strong>State:</strong> ${esc(db.profile.state||"Not entered")}</p>
-
-<p><strong>Sector:</strong> ${esc(db.profile.sector||"Not entered")}</p>
-
-<p><strong>Report Date:</strong> ${new Date().toLocaleDateString()}</p>
-
-</div>
-
-<div class="grid">
-
-<div class="stat">
-<div class="number">${db.audit.length}</div>
-<div class="label">Audit Items</div>
-</div>
-
-<div class="stat">
-<div class="number">${high.length}</div>
-<div class="label">High Risk Open</div>
-</div>
-
-<div class="stat">
-<div class="number">${pending.length}</div>
-<div class="label">Pending</div>
-</div>
-
-<div class="stat">
-<div class="number">${non.length}</div>
-<div class="label">Non-Compliant</div>
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>High-Risk Open Items</h3>
-
-<table>
-
-<thead>
-<tr>
-<th>Area</th>
-<th>Requirement</th>
-<th>Risk</th>
-<th>Status</th>
-<th>Observation</th>
-</tr>
-</thead>
-
-<tbody>
-
-${high.length?
-
-high.map(x=>`
-
-<tr>
-<td>${esc(x.area)}</td>
-<td>${esc(x.req)}</td>
-<td>${badge(x.risk)}</td>
-<td>${badge(x.status)}</td>
-<td>${esc(x.obs)}</td>
-</tr>
-
-`).join("")
-
-:
-
-`<tr><td colspan="5" class="empty">No high-risk open items.</td></tr>`
-
-}
-
-</tbody>
-
-</table>
-
-</div>
-
-<div class="card">
-
-<h3>Upcoming / Open Compliance Deadlines</h3>
-
-<table>
-
-<thead>
-<tr>
-<th>Task</th>
-<th>Due Date</th>
-<th>Owner</th>
-<th>Status</th>
-</tr>
-</thead>
-
-<tbody>
-
-${db.deadlines.length?
-
-db.deadlines.map(x=>`
-
-<tr>
-<td>${esc(x.task)}</td>
-<td>${esc(x.date)}</td>
-<td>${esc(x.owner)}</td>
-<td>${badge(x.status)}</td>
-</tr>
-
-`).join("")
-
-:
-
-`<tr><td colspan="4" class="empty">No deadlines.</td></tr>`
-
-}
-
-</tbody>
-
-</table>
+Add them through the Source Library.
 
 </div>
 
 `;
 
-document.getElementById("reportOutput").innerHTML=html;
+return;
+
+}
+
+list.innerHTML=arr.map(s=>`
+
+<div class="source-card">
+
+<b>${esc(s.title)}</b>
+
+<p>
+${esc(s.authority)}<br>
+${esc(s.reference)}<br>
+${esc(s.documentDate)}
+</p>
+
+${badge(s.status)}
+
+</div>
+
+`).join("");
+
+}
+
+
+function openSourceCategory(category){
+
+go("sources");
+
+document.getElementById(
+"sourceCategoryFilter"
+).value=category;
+
+renderSources();
 
 }
 
 
 /* =========================================================
-   BACKUP
+   FRAMEWORK FILTER
 ========================================================= */
 
-function exportData(){
+function filterFramework(code){
 
-const text=JSON.stringify(db,null,2);
+go("framework");
+
+document.getElementById("frameworkSearch").value=code;
+
+renderFramework();
+
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+function generateComplianceReport(){
+
+const total=db.audit.length;
+
+const completed=db.audit.filter(
+x=>x.status==="Compliant"
+).length;
+
+const pending=db.audit.filter(
+x=>x.status==="Pending"
+).length;
+
+const partial=db.audit.filter(
+x=>x.status==="Partially Compliant"
+).length;
+
+const non=db.audit.filter(
+x=>x.status==="Non-Compliant"
+).length;
+
+const high=db.audit.filter(
+x=>x.risk==="High"
+).length;
+
+const profile=db.profile||{};
+
+const text=
+
+`LCSA COMPLIANCE REPORT
+======================
+
+Generated:
+${new Date().toLocaleString()}
+
+ESTABLISHMENT
+-------------
+Name: ${profile.name||"-"}
+Type: ${profile.type||"-"}
+State: ${profile.state||"-"}
+Employees: ${profile.employees||"-"}
+Contract Workers: ${profile.contract||"-"}
+
+COMPLIANCE SUMMARY
+------------------
+Total Audit Controls: ${total}
+Compliant: ${completed}
+Pending: ${pending}
+Partially Compliant: ${partial}
+Non-Compliant: ${non}
+High Risk Controls: ${high}
+
+SOURCE LIBRARY
+--------------
+Sources: ${db.sources.length}
+
+FRAMEWORK
+---------
+Controls: ${db.framework.length}
+
+JUDICIAL DATABASE
+-----------------
+Judgments / Orders: ${db.judgments.length}
+
+CALENDAR
+--------
+Compliance Dates: ${db.calendar.length}
+
+IMPORTANT
+---------
+This report is a management/audit working document.
+Verify the latest applicable statute, rules, notifications,
+circulars, Government orders and judicial status before final
+legal or compliance action.
+`;
+
+document.getElementById("reportOutput")
+.textContent=text;
+
+}
+
+
+function exportSources(){
 
 downloadText(
-"LCSA-v2.0-Backup-"+new Date().toISOString().slice(0,10)+".json",
-text
+"LCSA-Source-Register.json",
+JSON.stringify(db.sources,null,2)
 );
 
 }
 
 
-function importData(event){
+function exportFramework(){
 
-const file=event.target.files[0];
-
-if(!file)return;
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-try{
-
-const imported=JSON.parse(e.target.result);
-
-if(!imported||
-typeof imported!=="object"||
-!Array.isArray(imported.audit)
-){
-
-throw new Error("Invalid LCSA backup");
+downloadText(
+"LCSA-Compliance-Framework.json",
+JSON.stringify(db.framework,null,2)
+);
 
 }
 
-db=imported;
 
-save();
+function exportDatabase(){
+
+downloadText(
+"LCSA-V3-Full-Backup.json",
+JSON.stringify(db,null,2)
+);
+
+}
+
+
+function importDatabase(event){
+
+const file=event.target.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=function(){
+
+try{
+
+const incoming=JSON.parse(reader.result);
+
+if(!incoming.version){
+
+alert("Invalid LCSA backup.");
+
+return;
+
+}
+
+db=Object.assign(defaultDB(),incoming);
+
+saveDB();
 
 renderAll();
 
-alert("Backup restored successfully.");
+alert("LCSA backup restored.");
 
-}catch(err){
+}catch(e){
 
-alert("Invalid LCSA backup file.");
+alert("Unable to restore backup.");
 
 }
 
@@ -2192,26 +4028,12 @@ reader.readAsText(file);
 }
 
 
-function factoryReset(){
-
-if(!confirm(
-"WARNING: This will permanently delete all locally stored LCSA data. Continue?"
-))return;
-
-localStorage.removeItem(DB_KEY);
-
-location.reload();
-
-}
-
-
-/* =========================================================
-   DOWNLOAD
-========================================================= */
-
 function downloadText(filename,text){
 
-const blob=new Blob([text],{type:"text/plain;charset=utf-8"});
+const blob=new Blob(
+[text],
+{type:"text/plain;charset=utf-8"}
+);
 
 const url=URL.createObjectURL(blob);
 
@@ -2233,31 +4055,119 @@ URL.revokeObjectURL(url);
 
 
 /* =========================================================
-   INITIALISE
+   DASHBOARD
 ========================================================= */
 
-function renderAll(){
+function updateDashboard(){
 
-renderProfile();
+const sources=document.getElementById("statSources");
 
-renderAudit();
+if(!sources) return;
 
-renderRules();
+sources.textContent=db.sources.length;
 
-renderCases();
+document.getElementById("statFramework")
+.textContent=db.framework.length;
 
-renderJudgments();
+document.getElementById("statAudit")
+.textContent=db.audit.length;
 
-renderDeadlines();
+document.getElementById("statJudgments")
+.textContent=db.judgments.length;
 
-updateDashboard();
+const total=db.audit.length;
+
+const completed=db.audit.filter(
+x=>x.status==="Compliant"
+).length;
+
+const pending=db.audit.filter(
+x=>x.status==="Pending"
+).length;
+
+const high=db.audit.filter(
+x=>x.risk==="High" &&
+x.status!=="Compliant"
+).length;
+
+document.getElementById("dashCompleted")
+.textContent=completed;
+
+document.getElementById("dashPending")
+.textContent=pending;
+
+document.getElementById("dashHigh")
+.textContent=high;
+
+const pct=total
+?Math.round((completed/total)*100)
+:0;
+
+document.getElementById("dashProgress")
+.style.width=pct+"%";
 
 }
 
 
-initialiseAudit();
+/* =========================================================
+   RESET
+========================================================= */
+
+function factoryReset(){
+
+if(!confirm(
+"Delete ALL LCSA v3.0 data from this browser?"
+)) return;
+
+localStorage.removeItem(DB_KEY);
+
+db=defaultDB();
+
+seedOfficialSources();
 
 renderAll();
+
+alert("LCSA has been reset.");
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
+
+function renderAll(){
+
+updateDashboard();
+
+renderProfile();
+
+renderSources();
+
+renderFramework();
+
+renderAudit();
+
+renderJudgments();
+
+renderCalendar();
+
+renderStateSources();
+
+}
+
+
+ /* ========================================================
+    INITIALISE
+ ======================================================== */
+
+initSelects();
+
+seedOfficialSources();
+
+renderAll();
+
+go("dashboard");
 
 
 /* =========================================================
@@ -2268,9 +4178,11 @@ if("serviceWorker" in navigator){
 
 window.addEventListener("load",()=>{
 
-navigator.serviceWorker.register("./service-worker.js")
-.then(()=>console.log("LCSA service worker registered"))
-.catch(err=>console.log("Service worker error",err));
+navigator.serviceWorker
+.register("./service-worker.js")
+.catch(err=>console.log(
+"Service Worker:",err
+));
 
 });
 
