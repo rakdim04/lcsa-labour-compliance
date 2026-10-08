@@ -1,4 +1,4 @@
-const CACHE_NAME = "lcsa-v4-2-1";
+const CACHE_NAME = "lcsa-v4-3-1";
 
 const FILES_TO_CACHE = [
   "./",
@@ -14,10 +14,15 @@ self.addEventListener(
 
     event.waitUntil(
 
-      caches.open(CACHE_NAME)
-        .then(cache =>
-          cache.addAll(FILES_TO_CACHE)
-        )
+      caches.open(
+        CACHE_NAME
+      )
+      .then(
+        cache =>
+          cache.addAll(
+            FILES_TO_CACHE
+          )
+      )
 
     );
 
@@ -34,21 +39,22 @@ self.addEventListener(
     event.waitUntil(
 
       caches.keys()
-        .then(keys =>
+      .then(
+        keys =>
           Promise.all(
 
             keys
-              .filter(
-                key =>
-                  key !== CACHE_NAME
-              )
-              .map(
-                key =>
-                  caches.delete(key)
-              )
+            .filter(
+              key =>
+                key !== CACHE_NAME
+            )
+            .map(
+              key =>
+                caches.delete(key)
+            )
 
           )
-        )
+      )
 
     );
 
@@ -68,61 +74,100 @@ self.addEventListener(
       return;
 
 
+    /*
+      For the application itself:
+      cache first.
+
+      For external resources such as PDF.js:
+      network first.
+    */
+
+    const url=
+      new URL(
+        event.request.url
+      );
+
+
+    if(
+      url.origin !== location.origin
+    ){
+
+      event.respondWith(
+
+        fetch(
+          event.request
+        )
+        .catch(
+          () =>
+            caches.match(
+              event.request
+            )
+        )
+
+      );
+
+      return;
+
+    }
+
+
     event.respondWith(
 
       caches.match(
         event.request
       )
-      .then(cached => {
+      .then(
+        cached=>{
 
-        if(cached)
-          return cached;
-
-
-        return fetch(
-          event.request
-        )
-        .then(response => {
-
-          if(
-            !response ||
-            response.status !== 200 ||
-            response.type === "opaque"
-          ){
-
-            return response;
-
-          }
+          if(cached)
+            return cached;
 
 
-          const copy=
-            response.clone();
-
-
-          caches.open(
-            CACHE_NAME
+          return fetch(
+            event.request
           )
-          .then(cache => {
+          .then(
+            response=>{
 
-            cache.put(
-              event.request,
-              copy
-            );
+              if(
+                !response ||
+                response.status!==200
+              ){
 
-          });
+                return response;
+
+              }
 
 
-          return response;
+              const copy=
+                response.clone();
 
-        })
-        .catch(
-          () =>
-            caches.match(
-              "./index.html"
-            )
-        );
 
-      })
+              caches.open(
+                CACHE_NAME
+              )
+              .then(
+                cache=>
+                  cache.put(
+                    event.request,
+                    copy
+                  )
+              );
+
+
+              return response;
+
+            }
+          )
+          .catch(
+            ()=>
+              caches.match(
+                "./index.html"
+              )
+          );
+
+        }
+      )
 
     );
 
