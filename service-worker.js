@@ -1,175 +1,57 @@
-const CACHE_NAME = "lcsa-v4-3-1";
+const CACHE_NAME = "lcsa-v4-4-1";
 
-const FILES_TO_CACHE = [
+const APP_FILES = [
   "./",
   "./index.html",
   "./manifest.json",
   "./service-worker.js"
 ];
 
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(APP_FILES))
+      .then(() => self.skipWaiting())
+  );
+});
 
-self.addEventListener(
-  "install",
-  event => {
-
-    event.waitUntil(
-
-      caches.open(
-        CACHE_NAME
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys
+          .filter(key => key !== CACHE_NAME)
+          .map(key => caches.delete(key))
       )
-      .then(
-        cache =>
-          cache.addAll(
-            FILES_TO_CACHE
-          )
-      )
+    ).then(() => self.clients.claim())
+  );
+});
 
-    );
+self.addEventListener("fetch", event => {
+  const request = event.request;
 
-    self.skipWaiting();
+  if(request.method !== "GET") return;
 
-  }
-);
+  event.respondWith(
+    caches.match(request).then(cached => {
+      if(cached) return cached;
 
+      return fetch(request)
+        .then(response => {
+          if(
+            response &&
+            response.status === 200 &&
+            response.type === "basic"
+          ){
+            const copy = response.clone();
 
-self.addEventListener(
-  "activate",
-  event => {
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(request,copy));
+          }
 
-    event.waitUntil(
-
-      caches.keys()
-      .then(
-        keys =>
-          Promise.all(
-
-            keys
-            .filter(
-              key =>
-                key !== CACHE_NAME
-            )
-            .map(
-              key =>
-                caches.delete(key)
-            )
-
-          )
-      )
-
-    );
-
-    self.clients.claim();
-
-  }
-);
-
-
-self.addEventListener(
-  "fetch",
-  event => {
-
-    if(
-      event.request.method !== "GET"
-    )
-      return;
-
-
-    /*
-      For the application itself:
-      cache first.
-
-      For external resources such as PDF.js:
-      network first.
-    */
-
-    const url=
-      new URL(
-        event.request.url
-      );
-
-
-    if(
-      url.origin !== location.origin
-    ){
-
-      event.respondWith(
-
-        fetch(
-          event.request
-        )
-        .catch(
-          () =>
-            caches.match(
-              event.request
-            )
-        )
-
-      );
-
-      return;
-
-    }
-
-
-    event.respondWith(
-
-      caches.match(
-        event.request
-      )
-      .then(
-        cached=>{
-
-          if(cached)
-            return cached;
-
-
-          return fetch(
-            event.request
-          )
-          .then(
-            response=>{
-
-              if(
-                !response ||
-                response.status!==200
-              ){
-
-                return response;
-
-              }
-
-
-              const copy=
-                response.clone();
-
-
-              caches.open(
-                CACHE_NAME
-              )
-              .then(
-                cache=>
-                  cache.put(
-                    event.request,
-                    copy
-                  )
-              );
-
-
-              return response;
-
-            }
-          )
-          .catch(
-            ()=>
-              caches.match(
-                "./index.html"
-              )
-          );
-
-        }
-      )
-
-    );
-
-  }
-);
+          return response;
+        })
+        .catch(() => caches.match("./index.html"));
+    })
+  );
+});
