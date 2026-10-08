@@ -1,7 +1,7 @@
 {
   "name": "LCSA Labour Compliance & Strategy Advisor",
   "short_name": "LCSA",
-  "description": "LCSA v4.2 - Labour Compliance, Legal Research and Strategy Advisor",
+  "description": "LCSA v4.3 - Labour Compliance, Legal Research and Strategy Advisor",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
