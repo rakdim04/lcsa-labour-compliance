@@ -1,26 +1,23 @@
 {
-  "name": "LCSA - Labour Compliance & Strategy Advisor",
+  "name": "LCSA Labour Compliance & Strategy Advisor",
   "short_name": "LCSA",
-  "description": "Labour law, Labour Codes, FR-SR, CCS, EPFO, ESIC, judgments and source-linked compliance advisor.",
+  "description": "LCSA v4.2 - Labour Compliance, Legal Research and Strategy Advisor",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#f4f7fb",
-  "theme_color": "#12355b",
-  "lang": "en-IN",
-  "categories": [
-    "business",
-    "productivity",
-    "education",
-    "government"
-  ],
+  "background_color": "#f1f5f9",
+  "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='90' fill='%2312355b'/%3E%3Ctext x='256' y='310' text-anchor='middle' font-size='190' font-family='Arial' font-weight='bold' fill='white'%3EL%3C/text%3E%3C/svg%3E",
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
