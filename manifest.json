@@ -1,28 +1,13 @@
+
 {
   "name": "LCSA Labour Compliance & Strategy Advisor",
   "short_name": "LCSA",
-  "description": "India Labour Compliance, HR, IR, CCS, FR/SR, EPFO, ESIC, POSH and Legal Research Advisor",
+  "description": "Indian labour-law compliance, service rules, source library, legal research and audit advisor.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#f1f5f9",
-  "theme_color": "#0f172a",
-  "categories": [
-    "business",
-    "productivity",
-    "government"
-  ],
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#f3f6fa",
+  "theme_color": "#142d4e",
+  "icons": []
 }
