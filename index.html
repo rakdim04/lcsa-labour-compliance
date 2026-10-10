@@ -1,1145 +1,372 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#142d4e">
-<meta name="description" content="LCSA Labour Compliance and Strategy Advisor">
-<link rel="manifest" href="./manifest.json">
-<title>LCSA v5.0 | Labour Compliance & Strategy Advisor</title>
-
-<style>
-:root{
-  --navy:#142d4e;--blue:#245a91;--pale:#edf4fb;
-  --bg:#f3f6fa;--white:#fff;--ink:#1d2939;--muted:#667085;
-  --line:#d9e2ec;--green:#147d52;--amber:#9a6700;--red:#b42318;
-  --radius:12px;--shadow:0 3px 12px #142d4e0c
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);
-font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{background:var(--navy);color:#fff;padding:16px 18px}
-.header-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-header h1{font-size:21px;margin:0}
-header p{margin:3px 0 0;color:#d6e4f5;font-size:13px}
-main{max-width:1500px;margin:auto;padding:16px}
-nav{display:flex;gap:7px;overflow:auto;padding:10px 0 14px}
-button,.button{border:0;border-radius:8px;padding:10px 13px;
-background:var(--blue);color:white;cursor:pointer;font:inherit;font-weight:600}
-button.secondary{background:#e8eef5;color:var(--navy)}
-button.danger{background:#a82b2b}
-button.success{background:var(--green)}
-button:disabled{opacity:.45;cursor:not-allowed}
-nav button{white-space:nowrap;background:#e4ebf3;color:var(--navy)}
-nav button.active{background:var(--navy);color:white}
-.panel,.card{background:var(--white);border:1px solid var(--line);
-border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
-h2{font-size:20px;margin:0 0 12px}
-h3{font-size:16px;margin:0 0 8px}
-p{margin:7px 0}
-small,.muted{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.stat{padding:16px;border-radius:var(--radius);background:white;border:1px solid var(--line)}
-.stat strong{font-size:25px;display:block;color:var(--navy)}
-.stat span{font-size:13px;color:var(--muted)}
-label{display:block;font-weight:650;font-size:13px;margin:9px 0 4px}
-input,select,textarea{width:100%;padding:10px;border:1px solid #c8d3df;
-border-radius:8px;background:#fff;color:var(--ink);font:inherit}
-textarea{min-height:95px;resize:vertical}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.row>*{flex:1}
-.row button,.row .button{flex:0 0 auto}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
-.wide{grid-column:1/-1}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.table-wrap{overflow:auto}
-table{border-collapse:collapse;width:100%;min-width:780px}
-th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{background:#f2f6fa;color:var(--navy);font-size:13px}
-td{font-size:14px}
-.badge{display:inline-block;border-radius:99px;padding:3px 8px;
-font-size:12px;font-weight:700;background:#e9eef5;color:#344054}
-.badge.green{background:#dcfce7;color:#166534}
-.badge.amber{background:#fef3c7;color:#92400e}
-.badge.red{background:#fee2e2;color:#991b1b}
-.badge.blue{background:#dbeafe;color:#1e40af}
-.item{padding:12px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border-bottom:0}
-.item-title{font-weight:750;color:var(--navy)}
-.snippet{background:#f7f9fc;border-left:3px solid #8aa9ca;padding:9px;margin:8px 0;white-space:pre-wrap}
-.empty{padding:20px;text-align:center;color:var(--muted)}
-.notice{padding:11px;border-radius:8px;background:#fff7df;color:#694d00;font-size:13px}
-footer{text-align:center;color:var(--muted);padding:18px;font-size:12px}
-.hidden{display:none!important}
-progress{width:100%;height:14px}
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){
- main{padding:10px}.grid,.two,.form-grid{grid-template-columns:1fr}
- .wide{grid-column:auto}header{padding:13px}
- header h1{font-size:18px}.panel,.card{padding:12px}
-}
-</style>
-</head>
-
-<body>
-<header>
-  <div class="header-row">
-    <div>
-      <h1>LCSA v5.0</h1>
-      <p>Labour Compliance & Strategy Advisor · India</p>
-    </div>
-    <div class="row" style="flex:0 0 auto">
-      <span id="connectionStatus" class="badge">Checking connection…</span>
-      <button id="installBtn" class="secondary hidden">Install App</button>
-    </div>
-  </div>
-</header>
-
-<main>
-<nav id="navigation">
-  <button data-page="dashboard" class="active">Dashboard</button>
-  <button data-page="advisor">Advisor</button>
-  <button data-page="sources">Source Library</button>
-  <button data-page="framework">Framework</button>
-  <button data-page="audit">Audit</button>
-  <button data-page="judgments">Judgments</button>
-  <button data-page="cases">Legal Cases</button>
-  <button data-page="deadlines">Deadlines</button>
-  <button data-page="reports">Reports & Backup</button>
-</nav>
-
-<section id="page-dashboard" class="page">
-  <div class="panel">
-    <h2>Compliance dashboard</h2>
-    <p class="muted">Your local research and compliance workspace.</p>
-    <div class="notice">Important: LCSA is a research and verification aid. It does not certify that a law, rule, circular or judgment is current. Verify the official text, effective date, jurisdiction and subsequent judicial treatment before taking action.</div>
-  </div>
-  <div class="grid">
-    <div class="stat"><strong id="statSources">0</strong><span>Source records</span></div>
-    <div class="stat"><strong id="statControls">0</strong><span>Verification controls</span></div>
-    <div class="stat"><strong id="statOpen">0</strong><span>Open audit findings</span></div>
-    <div class="stat"><strong id="statJudgments">0</strong><span>Judgment records</span></div>
-  </div>
-  <div class="two" style="margin-top:14px">
-    <div class="panel">
-      <h3>Recommended workflow</h3>
-      <ol>
-        <li>Add official Acts, Rules, notifications, circulars and judgments to the Source Library.</li>
-        <li>Upload searchable PDFs or paste relevant extracts.</li>
-        <li>Ask the Advisor a specific question and review its matching sources.</li>
-        <li>Generate an audit from the verification framework.</li>
-        <li>Record evidence, findings and corrective action.</li>
-        <li>Export a backup regularly.</li>
-      </ol>
-    </div>
-    <div class="panel">
-      <h3>Source quality</h3>
-      <p>Prefer the applicable Act or Code, Gazette notification, Rules, statutory scheme, official circular/order and binding judicial decision.</p>
-      <p>Distinguish binding law from administrative guidance, commentary and unverified extracts.</p>
-      <p>Do not treat a search-result snippet as the full legal position.</p>
-    </div>
-  </div>
-</section>
-
-<section id="page-advisor" class="page hidden">
-  <div class="panel">
-    <h2>Legal & compliance Advisor</h2>
-    <p class="muted">Searches your locally saved source text, source metadata, framework controls and judgment records.</p>
-    <label for="question">Question / facts / issue for advice</label>
-    <textarea id="question" placeholder="Example: An employee was given additional charge before a regular post was created. What records and applicable FR/SR provisions should be checked before pay fixation?"></textarea>
-    <div class="form-grid">
-      <div><label>Jurisdiction</label>
-        <select id="advisorJurisdiction">
-          <option value="Any">Any / not specified</option>
-          <option>Central Government</option><option>State Government</option>
-          <option>PSU / Government company</option><option>Private establishment</option>
-          <option>Central labour jurisdiction</option><option>State labour jurisdiction</option>
-        </select>
-      </div>
-      <div><label>State / UT (if relevant)</label>
-        <select id="advisorState"><option value="">Not specified</option></select>
-      </div>
-      <div><label>Employee / establishment type</label>
-        <select id="advisorType">
-          <option>Not specified</option><option>Central Government employee</option>
-          <option>State Government employee</option><option>PSU employee</option>
-          <option>Private-sector employee</option><option>Contract labour</option>
-          <option>Factory / industrial establishment</option><option>Office / commercial establishment</option>
-        </select>
-      </div>
-      <div><label>Preferred output</label>
-        <select id="advisorMode">
-          <option value="full">Full preliminary analysis</option>
-          <option value="audit">Compliance audit checklist</option>
-          <option value="sources">Sources only</option>
-          <option value="legal">Legal Department reference</option>
-        </select>
-      </div>
-    </div>
-    <div class="toolbar">
-      <button id="askBtn">Analyse question</button>
-      <button id="clearAdvisor" class="secondary">Clear</button>
-      <button id="exportAdvice" class="secondary" disabled>Export advice</button>
-      <button id="legalReference" class="secondary" disabled>Legal Department reference</button>
-    </div>
-  </div>
-  <div id="advisorResults"></div>
-</section>
-
-<section id="page-sources" class="page hidden">
-  <div class="panel">
-    <h2>National Source Library</h2>
-    <p class="muted">Store source metadata, official links, relevant extracts and source files. Files remain in this browser unless you export them.</p>
-    <div class="toolbar">
-      <button id="addSourceBtn">+ Add source</button>
-      <button id="exportSourceText" class="secondary">Export indexed text backup</button>
-      <button id="sourceTextImportBtn" class="secondary">Restore indexed text backup</button>
-      <input id="sourceTextImport" type="file" accept=".json,application/json" class="hidden">
-    </div>
-    <div class="form-grid">
-      <div><label>Search</label><input id="sourceSearch" placeholder="Title, section, subject, keywords, reference"></div>
-      <div><label>Source type</label>
-        <select id="sourceTypeFilter"><option value="">All source types</option></select>
-      </div>
-      <div><label>Status</label>
-        <select id="sourceStatusFilter">
-          <option value="">All statuses</option><option>Current / Verified</option>
-          <option>Requires Verification</option><option>Superseded</option>
-          <option>Repealed</option><option>Judicial Status Uncertain</option>
-        </select>
-      </div>
-      <div><label>Jurisdiction</label>
-        <select id="sourceJurisdictionFilter">
-          <option value="">All jurisdictions</option><option>Central</option><option>State</option>
-          <option>All India</option><option>International / Reference</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div id="sourceList" class="panel"></div>
-</section>
-
-<section id="page-framework" class="page hidden">
-  <div class="panel">
-    <h2>Master Compliance Verification Framework</h2>
-    <p class="muted">Generated verification controls are prompts for checking the applicable law and evidence, not assertions that every requirement applies to every establishment.</p>
-    <div class="toolbar">
-      <button id="buildAuditBtn">Create audit from framework</button>
-      <button id="exportFrameworkBtn" class="secondary">Export framework CSV</button>
-    </div>
-    <div class="form-grid">
-      <div><label>Search controls</label><input id="frameworkSearch" placeholder="Area, control, source or keyword"></div>
-      <div><label>Area</label><select id="frameworkAreaFilter"><option value="">All areas</option></select></div>
-    </div>
-    <p id="frameworkCount" class="muted"></p>
-    <div id="frameworkList" class="table-wrap"></div>
-    <div class="toolbar">
-      <button id="frameworkPrev" class="secondary">Previous</button>
-      <span id="frameworkPageLabel" class="badge">Page 1</span>
-      <button id="frameworkNext" class="secondary">Next</button>
-    </div>
-  </div>
-</section>
-
-<section id="page-audit" class="page hidden">
-  <div class="panel">
-    <h2>Compliance Audit Tracker</h2>
-    <div class="toolbar">
-      <button id="exportAuditBtn" class="secondary">Export audit CSV</button>
-      <button id="resetAuditFilter" class="secondary">Clear filters</button>
-    </div>
-    <div class="form-grid">
-      <div><label>Search</label><input id="auditSearch" placeholder="Control, area, finding, action"></div>
-      <div><label>Status</label>
-        <select id="auditStatusFilter">
-          <option value="">All statuses</option><option>Pending</option><option>Compliant</option>
-          <option>Non-compliant</option><option>Partially compliant</option>
-          <option>Not applicable</option><option>Under review</option>
-        </select>
-      </div>
-    </div>
-    <div id="auditList" class="table-wrap"></div>
-  </div>
-</section>
-
-<section id="page-judgments" class="page hidden">
-  <div class="panel">
-    <h2>Judgment & Tribunal Library</h2>
-    <p class="muted">Enter accurate case details and track stay, appeal, modification or overruling status. A judgment's existence does not establish that it remains good law.</p>
-    <div class="toolbar"><button id="addJudgmentBtn">+ Add judgment</button></div>
-    <label>Search judgments</label><input id="judgmentSearch" placeholder="Court, case name, citation, issue, ratio">
-    <div id="judgmentList"></div>
-  </div>
-</section>
-
-<section id="page-cases" class="page hidden">
-  <div class="panel">
-    <h2>Legal Cases & Opinion References</h2>
-    <div class="toolbar"><button id="addCaseBtn">+ Add legal case</button></div>
-    <div id="caseList"></div>
-  </div>
-</section>
-
-<section id="page-deadlines" class="page hidden">
-  <div class="panel">
-    <h2>Compliance Deadlines & Follow-up</h2>
-    <p class="muted">Enter due dates only after verifying the applicable statute, Rules, notification or order.</p>
-    <div class="toolbar"><button id="addDeadlineBtn">+ Add deadline</button></div>
-    <div id="deadlineList"></div>
-  </div>
-</section>
-
-<section id="page-reports" class="page hidden">
-  <div class="panel">
-    <h2>Reports, Backup & Restore</h2>
-    <div class="notice">The metadata backup does not contain binary source files. Use the indexed-text backup for extracted text. Download important original files separately and keep a secure external copy.</div>
-    <div class="toolbar">
-      <button id="exportAllBtn">Export database JSON</button>
-      <button id="importAllBtn" class="secondary">Restore database JSON</button>
-      <input id="importAllFile" type="file" accept=".json,application/json" class="hidden">
-      <button id="exportSourceText2" class="secondary">Export source text backup</button>
-    </div>
-    <div class="toolbar">
-      <button id="exportAdviceHistory" class="secondary">Export Advisor history</button>
-      <button id="exportAudit2" class="secondary">Export audit CSV</button>
-      <button id="exportJudgments" class="secondary">Export judgments CSV</button>
-    </div>
-    <h3>Local storage information</h3>
-    <p id="storageInfo" class="muted"></p>
-    <p>Clearing browser/site data may delete this database and source files. Export backups before clearing browser data or changing devices.</p>
-  </div>
-</section>
-
-<!-- Source editor -->
-<div id="sourceModal" class="panel hidden">
-  <h2 id="sourceModalTitle">Add source</h2>
-  <input id="sourceEditId" type="hidden">
-  <div class="form-grid">
-    <div><label>Title *</label><input id="sTitle" required></div>
-    <div><label>Source type *</label>
-      <select id="sType">
-        <option>Primary Law</option><option>Rule</option><option>Gazette / Notification</option>
-        <option>Regulation / Scheme</option><option>Official Order / Circular</option>
-        <option>Court Judgment</option><option>Tribunal Order</option>
-        <option>Departmental Guidance</option><option>Secondary Guidance</option>
-        <option>Manual / Checklist</option><option>Other</option>
-      </select>
-    </div>
-    <div><label>Category</label>
-      <select id="sCategory">
-        <option>Labour Codes</option><option>Labour Rules</option><option>FR & SR</option>
-        <option>CCS / DoPT</option><option>Department of Expenditure</option>
-        <option>EPFO</option><option>ESIC</option><option>POSH</option>
-        <option>Central Labour Authority</option><option>State Labour Department</option>
-        <option>Supreme Court</option><option>High Court</option><option>CAT</option>
-        <option>Labour Court</option><option>Industrial Tribunal</option><option>CGIT</option>
-        <option>EPFO / ESIC Tribunal</option><option>Other Tribunal</option>
-        <option>Manual / Guidance</option><option>Other</option>
-      </select>
-    </div>
-    <div><label>Jurisdiction</label>
-      <select id="sJurisdiction"><option>Central</option><option>State</option>
-        <option>All India</option><option>International / Reference</option></select>
-    </div>
-    <div><label>State / UT</label><select id="sState"><option value="">Not applicable</option></select></div>
-    <div><label>Issuing authority</label><input id="sAuthority"></div>
-    <div><label>Reference / number / citation</label><input id="sReference"></div>
-    <div><label>Issue date</label><input id="sDate" type="date"></div>
-    <div><label>Effective from</label><input id="sEffective" type="date"></div>
-    <div><label>Last verified</label><input id="sVerifiedDate" type="date"></div>
-    <div><label>Status</label><select id="sStatus">
-      <option>Requires Verification</option><option>Current / Verified</option>
-      <option>Superseded</option><option>Repealed</option><option>Judicial Status Uncertain</option>
-    </select></div>
-    <div><label>Authority level</label><select id="sStrength">
-      <option>Primary Law</option><option>Rule</option><option>Gazette / Notification</option>
-      <option>Regulation / Scheme</option><option>Official Order / Circular</option>
-      <option>Court Judgment</option><option>Tribunal Order</option>
-      <option>Departmental Guidance</option><option>Secondary Guidance</option>
-    </select></div>
-    <div><label>Supersedes</label><input id="sSupersedes"></div>
-    <div><label>Superseded by</label><input id="sSupersededBy"></div>
-    <div><label>Provision / section / rule / paragraph</label><input id="sProvision"></div>
-    <div><label>Official URL</label><input id="sUrl" type="url" placeholder="https://..."></div>
-    <div><label>Verified by</label><input id="sVerifiedBy"></div>
-    <div class="wide"><label>Summary / issue</label><textarea id="sSummary"></textarea></div>
-    <div class="wide"><label>Legal principle / clarification</label><textarea id="sPrinciple"></textarea></div>
-    <div class="wide"><label>Compliance implication</label><textarea id="sImplication"></textarea></div>
-    <div class="wide"><label>Keywords (comma-separated)</label><input id="sKeywords"></div>
-    <div class="wide"><label>Paste relevant source extract (optional)</label><textarea id="sText" placeholder="Paste a relevant extract or a short excerpt for searching. Keep a reference to the official source."></textarea></div>
-    <div class="wide"><label>Upload source file (PDF, TXT, CSV, HTML, JSON)</label><input id="sFile" type="file" accept=".pdf,.txt,.csv,.html,.htm,.json,.xml,.md,.rtf"></div>
-  </div>
-  <div id="sourceProgress" class="muted"></div>
-  <div class="toolbar">
-    <button id="saveSourceBtn">Save source</button>
-    <button id="cancelSourceBtn" class="secondary">Cancel</button>
-  </div>
-</div>
-
-<!-- Judgment editor -->
-<div id="judgmentModal" class="panel hidden">
-  <h2>Add judgment / tribunal order</h2>
-  <div class="form-grid">
-    <div><label>Court / tribunal *</label><input id="jCourt"></div>
-    <div><label>Case name *</label><input id="jName"></div>
-    <div><label>Case number / citation</label><input id="jNo"></div>
-    <div><label>Judgment date</label><input id="jDate" type="date"></div>
-    <div><label>Bench</label><input id="jBench"></div>
-    <div><label>Applicable Act / Code</label><input id="jAct"></div>
-    <div><label>Section / rule</label><input id="jSection"></div>
-    <div><label>Judicial status</label><select id="jStatus">
-      <option>Requires Verification</option><option>Current / Verified</option>
-      <option>Stayed</option><option>Modified</option><option>Overruled</option>
-      <option>Appeal pending</option><option>Judicial Status Uncertain</option>
-    </select></div>
-    <div class="wide"><label>Facts</label><textarea id="jFacts"></textarea></div>
-    <div class="wide"><label>Issue</label><textarea id="jIssue"></textarea></div>
-    <div class="wide"><label>Finding / ratio</label><textarea id="jRatio"></textarea></div>
-    <div class="wide"><label>Outcome / directions</label><textarea id="jOutcome"></textarea></div>
-    <div class="wide"><label>Compliance implication</label><textarea id="jImplication"></textarea></div>
-    <div class="wide"><label>Official URL</label><input id="jUrl" type="url"></div>
-    <div class="wide"><label>Keywords</label><input id="jKeywords"></div>
-  </div>
-  <div class="toolbar"><button id="saveJudgmentBtn">Save judgment</button><button id="cancelJudgmentBtn" class="secondary">Cancel</button></div>
-</div>
-
-<!-- Legal case editor -->
-<div id="caseModal" class="panel hidden">
-  <h2>Add legal case / opinion reference</h2>
-  <div class="form-grid">
-    <div><label>Subject *</label><input id="cTitle"></div>
-    <div><label>Reference number</label><input id="cRef"></div>
-    <div class="wide"><label>Facts</label><textarea id="cFacts"></textarea></div>
-    <div class="wide"><label>Legal issue</label><textarea id="cIssue"></textarea></div>
-    <div class="wide"><label>Sources / rules to verify</label><textarea id="cRules"></textarea></div>
-    <div class="wide"><label>Documents available / required</label><textarea id="cDocs"></textarea></div>
-    <div class="wide"><label>Specific opinion sought</label><textarea id="cOpinion"></textarea></div>
-  </div>
-  <div class="toolbar"><button id="saveCaseBtn">Save case</button><button id="cancelCaseBtn" class="secondary">Cancel</button></div>
-</div>
-
-<!-- Deadline editor -->
-<div id="deadlineModal" class="panel hidden">
-  <h2>Add deadline / follow-up</h2>
-  <div class="form-grid">
-    <div><label>Task *</label><input id="dTitle"></div>
-    <div><label>Due date *</label><input id="dDate" type="date"></div>
-    <div><label>Authority / subject</label><input id="dAuthority"></div>
-    <div><label>Responsible person</label><input id="dOwner"></div>
-    <div><label>Status</label><select id="dStatus"><option>Pending</option><option>Completed</option><option>Under review</option></select></div>
-    <div class="wide"><label>Official reference / notes</label><textarea id="dNotes"></textarea></div>
-  </div>
-  <div class="toolbar"><button id="saveDeadlineBtn">Save deadline</button><button id="cancelDeadlineBtn" class="secondary">Cancel</button></div>
-</div>
-
-<footer>LCSA v5.0 · Local browser application · Verify current law before relying on any output.</footer>
-</main>
-
-<!-- PDF.js is loaded from CDN when online. PDF extraction will not work offline unless PDF.js files are hosted locally. -->
-<script type="module">
-try {
-  const pdfjs = await import("https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs");
-  pdfjs.GlobalWorkerOptions.workerSrc =
-    "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.min.mjs";
-  window.LCSA_PDFJS = pdfjs;
-  window.dispatchEvent(new Event("lcsa-pdf-ready"));
-} catch (e) {
-  console.warn("PDF.js unavailable; text file indexing remains available.", e);
-}
-</script>
-
-<script>
-"use strict";
-
-const APP_VERSION = "5.0.0";
-const DB_KEY = "LCSA_V5_DATABASE";
-const IDB_NAME = "LCSA_V5_FILES";
-const IDB_STORE = "sourceFiles";
-const PAGE_SIZE = 40;
-
-const STATES = [
-"Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa",
-"Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala",
-"Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland",
-"Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura",
-"Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar Islands",
-"Chandigarh","Dadra and Nagar Haveli and Daman and Diu","Delhi",
-"Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="theme-color" content="#12304a">
+          <meta name="description" content="LCSA Labour Compliance & Strategy Advisor - source-based Indian labour and employee compliance workspace">
+            <link rel="manifest" href="./manifest.json">
+              <title>LCSA v5.0 | Labour Compliance & Strategy Advisor</title>
+              <style>
+:root{--navy:#12304a;--blue:#1769aa;--bg:#f3f6fa;--card:#fff;--ink:#182433;--muted:#627184;--line:#dbe3ec;--green:#16794b;--amber:#9a6100;--red:#b42318;--radius:14px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}header{background:var(--navy);color:#fff;padding:17px max(16px,calc((100% - 1250px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}header h1{margin:0;font-size:21px}header p{margin:2px 0 0;color:#d6e4f1;font-size:12px}.wrap{max-width:1250px;margin:auto;padding:16px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px}.nav{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:8px;height:max-content;position:sticky;top:10px}.nav button{display:block;width:100%;text-align:left;margin:2px 0;background:transparent;color:var(--ink);border:0;padding:10px;border-radius:9px;font-weight:600}.nav button.active,.nav button:hover{background:#e9f2fb;color:var(--blue)}main{min-width:0}.panel{display:none}.panel.active{display:block}.page-title{margin:0 0 12px;font-size:24px}.sub{color:var(--muted);margin-top:-7px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0}.card,.box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:15px}.metric{font-size:27px;font-weight:750;color:var(--navy)}.muted{color:var(--muted);font-size:13px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1 1 160px}.row .fixed{flex:0 0 auto}.btn,button{cursor:pointer}.btn{background:var(--blue);border:1px solid var(--blue);color:#fff;padding:9px 12px;border-radius:9px;font-weight:650;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}.btn.secondary{background:#fff;color:var(--navy);border-color:var(--line)}.btn.danger{background:#fff;color:var(--red);border-color:#f0b8b4}.btn.small{padding:6px 9px;font-size:12px}input,select,textarea{font:inherit;width:100%;border:1px solid #c9d4e0;border-radius:9px;padding:10px;background:#fff;color:var(--ink)}textarea{min-height:92px;resize:vertical}label{display:block;font-weight:650;font-size:13px;margin:8px 0 5px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.form-grid .wide{grid-column:1/-1}.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:720px}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}th{background:#eef3f8;font-size:12px;text-transform:uppercase;letter-spacing:.03em}tr:last-child td{border-bottom:0}.badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#edf1f5;font-size:11px;font-weight:700}.badge.green{background:#e3f5eb;color:var(--green)}.badge.amber{background:#fff1d6;color:var(--amber)}.badge.red{background:#fee8e7;color:var(--red)}.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}.news-card h3{margin:7px 0;font-size:17px}.news-card p{margin:7px 0}.news-card .source{font-size:12px;color:var(--muted)}.news-card .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.section-head h2{margin:0}.note{border-left:4px solid #d99b22;background:#fff8e8;padding:11px 13px;border-radius:7px;margin:12px 0}.success{border-left-color:var(--green);background:#edf9f2}.link-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:9px}.source-link{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);padding:12px;border-radius:10px}.source-link strong{display:block}.source-link span{font-size:12px;color:var(--muted)}.empty{padding:24px;text-align:center;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}.hidden{display:none!important}@media(max-width:760px){.layout{grid-template-columns:1fr}.nav{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.nav button{font-size:12px;padding:8px}.wrap{padding:10px}.page-title{font-size:21px}.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}header{padding:14px}}
+</style></head>
+              <body>
+                <header>
+                  <div>
+                    <h1>LCSA v5.0</h1>
+                    <p>Labour Compliance & Strategy Advisor · India</p>
+                  </div>
+                  <div class="top-actions">
+                    <button class="btn secondary" id="exportBtn">Export Backup</button>
+                    <button class="btn secondary" id="importBtn">Import Backup</button>
+                    <input id="importFile" type="file" accept="application/json" class="hidden">
+                    </div>
+                  </header>
+                  <div class="wrap">
+                    <div class="layout">
+                      <nav class="nav" aria-label="Main navigation">
+                        <button class="active" data-panel="dashboard">▦ Dashboard</button>
+                        <button data-panel="news">▤ News & Legal Updates</button>
+                        <button data-panel="advisor">⚖ Advisor</button>
+                        <button data-panel="sources">▣ National Source Library</button>
+                        <button data-panel="audit">☑ Compliance Audit</button>
+                        <button data-panel="judgments">⚖ Judgments & Cases</button>
+                        <button data-panel="deadlines">◷ Deadlines & Actions</button>
+                        <button data-panel="settings">⚙ Settings & Help</button>
+                      </nav>
+                      <main>
+                        <section id="dashboard" class="panel active">
+                          <h2 class="page-title">Compliance dashboard</h2>
+                          <p class="sub">Your local workspace for source tracking, employee-related news and compliance follow-up.</p>
+                          <div class="cards">
+                            <div class="card">
+                              <div class="muted">Saved news items</div>
+                              <div class="metric" id="mNews">0</div>
+                            </div>
+                            <div class="card">
+                              <div class="muted">Library sources</div>
+                              <div class="metric" id="mSources">0</div>
+                            </div>
+                            <div class="card">
+                              <div class="muted">Audit controls</div>
+                              <div class="metric" id="mAudit">0</div>
+                            </div>
+                            <div class="card">
+                              <div class="muted">Open actions</div>
+                              <div class="metric" id="mActions">0</div>
+                            </div>
+                          </div>
+                          <div class="note">
+                            <strong>Legal-use caution:</strong> LCSA is a research and compliance-support tool, not a substitute for checking the current Act/Code, applicable rules, Gazette notifications, official orders and binding judicial directions.</div>
+                            <div class="box">
+                              <div class="section-head">
+                                <h2>Official source shortcuts</h2>
+                                <button class="btn small" data-goto="news">Open News tab</button>
+                              </div>
+                              <div class="link-grid" id="dashboardLinks">
+                              </div>
+                            </div>
+                            <div class="box" style="margin-top:12px">
+                              <h2>Recent saved news</h2>
+                              <div id="recentNews">
+                              </div>
+                            </div>
+                          </section>
+                          <section id="news" class="panel">
+                            <div class="section-head">
+                              <div>
+                                <h2 class="page-title">News & Legal Updates</h2>
+                                <p class="sub">Discover public updates, save references, record implications and track verification.</p>
+                              </div>
+                              <button class="btn" id="newNewsBtn">＋ Add news item</button>
+                            </div>
+                            <div class="note">
+                              <strong>Coverage note:</strong> Official portals are linked below. The static GitHub Pages app cannot guarantee automatic collection from every site; feeds, search links and manually imported items are shown separately. A source link is not proof that a legal change is in force.</div>
+                              <div class="box">
+                                <h3 style="margin-top:0">Search public sources</h3>
+                                <div class="form-grid">
+                                  <div>
+                                    <label for="newsQuery">Keywords / subject / case number</label>
+                                    <input id="newsQuery" placeholder="e.g. EPFO circular, FR 22, gratuity, CAT pension">
+                                    </div>
+                                    <div>
+                                      <label for="newsCategory">Authority category</label>
+                                      <select id="newsCategory">
+                                        <option value="all">All categories</option>
+                                      </select>
+                                    </div>
+                                    <div>
+                                      <label for="newsFrom">From date</label>
+                                      <input id="newsFrom" type="date">
+                                      </div>
+                                      <div>
+                                        <label for="newsTo">To date</label>
+                                        <input id="newsTo" type="date">
+                                        </div>
+                                      </div>
+                                      <div class="row" style="margin-top:10px">
+                                        <button class="btn" id="searchNewsBtn">Search official web</button>
+                                        <button class="btn secondary" id="clearNewsFilter">Clear filters</button>
+                                        <span class="muted">Opens a public web search in a new tab.</span>
+                                      </div>
+                                    </div>
+                                    <div class="box" style="margin-top:12px">
+                                      <h3 style="margin-top:0">Official portals & open sources</h3>
+                                      <div class="link-grid" id="officialLinks">
+                                      </div>
+                                    </div>
+                                    <div class="section-head" style="margin:18px 0 10px">
+                                      <h2>Saved news register</h2>
+                                      <span class="muted" id="newsCount">
+                                      </span>
+                                    </div>
+                                    <div id="newsList" class="news-grid">
+                                    </div>
+                                  </section>
+                                  <section id="advisor" class="panel">
+                                    <h2 class="page-title">Source-based Advisor</h2>
+                                    <p class="sub">Create a preliminary issue analysis using your saved sources and news records.</p>
+                                    <div class="box">
+                                      <div class="form-grid">
+                                        <div class="wide">
+                                          <label for="advQuestion">Question / facts</label>
+                                          <textarea id="advQuestion" placeholder="Describe the employee issue, dates, service category, relevant order and question.">
+                                          </textarea>
+                                        </div>
+                                        <div>
+                                          <label for="advArea">Subject area</label>
+                                          <select id="advArea">
+                                            <option>General service matter</option>
+                                            <option>Pay fixation / FR 22</option>
+                                            <option>Promotion / ad hoc charge</option>
+                                            <option>Discipline / CCS (CCA)</option>
+                                            <option>Leave / LTC</option>
+                                            <option>Pension / gratuity</option>
+                                            <option>Wages / overtime</option>
+                                            <option>EPFO / provident fund</option>
+                                            <option>ESIC / social security</option>
+                                            <option>Contract labour</option>
+                                            <option>POSH</option>
+                                            <option>Working conditions / OSH</option>
+                                            <option>Industrial relations</option>
+                                            <option>Other labour compliance</option>
+                                          </select>
+                                        </div>
+                                        <div>
+                                          <label for="advJurisdiction">Jurisdiction</label>
+                                          <select id="advJurisdiction">
+                                            <option>Central Government</option>
+                                            <option>Central Public Sector / employer</option>
+                                            <option>Delhi</option>
+                                            <option>Rajasthan</option>
+                                            <option>Other State / UT</option>
+                                            <option>Private establishment</option>
+                                            <option>Unclear — verify</option>
+                                          </select>
+                                        </div>
+                                        <div>
+                                          <label for="advOutcome">Desired output</label>
+                                          <select id="advOutcome">
+                                            <option>Preliminary legal position</option>
+                                            <option>Compliance checklist</option>
+                                            <option>Documents / evidence required</option>
+                                            <option>Legal Department reference</option>
+                                            <option>Risk and gap analysis</option>
+                                          </select>
+                                        </div>
+                                        <div>
+                                          <label for="advRisk">Initial risk</label>
+                                          <select id="advRisk">
+                                            <option>Needs assessment</option>
+                                            <option>Low</option>
+                                            <option>Medium</option>
+                                            <option>High</option>
+                                            <option>Urgent / limitation risk</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="row" style="margin-top:12px">
+                                        <button class="btn" id="runAdvisor">Analyse saved records</button>
+                                        <button class="btn secondary" id="copyAdvisor">Copy analysis</button>
+                                        <button class="btn secondary" id="saveAdvisor">Save analysis</button>
+                                      </div>
+                                    </div>
+                                    <div id="advisorOutput" class="box" style="margin-top:12px">
+                                      <div class="empty">Enter the facts and choose “Analyse saved records”. The app will match local records; it does not independently determine the law.</div>
+                                    </div>
+                                    <div class="box" style="margin-top:12px">
+                                      <h3>Saved analyses</h3>
+                                      <div id="advisorHistory">
+                                      </div>
+                                    </div>
+                                  </section>
+                                  <section id="sources" class="panel">
+                                    <div class="section-head">
+                                      <div>
+                                        <h2 class="page-title">National Source Library</h2>
+                                        <p class="sub">Save official references, metadata and your own summaries/excerpts.</p>
+                                      </div>
+                                      <button class="btn" id="newSourceBtn">＋ Add source</button>
+                                    </div>
+                                    <div class="box">
+                                      <div class="form-grid">
+                                        <div>
+                                          <label for="sourceSearch">Search sources</label>
+                                          <input id="sourceSearch" placeholder="title, authority, section, keywords">
+                                          </div>
+                                          <div>
+                                            <label for="sourceTypeFilter">Source category</label>
+                                            <select id="sourceTypeFilter">
+                                              <option value="all">All categories</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div id="sourceList" style="margin-top:12px">
+                                      </div>
+                                    </section>
+                                    <section id="audit" class="panel">
+                                      <div class="section-head">
+                                        <div>
+                                          <h2 class="page-title">Compliance Audit</h2>
+                                          <p class="sub">Starter verification checklist. Confirm applicability and current legal provisions for each establishment.</p>
+                                        </div>
+                                        <button class="btn" id="exportAudit">Export audit CSV</button>
+                                      </div>
+                                      <div class="box">
+                                        <div class="form-grid">
+                                          <div>
+                                            <label for="auditSearch">Search controls</label>
+                                            <input id="auditSearch" placeholder="wages, registers, licence, EPFO...">
+                                            </div>
+                                            <div>
+                                              <label for="auditStatusFilter">Status</label>
+                                              <select id="auditStatusFilter">
+                                                <option value="all">All statuses</option>
+                                                <option>Not Started</option>
+                                                <option>Compliant</option>
+                                                <option>Gap Identified</option>
+                                                <option>Not Applicable</option>
+                                                <option>Under Review</option>
+                                              </select>
+                                            </div>
+                                          </div>
+                                          <p class="muted">The generated controls are audit prompts, not a statement that every requirement applies to every employer.</p>
+                                        </div>
+                                        <div id="auditList" style="margin-top:12px">
+                                        </div>
+                                      </section>
+                                      <section id="judgments" class="panel">
+                                        <div class="section-head">
+                                          <div>
+                                            <h2 class="page-title">Judgments & Cases</h2>
+                                            <p class="sub">Record case references, holdings and judicial-status checks.</p>
+                                          </div>
+                                          <button class="btn" id="newCaseBtn">＋ Add judgment / case</button>
+                                        </div>
+                                        <div class="box">
+                                          <label for="caseSearch">Search cases</label>
+                                          <input id="caseSearch" placeholder="court, case name, number, issue, ratio">
+                                          </div>
+                                          <div id="caseList" style="margin-top:12px">
+                                          </div>
+                                        </section>
+                                        <section id="deadlines" class="panel">
+                                          <div class="section-head">
+                                            <div>
+                                              <h2 class="page-title">Deadlines & Actions</h2>
+                                              <p class="sub">Track review tasks and due dates; verify statutory deadlines from the controlling source.</p>
+                                            </div>
+                                            <button class="btn" id="newActionBtn">＋ Add action</button>
+                                          </div>
+                                          <div id="actionList">
+                                          </div>
+                                        </section>
+                                        <section id="settings" class="panel">
+                                          <h2 class="page-title">Settings & Help</h2>
+                                          <div class="box">
+                                            <h3>Data storage</h3>
+                                            <p>Records are stored in this browser using local storage. They are not automatically shared across devices or users. Export backups regularly. Do not store unnecessary sensitive employee personal data.</p>
+                                            <div class="row">
+                                              <button class="btn" id="exportText">Export records as JSON</button>
+                                              <button class="btn secondary" id="resetSeed">Restore missing starter records</button>
+                                              <button class="btn danger" id="clearAll">Clear all LCSA data</button>
+                                            </div>
+                                          </div>
+                                          <div class="box" style="margin-top:12px">
+                                            <h3>Coverage and verification</h3>
+                                            <ul>
+                                              <li>Official links are entry points; check the original notification, circular, order or judgment.</li>
+                                              <li>News items entered by the user are marked “Unverified” until reviewed.</li>
+                                              <li>Verify publication date, effective date, amendments, stays, appeals, supersession and jurisdiction.</li>
+                                              <li>For dependable scheduled aggregation across many websites, use a permitted RSS/API feed or a backend service. Never place a private API key in this public client-side app.</li>
+                                            </ul>
+                                          </div>
+                                        </section>
+                                      </main>
+                                    </div>
+                                    <footer>LCSA v5.0 · Local browser workspace · Verify law and judicial status before taking action.</footer>
+                                  </div>
+                                  <dialog id="editDialog" style="border:0;border-radius:14px;width:min(760px,94vw);padding:0;box-shadow:0 18px 60px #102b4433">
+                                    <form id="editForm">
+                                      <div style="padding:17px 18px;background:#eef3f8;display:flex;justify-content:space-between;align-items:center">
+                                        <strong id="dialogTitle">Add record</strong>
+                                        <button type="button" class="btn secondary small" id="closeDialog">Close</button>
+                                      </div>
+                                      <div id="dialogFields" style="padding:18px;max-height:70vh;overflow:auto">
+                                      </div>
+                                      <div style="padding:14px 18px;border-top:1px solid #dbe3ec;display:flex;justify-content:flex-end;gap:8px">
+                                        <button type="button" class="btn secondary" id="cancelDialog">Cancel</button>
+                                        <button class="btn" type="submit">Save record</button>
+                                      </div>
+                                    </form>
+                                  </dialog>
+                                  <script>
+(()=>{'use strict';
+const KEY='LCSA_V5_DATABASE';const OLD_KEYS=['LCSA_V4_4_DATABASE','LCSA_V4_3_DATABASE','LCSA_V4_2_DATABASE','LCSA_V4_1_DATABASE'];
+const CATEGORIES=['Labour Ministry / CLC','State / UT Labour Department','EPFO','ESIC','CCS / DoPT / DoE','Pension / Pay / Service','Supreme Court','High Court','CAT','Labour Court / Industrial Tribunal / CGIT','POSH','PIB / Gazette','Legal News / Commentary','Other'];
+const SOURCES=[
+['Ministry of Labour & Employment','Labour Ministry / CLC','https://labour.gov.in/','Acts, Codes, rules, notifications and ministry updates'],['Chief Labour Commissioner (Central)','Labour Ministry / CLC','https://clc.gov.in/','Central labour enforcement, conciliation and related updates'],['e-Gazette of India','PIB / Gazette','https://egazette.gov.in/','Official Gazette notifications; verify issue, date and text'],['Press Information Bureau','PIB / Gazette','https://www.pib.gov.in/','Government press releases and announcements'],['EPFO','EPFO','https://www.epfindia.gov.in/','EPFO circulars, notifications, schemes and member services'],['ESIC','ESIC','https://www.esic.gov.in/','ESIC circulars, notifications and social-security updates'],['Department of Personnel & Training','CCS / DoPT / DoE','https://dopt.gov.in/','Central Government service rules, OMs and instructions'],['Department of Expenditure','CCS / DoPT / DoE','https://doe.gov.in/','Pay, allowances and financial rules/orders'],['Pensioners’ Portal / DoPPW','Pension / Pay / Service','https://pensionersportal.gov.in/','Pension-related circulars and pensioner information'],['Supreme Court of India','Supreme Court','https://www.sci.gov.in/','Judgments, orders, cause lists and case status'],['Supreme Court judgments search','Supreme Court','https://www.sci.gov.in/judgements/','Judgment search portal; check latest official path if changed'],['eCourts Services','High Court','https://ecourts.gov.in/','Court services and links to district judiciary systems'],['High Court of Delhi','High Court','https://delhihighcourt.nic.in/','Delhi High Court judgments and orders'],['Central Administrative Tribunal','CAT','https://cgat.gov.in/','CAT benches, judgments and cause lists'],['Ministry of Law & Justice','Other','https://lawmin.gov.in/','Official legal and legislative information'],['India Code','PIB / Gazette','https://www.indiacode.nic.in/','Central Acts and legal text; verify amendments and commencement'],['Rajasthan Labour Department','State / UT Labour Department','https://labour.rajasthan.gov.in/','State labour information; verify current rules and notifications'],['Uttar Pradesh Labour Department','State / UT Labour Department','https://uplabour.gov.in/','State labour information; verify current rules and notifications']
 ];
-
-const OFFICIAL_SOURCES = [
-{id:"SRC-LAB-MINISTRY",title:"Ministry of Labour & Employment",sourceType:"Departmental Guidance",category:"Labour Codes",authority:"Ministry of Labour & Employment",officialUrl:"https://labour.gov.in/",jurisdiction:"Central"},
-{id:"SRC-CLC",title:"Chief Labour Commissioner (Central)",sourceType:"Departmental Guidance",category:"Central Labour Authority",authority:"CLC (Central)",officialUrl:"https://clc.gov.in/",jurisdiction:"Central"},
-{id:"SRC-EPFO",title:"Employees' Provident Fund Organisation",sourceType:"Departmental Guidance",category:"EPFO",authority:"EPFO",officialUrl:"https://www.epfindia.gov.in/",jurisdiction:"Central"},
-{id:"SRC-ESIC",title:"Employees' State Insurance Corporation",sourceType:"Departmental Guidance",category:"ESIC",authority:"ESIC",officialUrl:"https://www.esic.gov.in/",jurisdiction:"Central"},
-{id:"SRC-DOPT",title:"Department of Personnel & Training",sourceType:"Departmental Guidance",category:"CCS / DoPT",authority:"DoPT",officialUrl:"https://dopt.gov.in/",jurisdiction:"Central"},
-{id:"SRC-DOE",title:"Department of Expenditure",sourceType:"Departmental Guidance",category:"Department of Expenditure",authority:"Department of Expenditure",officialUrl:"https://doe.gov.in/",jurisdiction:"Central"},
-{id:"SRC-SC",title:"Supreme Court of India",sourceType:"Departmental Guidance",category:"Supreme Court",authority:"Supreme Court of India",officialUrl:"https://www.sci.gov.in/",jurisdiction:"All India"},
-{id:"SRC-ECOURTS",title:"eCourts Services",sourceType:"Departmental Guidance",category:"High Court",authority:"eCourts",officialUrl:"https://ecourts.gov.in/",jurisdiction:"All India"},
-{id:"SRC-CAT",title:"Central Administrative Tribunal",sourceType:"Departmental Guidance",category:"CAT",authority:"CAT",officialUrl:"https://cgat.gov.in/",jurisdiction:"Central"},
-{id:"SRC-POSH",title:"POSH compliance source portal",sourceType:"Departmental Guidance",category:"POSH",authority:"Verify competent official authority",officialUrl:"https://wcd.gov.in/",jurisdiction:"Central"}
-];
-
-const ISSUE_RULES = [
-{area:"Wages / Minimum Wages",terms:["minimum wage","minimum wages","wage","wages","salary","deduction","overtime","bonus","equal remuneration","wage slip","pay slip"]},
-{area:"Industrial Relations",terms:["industrial dispute","standing order","trade union","strike","lockout","retrenchment","layoff","closure","disciplinary","misconduct","termination"]},
-{area:"Social Security / EPFO",terms:["epf","epfo","provident fund","uan","pf contribution","pension scheme","ecr","social security"]},
-{area:"ESIC",terms:["esic","esi contribution","insured person","employment injury","esi benefit"]},
-{area:"Gratuity / Retirement",terms:["gratuity","retirement","superannuation","pension","nps","death benefit","terminal benefit"]},
-{area:"OSH / Safety",terms:["safety","factory","accident","occupational safety","health examination","working hours","contract labour","migrant worker"]},
-{area:"POSH",terms:["posh","sexual harassment","internal committee","internal complaints committee","local committee"]},
-{area:"FR/SR / Pay Fixation",terms:["fr 22","fr-22","pay fixation","pay fix","additional charge","adhoc","ad hoc","promotion","higher post","increment","pay level","joining time","fr 49"]},
-{area:"CCS / Conduct / CCA",terms:["ccs","conduct rules","cca rules","charge sheet","charge-sheet","major penalty","minor penalty","departmental inquiry","disciplinary proceedings","suspension"]},
-{area:"Leave / LTC",terms:["leave rules","earned leave","half pay leave","commuted leave","child care leave","ltc","leave travel concession","maternity leave"]},
-{area:"Pension / NPS",terms:["pension","nps","national pension system","old pension","family pension","qualifying service","commutation"]},
-{area:"MACP / Seniority / APAR",terms:["macp","financial upgradation","seniority","apar","acr","probation","confirmation","deputation","transfer","reservation"]},
-{area:"Licences / Returns / Registers",terms:["licence","license","return","register","inspection","notice","establishment","registration","contractor","labour department"]}
-];
-
-const AREAS = [
-["Wages and minimum wages","Verify applicable wage rates, classifications, wage periods and payment evidence.","wage,minimum wage,rate,classification"],
-["Payment of wages","Verify payment timing, authorised payment methods and wage records.","wage,payment,bank,payslip"],
-["Deductions and recoveries","Verify permitted deductions, authorisations, limits and supporting records.","deduction,recovery,damage,absence"],
-["Bonus","Verify coverage, eligibility, calculation, exclusions and payment records.","bonus,eligibility,calculation"],
-["Equal pay and non-discrimination","Verify applicable equality and non-discrimination requirements and supporting records.","equal pay,discrimination,gender"],
-["Wage records and payslips","Verify prescribed wage registers, wage slips, attendance and retention.","register,payslip,attendance"],
-["Working hours and overtime","Verify applicable hours, rest intervals, weekly rest and overtime calculations.","hours,overtime,rest,shift"],
-["Appointment and employment records","Verify appointment letters, employment terms and employee master records.","appointment,employee record,employment"],
-["Leave, holidays and attendance","Verify applicable leave, holidays, attendance and leave balances.","leave,holiday,attendance"],
-["Standing orders and service rules","Verify applicability, certification/adoption and communication of service rules.","standing orders,service rules"],
-["Trade unions and worker representation","Verify applicable recognition, representation and consultation obligations.","trade union,recognition,worker"],
-["Industrial disputes","Verify dispute-handling procedures, notices, conciliation and records.","industrial dispute,conciliation"],
-["Strike, lockout, retrenchment and closure","Verify applicability, approvals/notices, compensation and prescribed procedure.","strike,lockout,retrenchment,closure,layoff"],
-["Social security coverage","Verify employee and establishment coverage under applicable social security provisions.","social security,coverage,employee"],
-["EPF compliance","Verify EPF coverage, enrolment, wage base, contributions and remittance evidence.","epf,epfo,uan,contribution"],
-["ESI compliance","Verify ESI coverage, employee registration, contributions and benefit-related records.","esi,esic,contribution"],
-["Gratuity","Verify eligibility, qualifying service, calculation, nomination and settlement records.","gratuity,service,nomination"],
-["Maternity benefits","Verify eligibility, benefits, notices, records and related workplace facilities.","maternity,pregnancy,benefit"],
-["Gig, platform and unorganised workers","Verify whether applicable registration, scheme or contribution obligations exist.","gig,platform,unorganised"],
-["Occupational safety and health","Verify risk assessments, safety policy, training, PPE and required health measures.","safety,health,ppe,training"],
-["Accident and dangerous occurrence reporting","Verify incident registers, required notifications, investigation and corrective action.","accident,incident,injury,report"],
-["Contract labour","Verify principal-employer and contractor obligations, licences and worker records.","contract labour,contractor,licence"],
-["Inter-State migrant workers","Verify applicability, worker records, benefits and required reporting.","migrant worker,inter-state"],
-["POSH","Verify Internal Committee constitution, policy, awareness, process, confidentiality and reporting.","posh,sexual harassment,internal committee"],
-["FR 22 and pay fixation","Verify the applicable rule, option, promotion/appointment order, pay history and competent approval.","fr 22,pay fixation,promotion"],
-["Additional charge and ad hoc appointment","Verify appointment authority, duration, post status, duties and applicable pay rules.","additional charge,ad hoc,adhoc,charge"],
-["Joining time, transfer and deputation","Verify orders, joining-time entitlement, relieving/joining dates and applicable instructions.","joining time,transfer,deputation"],
-["CCS leave rules","Verify leave type, eligibility, balance, sanction and supporting documents.","ccs leave,earned leave,commuted leave"],
-["LTC","Verify eligibility, block, journey, entitlement, claims and required evidence.","ltc,travel concession,journey"],
-["Conduct and disciplinary proceedings","Verify applicable conduct/CCA rules, authority, procedure, timelines and records.","conduct,cca,disciplinary,charge sheet"],
-["Pension, retirement and NPS","Verify applicable pension regime, service qualifying period, nominations and settlement.","pension,retirement,nps,service"],
-["MACP, promotion and seniority","Verify eligibility, service record, benchmark, vacancy/order and applicable policy.","macp,promotion,seniority,benchmark"],
-["APAR, vigilance and service book","Verify entries, communication, representations, vigilance status and service-book accuracy.","apar,service book,vigilance"],
-["EPFO employer operations","Verify employer registration, UAN/KYC, ECR, remittance, exits and record reconciliation.","epfo,ecr,uan,kcy,remittance"],
-["ESIC employer operations","Verify employer code, employee registration, contribution filings, challans and accident reporting.","esic,challan,insured person"],
-["Registers, returns and audit trail","Verify applicable registers, returns, evidence, retention and reconciliation.","register,return,audit trail"],
-["Licences, registrations and notices","Verify applicability, registration/licensing, displayed notices and renewals.","licence,registration,notice"],
-["Inspection, notices and prosecution","Verify notice response, deadlines, authorised representative and evidence of submission.","inspection,notice,prosecution"],
-["State-specific labour rules","Identify the correct State/UT rules, notifications and local applicability before compliance action.","state rule,state labour,notification"],
-["DoPT and Department of Expenditure instructions","Verify the latest applicable OM, order, financial delegation and amendments.","dopt,doe,office memorandum,financial rule"],
-["Data protection and record retention","Verify lawful access, confidentiality, record retention and secure handling of employee data.","confidentiality,data,record retention"],
-["Legal change management","Verify latest amendments, commencement, transition, repeal and supersession status.","amendment,commencement,superseded,transition"]
-];
-
-const CHECK_TEMPLATES = [
-"Confirm applicability to the establishment, employee category, jurisdiction and relevant period.",
-"Identify the controlling Act/Code, Rule, scheme, notification or service instruction and exact provision.",
-"Verify the required policy, appointment, registration, licence, sanction or authorisation, where applicable.",
-"Examine the prescribed records, registers, orders, correspondence and supporting evidence.",
-"Reconcile calculations, payments, entitlements or procedural steps against the verified controlling provision.",
-"Check notices, returns, reports, intimations and deadlines applicable to the facts.",
-"Record exceptions, exemptions, approvals, judicial directions and any contrary or superseding authority.",
-"Document the finding, risk, corrective action, responsible officer and review date."
-];
-
-let db = {
-  version:APP_VERSION,profile:{},settings:{},
-  sources:[],framework:[],audit:[],judgments:[],cases:[],
-  deadlines:[],advisorHistory:[]
-};
-let idb;
-let currentAdvice=null;
-let frameworkPage=1;
-let installPrompt=null;
-
-const $ = id => document.getElementById(id);
-const today = () => new Date().toISOString().slice(0,10);
-const uid = prefix => prefix+"-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8);
-const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const norm = s => String(s ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"");
-const tokens = s => [...new Set(norm(s).match(/[a-z0-9]+(?:[-/][a-z0-9]+)*/g)||[])].filter(t=>t.length>1);
-const safeUrl = s => {try{const u=new URL(s);return ["https:","http:"].includes(u.protocol)?u.href:""}catch{return ""}};
-function saveDB(){db.version=APP_VERSION;localStorage.setItem(DB_KEY,JSON.stringify(db));renderDashboard();renderStorageInfo()}
-function download(name,text,type="text/plain"){
-  const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");a.href=url;a.download=name;a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),1500);
-}
-function csv(rows){
-  return rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
-}
-function escapeHtmlText(text){return esc(text).replace(/\n/g,"<br>")}
-function setStatus(text,kind=""){const el=$("connectionStatus");el.textContent=text;el.className="badge "+kind}
-function showPage(name){
-  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
-  $("page-"+name).classList.remove("hidden");
-  document.querySelectorAll("#navigation button").forEach(b=>b.classList.toggle("active",b.dataset.page===name));
-  if(name==="dashboard")renderDashboard();
-  if(name==="sources")renderSources();
-  if(name==="framework")renderFramework();
-  if(name==="audit")renderAudit();
-  if(name==="judgments")renderJudgments();
-  if(name==="cases")renderCases();
-  if(name==="deadlines")renderDeadlines();
-  if(name==="reports")renderStorageInfo();
-}
-function openModal(id){$(id).classList.remove("hidden");$(id).scrollIntoView({behavior:"smooth",block:"start"})}
-function closeModal(id){$(id).classList.add("hidden")}
-
-function openIDB(){
- return new Promise((resolve,reject)=>{
-  const req=indexedDB.open(IDB_NAME,1);
-  req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(IDB_STORE))d.createObjectStore(IDB_STORE,{keyPath:"id"})};
-  req.onsuccess=()=>{idb=req.result;resolve(idb)};
-  req.onerror=()=>reject(req.error);
- });
-}
-function idbPut(record){
- return new Promise((resolve,reject)=>{
-  const tx=idb.transaction(IDB_STORE,"readwrite");tx.objectStore(IDB_STORE).put(record);
-  tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error);
- });
-}
-function idbGet(id){
- return new Promise((resolve,reject)=>{
-  const tx=idb.transaction(IDB_STORE,"readonly");const r=tx.objectStore(IDB_STORE).get(id);
-  r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error);
- });
-}
-function idbAll(){
- return new Promise((resolve,reject)=>{
-  const tx=idb.transaction(IDB_STORE,"readonly");const r=tx.objectStore(IDB_STORE).getAll();
-  r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error);
- });
-}
-function idbDelete(id){
- return new Promise((resolve,reject)=>{
-  const tx=idb.transaction(IDB_STORE,"readwrite");tx.objectStore(IDB_STORE).delete(id);
-  tx.oncomplete=()=>resolve(true);tx.onerror=()=>reject(tx.error);
- });
-}
-
-function seedSources(){
- for(const src of OFFICIAL_SOURCES){
-  if(!db.sources.some(s=>s.id===src.id)){
-   db.sources.push({...src,status:"Requires Verification",authorityLevel:src.sourceType,
-    summary:"Official portal reference. Identify and verify the exact applicable Act, Rule, notification, order or circular.",keywords:src.category,createdAt:today(),lastVerified:""});
-  }
- }
- for(const state of STATES){
-  const id="SRC-STATE-"+state.toUpperCase().replace(/[^A-Z0-9]+/g,"-");
-  if(!db.sources.some(s=>s.id===id)){
-   db.sources.push({id,title:state+" Labour Department / Rules",sourceType:"Departmental Guidance",
-    category:"State Labour Department",authority:state+" competent labour authority",jurisdiction:"State",
-    state,status:"Requires Verification",authorityLevel:"Departmental Guidance",
-    summary:"Placeholder only. Add the verified official portal URL, applicable State/UT Rules, Gazette notifications and current circulars.",
-    keywords:"state labour rules notification registration",createdAt:today(),lastVerified:""});
-  }
- }
-}
-function generateFramework(){
- const controls=[];
- for(const [area,requirement,keywords] of AREAS){
-  CHECK_TEMPLATES.forEach((template,i)=>{
-   const id="FW-"+String(controls.length+1).padStart(3,"0");
-   controls.push({
-    id,code:id,area,chapter:area,
-    requirement:template+" Area focus: "+requirement,
-    coreRequirement:requirement,applicability:"Verify case-specific applicability",
-    evidence:"Relevant order, register, calculation, return, correspondence or other contemporaneous evidence, as applicable.",
-    frequency:"As prescribed by applicable law/order; verify",
-    dueDate:"Verify applicable due date",responsible:"HR / Compliance / Accounts / Legal",
-    risk:i===1||i===4?"High":"Medium",
-    penalty:"Verify the current applicable penalty provision; do not infer a penalty from this control.",
-    source:"Verify against applicable official source",sourceIds:[],
-    status:"Pending",observation:"",action:"",
-    keywords:keywords+", "+area.toLowerCase()
-   });
-  });
- }
- db.framework=controls;
-}
-function migrateDB(){
- let raw=localStorage.getItem(DB_KEY);
- if(!raw){
-  for(const oldKey of ["LCSA_V4_4_DATABASE","LCSA_V4_3_DATABASE","LCSA_V4_2_DATABASE","LCSA_V4_1_DATABASE"]){
-   try{const old=JSON.parse(localStorage.getItem(oldKey)||"null");if(old){db={...db,...old};break}}catch{}
-  }
- }else{
-  try{db={...db,...JSON.parse(raw)}}catch{alert("The LCSA database could not be parsed. A fresh database will be created; do not overwrite your old browser data until you have checked it.")}
- }
- for(const key of ["sources","framework","audit","judgments","cases","deadlines","advisorHistory"])if(!Array.isArray(db[key]))db[key]=[];
- seedSources();
- if(db.framework.length<200)generateFramework();
- db.sources=db.sources.map(s=>({...s,id:s.id||uid("SRC"),status:s.status||"Requires Verification",keywords:s.keywords||""}));
- saveDB();
-}
-function fillStateSelectors(){
- for(const id of ["advisorState","sState"]){
-  const el=$(id);const first=el.options[0].outerHTML;
-  el.innerHTML=first+STATES.map(s=>`<option>${esc(s)}</option>`).join("");
- }
-}
-function fillFilters(){
- const types=[...new Set(db.sources.map(s=>s.sourceType).filter(Boolean))].sort();
- $("sourceTypeFilter").innerHTML='<option value="">All source types</option>'+types.map(t=>`<option>${esc(t)}</option>`).join("");
- const areas=[...new Set(db.framework.map(f=>f.area))].sort();
- $("frameworkAreaFilter").innerHTML='<option value="">All areas</option>'+areas.map(a=>`<option>${esc(a)}</option>`).join("");
-}
-function renderDashboard(){
- $("statSources").textContent=db.sources.length;
- $("statControls").textContent=db.framework.length;
- $("statOpen").textContent=db.audit.filter(a=>!["Compliant","Not applicable"].includes(a.status)).length;
- $("statJudgments").textContent=db.judgments.length;
-}
-function renderStorageInfo(){
- $("storageInfo").textContent=`App version ${APP_VERSION}. Metadata is stored in localStorage; uploaded source files and indexed pages are stored in IndexedDB. Indexed files: ${idb?"available":"not connected"}.`;
-}
-function sourceTextStatus(s){
- return s.hasText?'<span class="badge green">Text indexed</span>':'<span class="badge amber">No indexed text</span>';
-}
-function statusBadge(s){
- const cls=s==="Current / Verified"||s==="Compliant"||s==="Completed"?"green":
-  s==="Non-compliant"||s==="Overruled"||s==="Repealed"?"red":
-  s==="Requires Verification"||s==="Pending"||s==="Judicial Status Uncertain"?"amber":"blue";
- return `<span class="badge ${cls}">${esc(s||"Not recorded")}</span>`;
-}
-function renderSources(){
- const q=norm($("sourceSearch").value),type=$("sourceTypeFilter").value,status=$("sourceStatusFilter").value,jur=$("sourceJurisdictionFilter").value;
- const rows=db.sources.filter(s=>(!q||norm([s.title,s.reference,s.authority,s.category,s.provision,s.summary,s.keywords,s.state].join(" ")).includes(q))
-  &&(!type||s.sourceType===type)&&(!status||s.status===status)&&(!jur||s.jurisdiction===jur));
- $("sourceList").innerHTML=rows.length?rows.map(s=>`
- <div class="item">
-  <div class="item-title">${esc(s.title)}</div>
-  <p>${statusBadge(s.status)} <span class="badge">${esc(s.sourceType||"Unclassified")}</span>
-  <span class="badge">${esc(s.jurisdiction||"Jurisdiction not set")}</span> ${sourceTextStatus(s)}</p>
-  <p><b>Authority:</b> ${esc(s.authority||"Not specified")} · <b>Reference:</b> ${esc(s.reference||"Not specified")}</p>
-  <p><b>Provision:</b> ${esc(s.provision||"Not specified")} · <b>State:</b> ${esc(s.state||"Not applicable")}</p>
-  <p>${esc(s.summary||"No summary recorded.")}</p>
-  ${s.fileName?`<p><b>File:</b> ${esc(s.fileName)} (${esc(s.fileSize||"")} bytes)</p>`:""}
-  <div class="toolbar">
-   <button class="secondary" data-act="read-source" data-id="${esc(s.id)}">Read / search</button>
-   ${s.fileName?`<button class="secondary" data-act="open-file" data-id="${esc(s.id)}">Open file</button>`:""}
-   <button class="secondary" data-act="use-source" data-id="${esc(s.id)}">Use in Advisor</button>
-   <button class="secondary" data-act="edit-source" data-id="${esc(s.id)}">Edit</button>
-   <button class="danger" data-act="delete-source" data-id="${esc(s.id)}">Delete</button>
-   ${s.officialUrl?`<button class="secondary" data-act="open-url" data-url="${esc(s.officialUrl)}">Official portal</button>`:""}
-  </div>
- </div>`).join(""):'<div class="empty">No matching sources. Add an official source, upload a file or enter a relevant extract.</div>';
-}
-function addSource(){clearSourceForm();openModal("sourceModal")}
-function clearSourceForm(){
- $("sourceEditId").value="";
- ["sTitle","sAuthority","sReference","sDate","sEffective","sVerifiedDate","sSupersedes","sSupersededBy","sProvision","sUrl","sVerifiedBy","sSummary","sPrinciple","sImplication","sKeywords","sText"].forEach(id=>$(id).value="");
- $("sFile").value="";$("sourceProgress").textContent="";$("sourceModalTitle").textContent="Add source";
- $("sType").value="Primary Law";$("sCategory").value="Labour Codes";$("sJurisdiction").value="Central";$("sStatus").value="Requires Verification";
-}
-function editSource(id){
- const s=db.sources.find(x=>x.id===id);if(!s)return;
- clearSourceForm();$("sourceEditId").value=s.id;$("sourceModalTitle").textContent="Edit source";
- const map={sTitle:"title",sType:"sourceType",sCategory:"category",sJurisdiction:"jurisdiction",sState:"state",
- sAuthority:"authority",sReference:"reference",sDate:"date",sEffective:"effectiveFrom",sVerifiedDate:"lastVerified",
- sStatus:"status",sStrength:"authorityLevel",sSupersedes:"supersedes",sSupersededBy:"supersededBy",
- sProvision:"provision",sUrl:"officialUrl",sVerifiedBy:"verifiedBy",sSummary:"summary",
- sPrinciple:"legalPrinciple",sImplication:"complianceImplication",sKeywords:"keywords"};
- for(const [el,key] of Object.entries(map))if($(el))$(el).value=s[key]||"";
- openModal("sourceModal");
-}
-async function extractFile(file){
- const ext=(file.name.split(".").pop()||"").toLowerCase();
- if(ext==="pdf"||file.type==="application/pdf"){
-  if(!window.LCSA_PDFJS)throw new Error("PDF text extraction library is not available. Connect to the internet and try again, or paste the relevant extract.");
-  $("sourceProgress").textContent="Extracting PDF text…";
-  const data=new Uint8Array(await file.arrayBuffer());
-  const pdf=await window.LCSA_PDFJS.getDocument({data}).promise;
-  const pages=[];
-  for(let n=1;n<=pdf.numPages;n++){
-   $("sourceProgress").textContent=`Extracting PDF page ${n} of ${pdf.numPages}…`;
-   const page=await pdf.getPage(n);
-   const content=await page.getTextContent();
-   pages.push(content.items.map(x=>x.str||"").join(" ").replace(/\s+/g," ").trim());
-  }
-  return {text:pages.join("\n\n"),pages,pageCount:pdf.numPages};
- }
- if(["txt","csv","html","htm","json","xml","md","rtf"].includes(ext)){
-  let text=await file.text();
-  if(["html","htm","xml"].includes(ext))text=text.replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/&amp;/g,"&").replace(/\s+/g," ");
-  return {text,pages:[text],pageCount:1};
- }
- return {text:"",pages:[],pageCount:0};
-}
-async function saveSource(){
- const title=$("sTitle").value.trim(),file=$("sFile").files[0],editId=$("sourceEditId").value;
- if(!title&&!file){alert("Enter a source title or choose a file.");return}
- const id=editId||uid("SRC");
- const source={
-  id,title:title||file.name,sourceType:$("sType").value,category:$("sCategory").value,
-  jurisdiction:$("sJurisdiction").value,state:$("sState").value,authority:$("sAuthority").value.trim(),
-  reference:$("sReference").value.trim(),date:$("sDate").value,effectiveFrom:$("sEffective").value,
-  lastVerified:$("sVerifiedDate").value,status:$("sStatus").value,authorityLevel:$("sStrength").value,
-  supersedes:$("sSupersedes").value.trim(),supersededBy:$("sSupersededBy").value.trim(),
-  provision:$("sProvision").value.trim(),officialUrl:safeUrl($("sUrl").value),
-  verifiedBy:$("sVerifiedBy").value.trim(),summary:$("sSummary").value.trim(),
-  legalPrinciple:$("sPrinciple").value.trim(),complianceImplication:$("sImplication").value.trim(),
-  keywords:$("sKeywords").value.trim(),updatedAt:today()
- };
- const old=db.sources.find(s=>s.id===id);
- if(old)Object.assign(source,{createdAt:old.createdAt||today(),fileName:old.fileName,fileType:old.fileType,fileSize:old.fileSize,hasText:old.hasText,pageCount:old.pageCount});
- else source.createdAt=today();
- db.sources=db.sources.filter(s=>s.id!==id);
- db.sources.unshift(source);
- saveDB();
- try{
-  const existing=await idbGet(id);
-  let text=$("sText").value.trim(),pages=[];
-  if(file){
-   const extracted=await extractFile(file);
-   if(extracted.text)text=[text,extracted.text].filter(Boolean).join("\n\n");
-   pages=extracted.pages;
-   await idbPut({id,blob:file,text,pages,fileName:file.name,mime:file.type||"application/octet-stream",size:file.size,updatedAt:today()});
-   source.fileName=file.name;source.fileType=file.type;source.fileSize=file.size;source.pageCount=extracted.pageCount;
-  }else if(text){
-   await idbPut({id,blob:existing?.blob||null,text,pages:existing?.pages||[],fileName:existing?.fileName||"",mime:existing?.mime||"",size:existing?.size||0,updatedAt:today()});
-  }else if(existing){
-   text=existing.text||"";pages=existing.pages||[];
-  }
-  if(text){
-   const rec=await idbGet(id);
-   await idbPut({...rec,id,text,pages:pages.length?pages:(rec?.pages||[]),updatedAt:today()});
-   source.hasText=true;
-  }
-  db.sources=db.sources.map(s=>s.id===id?source:s);
-  saveDB();
-  closeModal("sourceModal");renderSources();
-  alert("Source saved. "+(source.hasText?"Text is indexed for local search.":"Metadata saved; no searchable text was extracted."));
- }catch(err){
-  console.error(err);saveDB();closeModal("sourceModal");renderSources();
-  alert("Source metadata was saved, but file processing reported: "+err.message);
- }
-}
-async function readSource(id){
- const s=db.sources.find(x=>x.id===id);const rec=await idbGet(id);
- const text=rec?.text||"No indexed text is available. Upload a text-searchable PDF or paste an extract in Edit Source.";
- const q=prompt("Find text inside this source (leave blank to display beginning):","");
- let out=text;
- if(q){const at=norm(text).indexOf(norm(q));out=at<0?"No match in indexed text.":text.slice(Math.max(0,at-500),Math.min(text.length,at+1500))}
- alert((s?.title||"Source")+"\n\n"+out.slice(0,12000));
-}
-async function openSourceFile(id){
- const rec=await idbGet(id);if(!rec?.blob){alert("No original file is stored for this source.");return}
- const url=URL.createObjectURL(rec.blob);window.open(url,"_blank","noopener");
- setTimeout(()=>URL.revokeObjectURL(url),60000);
-}
-async function deleteSource(id){
- const s=db.sources.find(x=>x.id===id);if(!s||!confirm("Delete source metadata and its locally stored file/text?"))return;
- db.sources=db.sources.filter(x=>x.id!==id);
- await idbDelete(id);saveDB();renderSources();
-}
-function sourceSearchText(s,doc){
- return norm([s.title,s.sourceType,s.category,s.authority,s.reference,s.provision,s.summary,s.legalPrinciple,s.complianceImplication,s.keywords,s.state,doc?.text].join(" "));
-}
-function authorityWeight(s){
- const t=s.authorityLevel||s.sourceType||"";
- return ({"Primary Law":10,"Rule":9,"Gazette / Notification":9,"Regulation / Scheme":8,
- "Official Order / Circular":7,"Court Judgment":7,"Tribunal Order":6,
- "Departmental Guidance":4,"Secondary Guidance":2})[t]||1;
-}
-function statusWeight(s){
- return ({"Current / Verified":8,"Requires Verification":2,"Judicial Status Uncertain":1,"Superseded":-12,"Repealed":-15})[s.status]??0;
-}
-function scoreText(corpus,terms){
- let score=0;
- for(const term of terms){if(term.length>2&&corpus.includes(term))score+=3}
- return score;
-}
-function identifyIssues(question){
- const q=norm(question);
- return ISSUE_RULES.filter(r=>r.terms.some(t=>q.includes(t))).map(r=>r.area);
-}
-function scoreFramework(f,terms,question){
- const corpus=norm([f.area,f.requirement,f.coreRequirement,f.keywords,f.source].join(" "));
- let score=scoreText(corpus,terms);
- if(norm(question).includes(norm(f.area)))score+=5;
- return score;
-}
-function snippetFor(text,query){
- if(!text)return "";
- const q=tokens(query).sort((a,b)=>b.length-a.length);
- let at=-1;
- for(const t of q){at=norm(text).indexOf(t);if(at>=0)break}
- if(at<0)return text.slice(0,260);
- return "…"+text.slice(Math.max(0,at-150),Math.min(text.length,at+380))+"…";
-}
-async function analyseQuestion(){
- const question=$("question").value.trim();if(!question){alert("Enter a question or issue first.");return}
- $("askBtn").disabled=true;$("askBtn").textContent="Searching local library…";
- try{
-  const docs=await idbAll();const docMap=new Map(docs.map(d=>[d.id,d]));
-  const terms=tokens(question);const areas=identifyIssues(question);
-  const context=[question,$("advisorJurisdiction").value,$("advisorState").value,$("advisorType").value].join(" ");
-  const sources=db.sources.map(s=>{
-   const doc=docMap.get(s.id);const corpus=sourceSearchText(s,doc);
-   let score=scoreText(corpus,terms)+authorityWeight(s)+statusWeight(s);
-   if(s.officialUrl)score+=1;
-   if(s.status==="Superseded"||s.status==="Repealed")score-=10;
-   if($("advisorState").value&&s.state===$("advisorState").value)score+=4;
-   if($("advisorJurisdiction").value==="Central"&&s.jurisdiction==="Central")score+=2;
-   if(doc?.text)score+=Math.min(6,scoreText(norm(doc.text),terms));
-   return {...s,score,snippet:snippetFor(doc?.text||s.summary||"",question),hasText:!!doc?.text};
-  }).filter(s=>s.score>2).sort((a,b)=>b.score-a.score).slice(0,10);
-  const framework=db.framework.map(f=>({...f,score:scoreFramework(f,terms,question)}))
-   .filter(f=>f.score>1||areas.some(a=>a===f.area)).sort((a,b)=>b.score-a.score).slice(0,12);
-  const judgments=db.judgments.map(j=>{
-   const corpus=norm([j.court,j.caseName,j.caseNo,j.act,j.section,j.facts,j.issue,j.ratio,j.outcome,j.implication,j.keywords].join(" "));
-   return {...j,score:scoreText(corpus,terms)+(j.status==="Current / Verified"?4:0)};
-  }).filter(j=>j.score>1).sort((a,b)=>b.score-a.score).slice(0,6);
-  const supported=sources.some(s=>s.hasText||s.summary||s.provision);
-  const risk=framework.some(f=>f.risk==="High")?"High":framework.length?"Medium":"Not assessed";
-  currentAdvice={createdAt:new Date().toISOString(),question,context,areas,sources,framework,judgments,risk};
-  db.advisorHistory.unshift(currentAdvice);db.advisorHistory=db.advisorHistory.slice(0,100);saveDB();
-  renderAdvice(currentAdvice,supported);
-  $("exportAdvice").disabled=false;$("legalReference").disabled=false;
- }catch(e){console.error(e);$("advisorResults").innerHTML=`<div class="panel">Search failed: ${esc(e.message)}</div>`}
- finally{$("askBtn").disabled=false;$("askBtn").textContent="Analyse question"}
-}
-function renderAdvice(a,supported){
- const mode=$("advisorMode").value;
- let html=`<div class="panel"><h2>Preliminary source-based analysis</h2>
- <p><b>Question:</b> ${esc(a.question)}</p>
- <p><b>Context:</b> ${esc(a.context)}</p>
- <p><b>Potential subject areas:</b> ${esc(a.areas.join(", ")||"Not confidently identified")}</p>
- <p><b>Risk screening:</b> ${statusBadge(a.risk==="High"?"Non-compliant":a.risk==="Medium"?"Under review":"Requires Verification")} ${esc(a.risk)}</p>
- <div class="notice"><b>Limit:</b> This is a local-library match, not an independently researched legal opinion. A search match does not prove applicability or that a source remains current.</div>`;
- if(mode!=="sources"){
-  html+=`<h3>Preliminary position</h3><p>${supported?
-   "The local library contains records that may be relevant. Review the cited source, exact provision, effective date, jurisdiction and any later amendment or judicial treatment before reaching a conclusion.":
-   "The local library does not contain enough indexed source material to support a legal conclusion. Add the applicable official Act/Code, Rules, notification, order or judgment before relying on the Advisor."}</p>`;
- }
- if(mode!=="audit"){
-  html+="<h3>Relevant source records</h3>";
-  html+=a.sources.length?a.sources.map(s=>`<div class="item"><div class="item-title">${esc(s.title)}</div>
-  <p>${statusBadge(s.status)} <span class="badge">${esc(s.authorityLevel||s.sourceType)}</span></p>
-  <p><b>Reference:</b> ${esc(s.reference||"Not recorded")} · <b>Provision:</b> ${esc(s.provision||"Not recorded")}</p>
-  <p>${esc(s.summary||"No summary recorded.")}</p>
-  ${s.snippet?`<div class="snippet">${esc(s.snippet)}</div>`:""}
-  ${s.officialUrl?`<p><a href="${esc(safeUrl(s.officialUrl))}" target="_blank" rel="noopener">Open official source</a></p>`:""}
-  </div>`).join(""):'<p>No relevant source record found in the local library.</p>';
- }
- html+="<h3>Verification controls</h3>";
- html+=a.framework.length?a.framework.map(f=>`<div class="item"><b>${esc(f.id)} · ${esc(f.area)}</b><p>${esc(f.requirement)}</p><p><b>Evidence to check:</b> ${esc(f.evidence)}</p><p><b>Penalty:</b> ${esc(f.penalty)}</p></div>`).join(""):'<p>No matching framework controls found.</p>';
- if(mode!=="sources"){
-  html+="<h3>Judicial material in local library</h3>";
-  html+=a.judgments.length?a.judgments.map(j=>`<div class="item"><b>${esc(j.caseName)}</b><p>${esc(j.court)} · ${esc(j.caseNo)} · ${esc(j.judgmentDate)}</p>${statusBadge(j.status)}<p>${esc(j.ratio||j.issue||"No ratio/issue recorded.")}</p><p>${esc(j.implication||"")}</p>${j.officialUrl?`<a href="${esc(safeUrl(j.officialUrl))}" target="_blank" rel="noopener">Open judgment</a>`:""}</div>`).join(""):'<p>No matching judgment records in the local library. This does not mean that no relevant judgments exist.</p>';
-  html+=`<h3>Verification sequence</h3><ol>
-  <li>Confirm the exact employee category, establishment, jurisdiction and relevant dates.</li>
-  <li>Read the applicable primary law, Rules, Gazette notification and official order in full.</li>
-  <li>Check commencement, amendments, transitional provisions and supersession.</li>
-  <li>Check relevant judgments, stay orders, appeals and higher-court treatment.</li>
-  <li>Compare the source with original service/employment records, calculations and approvals.</li>
-  <li>Record the final position, reasons, risk and action after competent review.</li>
-  </ol>`;
- }
- html+="</div>";
- $("advisorResults").innerHTML=html;
-}
-function adviceText(a){
- if(!a)return "";
- return `LCSA v5.0 — PRELIMINARY SOURCE-BASED ANALYSIS\nGenerated: ${a.createdAt}\n\nQUESTION\n${a.question}\n\nCONTEXT\n${a.context}\n\nPOTENTIAL SUBJECT AREAS\n${a.areas.join(", ")||"Not identified"}\n\nRELEVANT SOURCES\n${a.sources.map(s=>`- ${s.title} | ${s.reference||"No reference"} | ${s.provision||"No provision"} | Status: ${s.status}\n  ${s.summary||""}\n  ${s.officialUrl||""}`).join("\n")||"No matching source records"}\n\nVERIFICATION CONTROLS\n${a.framework.map(f=>`- ${f.id} ${f.area}: ${f.requirement}\n  Evidence: ${f.evidence}\n  Penalty: ${f.penalty}`).join("\n")||"None matched"}\n\nJUDICIAL MATERIAL\n${a.judgments.map(j=>`- ${j.caseName} | ${j.court} | ${j.caseNo} | ${j.status}\n  ${j.ratio||j.issue||""}`).join("\n")||"No matching judgment records"}\n\nCAUTION\nThis is a local-library research aid, not a legal opinion. Verify current official sources, applicability and judicial status before action.`;
-}
-function legalReferenceText(a){
- return `LCSA — LEGAL DEPARTMENT REFERENCE\n\nSubject: Legal opinion sought — ${a?.question||""}\nDate: ${today()}\n\nFacts / issue submitted:\n${a?.question||""}\n\nContext supplied:\n${a?.context||""}\n\nPotential subject areas identified by LCSA:\n${a?.areas?.join(", ")||"To be identified"}\n\nLocal source records requiring examination:\n${a?.sources?.map(s=>`- ${s.title}; reference: ${s.reference||"not recorded"}; provision: ${s.provision||"not recorded"}; status: ${s.status}; URL: ${s.officialUrl||"not recorded"}`).join("\n")||"No relevant source records identified"}\n\nVerification controls for consideration:\n${a?.framework?.map(f=>`- ${f.id}: ${f.area} — ${f.requirement}`).join("\n")||"To be identified"}\n\nJudicial material in the local library:\n${a?.judgments?.map(j=>`- ${j.caseName}; ${j.court}; ${j.caseNo}; status: ${j.status}`).join("\n")||"No matching judgment records identified"}\n\nSpecific opinion requested:\nPlease examine the facts and original records, identify the applicable current statutory provisions, Rules, orders and binding judicial directions, address any contrary authority, and advise on the legally permissible course of action and consequential financial/service implications.\n\nNote: LCSA matches are preliminary and must be independently verified. This reference does not state a concluded legal position.`;
-}
-
-function renderFramework(){
- const q=norm($("frameworkSearch").value),area=$("frameworkAreaFilter").value;
- const rows=db.framework.filter(f=>(!q||norm([f.id,f.area,f.requirement,f.keywords,f.source].join(" ")).includes(q))&&(!area||f.area===area));
- $("frameworkCount").textContent=`${rows.length} matching controls · ${db.framework.length} total controls`;
- const pages=Math.max(1,Math.ceil(rows.length/PAGE_SIZE));frameworkPage=Math.min(frameworkPage,pages);
- const part=rows.slice((frameworkPage-1)*PAGE_SIZE,frameworkPage*PAGE_SIZE);
- $("frameworkList").innerHTML=`<table><thead><tr><th>ID</th><th>Area</th><th>Verification control</th><th>Risk</th><th>Penalty field</th></tr></thead><tbody>${
- part.map(f=>`<tr><td>${esc(f.id)}</td><td>${esc(f.area)}</td><td>${esc(f.requirement)}<p class="muted">Evidence: ${esc(f.evidence)}</p></td><td>${esc(f.risk)}</td><td>${esc(f.penalty)}</td></tr>`).join("")
- }</tbody></table>`;
- $("frameworkPageLabel").textContent=`Page ${frameworkPage} / ${pages}`;
- $("frameworkPrev").disabled=frameworkPage<=1;$("frameworkNext").disabled=frameworkPage>=pages;
-}
-function createAudit(){
- let added=0;
- for(const f of db.framework){
-  if(!db.audit.some(a=>a.frameworkId===f.id)){
-   db.audit.push({id:uid("AUD"),frameworkId:f.id,code:f.id,area:f.area,requirement:f.requirement,
-    status:"Pending",observation:"",action:"",owner:f.responsible||"HR / Compliance",dueDate:"",updatedAt:today()});added++;
-  }
- }
- saveDB();alert(`${added} audit controls added. Existing audit findings were retained.`);showPage("audit");
-}
-function renderAudit(){
- const q=norm($("auditSearch").value),st=$("auditStatusFilter").value;
- const rows=db.audit.filter(a=>(!q||norm([a.code,a.area,a.requirement,a.observation,a.action,a.owner].join(" ")).includes(q))&&(!st||a.status===st));
- $("auditList").innerHTML=rows.length?`<table><thead><tr><th>Control</th><th>Status</th><th>Observation / evidence</th><th>Corrective action</th><th>Owner / due date</th><th>Save</th></tr></thead><tbody>${
- rows.map(a=>`<tr data-audit="${esc(a.id)}"><td><b>${esc(a.code)}</b><p>${esc(a.area)}</p><small>${esc(a.requirement)}</small></td>
- <td><select data-field="status">${["Pending","Compliant","Non-compliant","Partially compliant","Not applicable","Under review"].map(x=>`<option ${a.status===x?"selected":""}>${x}</option>`).join("")}</select></td>
- <td><textarea data-field="observation" rows="3">${esc(a.observation)}</textarea></td>
- <td><textarea data-field="action" rows="3">${esc(a.action)}</textarea></td>
- <td><input data-field="owner" value="${esc(a.owner)}" placeholder="Owner"><input data-field="dueDate" type="date" value="${esc(a.dueDate)}"></td>
- <td><button data-act="save-audit" data-id="${esc(a.id)}">Save</button></td></tr>`).join("")
- }</tbody></table>`:'<div class="empty">No audit controls match these filters. Use “Create audit from framework” to generate the audit register.</div>';
-}
-function saveAuditRow(id){
- const a=db.audit.find(x=>x.id===id);const tr=document.querySelector(`[data-audit="${CSS.escape(id)}"]`);if(!a||!tr)return;
- for(const el of tr.querySelectorAll("[data-field]"))a[el.dataset.field]=el.value;
- a.updatedAt=today();saveDB();alert("Audit finding saved.");
-}
-function renderJudgments(){
- const q=norm($("judgmentSearch").value);
- const rows=db.judgments.filter(j=>!q||norm([j.court,j.caseName,j.caseNo,j.act,j.section,j.facts,j.issue,j.ratio,j.outcome,j.keywords].join(" ")).includes(q));
- $("judgmentList").innerHTML=rows.length?rows.map(j=>`<div class="item"><div class="item-title">${esc(j.caseName)}</div>
- <p>${esc(j.court)} · ${esc(j.caseNo||"No citation")} · ${esc(j.judgmentDate||"Date not recorded")}</p>
- ${statusBadge(j.status)} <p><b>Act / provision:</b> ${esc(j.act||"Not recorded")} · ${esc(j.section||"")}</p>
- <p><b>Issue:</b> ${esc(j.issue||"Not recorded")}</p><p><b>Finding / ratio:</b> ${esc(j.ratio||"Not recorded")}</p>
- <p><b>Outcome:</b> ${esc(j.outcome||"Not recorded")}</p><p><b>Compliance implication:</b> ${esc(j.implication||"Not recorded")}</p>
- ${j.officialUrl?`<a target="_blank" rel="noopener" href="${esc(safeUrl(j.officialUrl))}">Open official judgment</a>`:""}
- <div class="toolbar"><button class="danger" data-act="delete-judgment" data-id="${esc(j.id)}">Delete</button></div></div>`).join(""):'<div class="empty">No judgment records. Add verified decisions and their subsequent status.</div>';
-}
-function saveJudgment(){
- const name=$("jName").value.trim(),court=$("jCourt").value.trim();if(!name||!court){alert("Court and case name are required.");return}
- db.judgments.unshift({id:uid("JUD"),court,caseName:name,caseNo:$("jNo").value.trim(),judgmentDate:$("jDate").value,
- bench:$("jBench").value.trim(),act:$("jAct").value.trim(),section:$("jSection").value.trim(),status:$("jStatus").value,
- facts:$("jFacts").value.trim(),issue:$("jIssue").value.trim(),ratio:$("jRatio").value.trim(),outcome:$("jOutcome").value.trim(),
- implication:$("jImplication").value.trim(),officialUrl:safeUrl($("jUrl").value),keywords:$("jKeywords").value.trim(),createdAt:today()});
- saveDB();closeModal("judgmentModal");renderJudgments();
-}
-function renderCases(){
- $("caseList").innerHTML=db.cases.length?db.cases.map(c=>`<div class="item"><div class="item-title">${esc(c.title)}</div>
- <p><b>Reference:</b> ${esc(c.ref||"Not recorded")}</p><p><b>Facts:</b> ${esc(c.facts||"Not recorded")}</p>
- <p><b>Issue:</b> ${esc(c.issue||"Not recorded")}</p><p><b>Sources to verify:</b> ${esc(c.rules||"Not recorded")}</p>
- <p><b>Documents:</b> ${esc(c.docs||"Not recorded")}</p><p><b>Opinion sought:</b> ${esc(c.opinion||"Not recorded")}</p>
- <div class="toolbar"><button data-act="export-case" data-id="${esc(c.id)}" class="secondary">Export reference</button><button data-act="delete-case" data-id="${esc(c.id)}" class="danger">Delete</button></div></div>`).join(""):'<div class="empty">No legal cases have been added.</div>';
-}
-function saveCase(){
- const title=$("cTitle").value.trim();if(!title){alert("Enter a subject.");return}
- const c={id:uid("CASE"),title,ref:$("cRef").value.trim(),facts:$("cFacts").value.trim(),issue:$("cIssue").value.trim(),
- rules:$("cRules").value.trim(),docs:$("cDocs").value.trim(),opinion:$("cOpinion").value.trim(),createdAt:today()};
- db.cases.unshift(c);saveDB();closeModal("caseModal");renderCases();
-}
-function renderDeadlines(){
- const rows=[...db.deadlines].sort((a,b)=>(a.date||"").localeCompare(b.date||""));
- $("deadlineList").innerHTML=rows.length?rows.map(d=>`<div class="item"><b>${esc(d.title)}</b>
- <p>Due: ${esc(d.date)} · ${statusBadge(d.status)}</p><p>Authority: ${esc(d.authority||"Not specified")} · Owner: ${esc(d.owner||"Not specified")}</p>
- <p>${esc(d.notes||"")}</p><div class="toolbar"><button data-act="complete-deadline" data-id="${esc(d.id)}" class="success">Mark completed</button><button data-act="delete-deadline" data-id="${esc(d.id)}" class="danger">Delete</button></div></div>`).join(""):'<div class="empty">No deadlines recorded.</div>';
-}
-function saveDeadline(){
- const title=$("dTitle").value.trim(),date=$("dDate").value;if(!title||!date){alert("Task and due date are required.");return}
- db.deadlines.push({id:uid("DUE"),title,date,authority:$("dAuthority").value.trim(),owner:$("dOwner").value.trim(),
- status:$("dStatus").value,notes:$("dNotes").value.trim(),createdAt:today()});
- saveDB();closeModal("deadlineModal");renderDeadlines();
-}
-async function exportTextBackup(){
- const docs=await idbAll();
- const payload={version:APP_VERSION,exportedAt:new Date().toISOString(),
- sources:db.sources.map(s=>({id:s.id,title:s.title,fileName:s.fileName||"",text:docs.find(d=>d.id===s.id)?.text||"",pages:docs.find(d=>d.id===s.id)?.pages||[]}))};
- download("LCSA-v5-indexed-source-text-backup.json",JSON.stringify(payload,null,2),"application/json");
-}
-async function importTextBackup(file){
- try{
-  const data=JSON.parse(await file.text());if(!Array.isArray(data.sources))throw new Error("Invalid source-text backup");
-  for(const s of data.sources){
-   const old=await idbGet(s.id);
-   await idbPut({...old,id:s.id,blob:old?.blob||null,text:s.text||"",pages:s.pages||old?.pages||[],fileName:old?.fileName||s.fileName||"",mime:old?.mime||"",size:old?.size||0,updatedAt:today()});
-   const meta=db.sources.find(x=>x.id===s.id);if(meta&&s.text)meta.hasText=true;
-  }
-  saveDB();renderSources();alert("Indexed source text restored. Original file binaries are not included in this backup.");
- }catch(e){alert("Restore failed: "+e.message)}
-}
-function exportDatabase(){download("LCSA-v5-database-backup.json",JSON.stringify(db,null,2),"application/json")}
-function importDatabase(file){
- const reader=new FileReader();reader.onload=()=>{
-  try{
-   const data=JSON.parse(reader.result);
-   if(!data||!Array.isArray(data.sources)||!Array.isArray(data.framework))throw new Error("This does not look like an LCSA database backup.");
-   if(!confirm("Restore will replace the current database metadata. Export the current database first. Continue?"))return;
-   db={...db,...data};seedSources();saveDB();fillFilters();renderDashboard();alert("Database restored. If you have an indexed-text backup, restore it separately.");
-  }catch(e){alert("Restore failed: "+e.message)}
- };reader.readAsText(file);
-}
-function exportAudit(){
- download("LCSA-v5-audit.csv",csv([["ID","Area","Requirement","Status","Observation","Corrective action","Owner","Due date","Updated"],
- ...db.audit.map(a=>[a.code,a.area,a.requirement,a.status,a.observation,a.action,a.owner,a.dueDate,a.updatedAt])]),"text/csv");
-}
-function exportFramework(){
- download("LCSA-v5-framework.csv",csv([["ID","Area","Requirement","Applicability","Evidence","Frequency","Risk","Penalty","Keywords"],
- ...db.framework.map(f=>[f.id,f.area,f.requirement,f.applicability,f.evidence,f.frequency,f.risk,f.penalty,f.keywords])]),"text/csv");
-}
-function exportJudgments(){
- download("LCSA-v5-judgments.csv",csv([["Court","Case name","Case number","Date","Act","Section","Status","Issue","Ratio","Outcome","URL"],
- ...db.judgments.map(j=>[j.court,j.caseName,j.caseNo,j.judgmentDate,j.act,j.section,j.status,j.issue,j.ratio,j.outcome,j.officialUrl])]),"text/csv");
-}
-function openExternalSearch(){
- const q=$("question").value.trim();if(!q){alert("Enter a question first.");return}
- window.open("https://www.google.com/search?q="+encodeURIComponent(q+" India official labour law government judgment"),"_blank","noopener");
-}
-function bindEvents(){
- document.querySelectorAll("#navigation button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
- $("addSourceBtn").onclick=addSource;$("saveSourceBtn").onclick=saveSource;$("cancelSourceBtn").onclick=()=>closeModal("sourceModal");
- $("sourceSearch").oninput=renderSources;$("sourceTypeFilter").onchange=renderSources;$("sourceStatusFilter").onchange=renderSources;$("sourceJurisdictionFilter").onchange=renderSources;
- $("sourceList").addEventListener("click",async e=>{
-  const b=e.target.closest("button[data-act]");if(!b)return;const id=b.dataset.id;
-  if(b.dataset.act==="read-source")await readSource(id);
-  if(b.dataset.act==="open-file")await openSourceFile(id);
-  if(b.dataset.act==="use-source"){const s=db.sources.find(x=>x.id===id);$("question").value=`Please assess the applicability and compliance implications of this source: ${s?.title||""}. Provision: ${s?.provision||"not specified"}. Summary: ${s?.summary||""}`;showPage("advisor")}
-  if(b.dataset.act==="edit-source")editSource(id);
-  if(b.dataset.act==="delete-source")await deleteSource(id);
-  if(b.dataset.act==="open-url"){const url=safeUrl(b.dataset.url);if(url)window.open(url,"_blank","noopener")}
- });
- $("sourceTextImportBtn").onclick=()=>$("sourceTextImport").click();
- $("sourceTextImport").onchange=e=>{if(e.target.files[0])importTextBackup(e.target.files[0]);e.target.value=""};
- $("exportSourceText").onclick=exportTextBackup;$("exportSourceText2").onclick=exportTextBackup;
- $("askBtn").onclick=analyseQuestion;$("clearAdvisor").onclick=()=>{$("question").value="";$("advisorResults").innerHTML="";currentAdvice=null;$("exportAdvice").disabled=true;$("legalReference").disabled=true};
- $("exportAdvice").onclick=()=>currentAdvice&&download("LCSA-v5-advisor-analysis.txt",adviceText(currentAdvice));
- $("legalReference").onclick=()=>currentAdvice&&download("LCSA-Legal-Department-Reference.txt",legalReferenceText(currentAdvice));
- $("frameworkSearch").oninput=()=>{frameworkPage=1;renderFramework()};$("frameworkAreaFilter").onchange=()=>{frameworkPage=1;renderFramework()};
- $("frameworkPrev").onclick=()=>{frameworkPage=Math.max(1,frameworkPage-1);renderFramework()};
- $("frameworkNext").onclick=()=>{frameworkPage++;renderFramework()};
- $("buildAuditBtn").onclick=createAudit;$("exportFrameworkBtn").onclick=exportFramework;
- $("auditSearch").oninput=renderAudit;$("auditStatusFilter").onchange=renderAudit;
- $("resetAuditFilter").onclick=()=>{$("auditSearch").value="";$("auditStatusFilter").value="";renderAudit()};
- $("auditList").addEventListener("click",e=>{const b=e.target.closest('[data-act="save-audit"]');if(b)saveAuditRow(b.dataset.id)});
- $("addJudgmentBtn").onclick=()=>openModal("judgmentModal");$("cancelJudgmentBtn").onclick=()=>closeModal("judgmentModal");$("saveJudgmentBtn").onclick=saveJudgment;
- $("judgmentSearch").oninput=renderJudgments;
- $("judgmentList").addEventListener("click",e=>{const b=e.target.closest('[data-act="delete-judgment"]');if(b&&confirm("Delete this judgment record?")){db.judgments=db.judgments.filter(j=>j.id!==b.dataset.id);saveDB();renderJudgments()}});
- $("addCaseBtn").onclick=()=>openModal("caseModal");$("cancelCaseBtn").onclick=()=>closeModal("caseModal");$("saveCaseBtn").onclick=saveCase;
- $("caseList").addEventListener("click",e=>{const b=e.target.closest("button[data-act]");if(!b)return;const c=db.cases.find(x=>x.id===b.dataset.id);if(b.dataset.act==="delete-case"&&confirm("Delete this case?")){db.cases=db.cases.filter(x=>x.id!==b.dataset.id);saveDB();renderCases()}if(b.dataset.act==="export-case"&&c)download("LCSA-case-reference.txt",`LEGAL DEPARTMENT REFERENCE\n\nSubject: ${c.title}\nReference: ${c.ref}\n\nFacts:\n${c.facts}\n\nIssue:\n${c.issue}\n\nSources / rules to verify:\n${c.rules}\n\nDocuments:\n${c.docs}\n\nSpecific opinion sought:\n${c.opinion}\n\nPlease verify current applicable law, rules, orders and judicial directions before action.`)});
- $("addDeadlineBtn").onclick=()=>openModal("deadlineModal");$("cancelDeadlineBtn").onclick=()=>closeModal("deadlineModal");$("saveDeadlineBtn").onclick=saveDeadline;
- $("deadlineList").addEventListener("click",e=>{const b=e.target.closest("button[data-act]");if(!b)return;if(b.dataset.act==="complete-deadline"){const d=db.deadlines.find(x=>x.id===b.dataset.id);if(d)d.status="Completed"}if(b.dataset.act==="delete-deadline"&&confirm("Delete deadline?"))db.deadlines=db.deadlines.filter(x=>x.id!==b.dataset.id);saveDB();renderDeadlines()});
- $("exportAuditBtn").onclick=exportAudit;$("exportAudit2").onclick=exportAudit;$("exportJudgments").onclick=exportJudgments;
- $("exportAllBtn").onclick=exportDatabase;$("importAllBtn").onclick=()=>$("importAllFile").click();
- $("importAllFile").onchange=e=>{if(e.target.files[0])importDatabase(e.target.files[0]);e.target.value=""};
- $("exportAdviceHistory").onclick=()=>download("LCSA-v5-advisor-history.json",JSON.stringify(db.advisorHistory,null,2),"application/json");
-}
-function renderSourceTypeFilters(){fillFilters()}
-async function init(){
- fillStateSelectors();
- try{await openIDB()}catch(e){console.error(e);alert("Local file storage could not be opened. Source metadata may still work, but file upload/indexing may fail.")}
- migrateDB();fillFilters();bindEvents();renderDashboard();renderSources();renderFramework();renderStorageInfo();
- setStatus(navigator.onLine?"Online":"Offline",navigator.onLine?"green":"amber");
- window.addEventListener("online",()=>setStatus("Online","green"));
- window.addEventListener("offline",()=>setStatus("Offline","amber"));
- if("serviceWorker" in navigator){navigator.serviceWorker.register("./service-worker.js").catch(e=>console.warn("Service worker registration failed",e))}
-}
-window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();installPrompt=e;$("installBtn").classList.remove("hidden")});
-$("installBtn").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("installBtn").classList.add("hidden")});
-window.addEventListener("DOMContentLoaded",init);
-</script>
-</body>
-</html>
+const SEARCH_TEMPLATES=[['Labour Codes and Ministry','https://www.google.com/search?q=site%3Alabour.gov.in+labour+notification+circular+OR+rule'],['EPFO circulars','https://www.google.com/search?q=site%3Aepfindia.gov.in+circular+OR+notification+EPFO'],['ESIC circulars','https://www.google.com/search?q=site%3Aesic.gov.in+circular+OR+notification+ESIC'],['DoPT OMs / CCS Rules','https://www.google.com/search?q=site%3Adopt.gov.in+office+memorandum+CCS+Rules'],['DoE pay / allowances','https://www.google.com/search?q=site%3Adoe.gov.in+office+memorandum+pay+allowances'],['Supreme Court service / labour','https://www.google.com/search?q=site%3Asci.gov.in+service+law+labour+judgment'],['High Court employee / labour cases','https://www.google.com/search?q=India+High+Court+labour+service+law+judgment+official'],['CAT orders','https://www.google.com/search?q=site%3Acgat.gov.in+judgment+order+service+matter'],['State labour departments','https://www.google.com/search?q=India+state+labour+department+notification+official'],['POSH updates','https://www.google.com/search?q=India+POSH+Act+official+notification+judgment']];
+const AREAS=['Applicability and establishment coverage','Registration and licences','Appointment letters and employment terms','Wage structure and minimum wages','Timely wage payment and deductions','Overtime and working hours','Attendance and muster rolls','Leave, holidays and weekly rest','Equal remuneration and non-discrimination','Bonus eligibility and payment','Gratuity eligibility and calculation','Provident fund coverage and contributions','EPF returns and member records','ESI coverage and contributions','ESI benefits and accident reporting','Contract labour principal-employer duties','Contractor due diligence and licence','Inter-state migrant worker requirements','Building and construction worker compliance','Occupational safety and health policy','Workplace safety risk assessment','Accident register and reporting','Welfare facilities and amenities','Women employees and night-shift safeguards','POSH Internal Committee and policy','POSH training and annual reporting','Industrial relations and standing orders','Trade union and collective bargaining records','Grievance redressal and conciliation','Retrenchment, closure and lay-off process','Disciplinary proceedings and natural justice','CCS Conduct / CCA compliance','Pay fixation and promotion orders','FR & SR and delegation of powers','Leave Travel Concession (LTC)','Pension and retirement benefits','Service book and personal file records','Government OMs and circular implementation','Returns, registers and record retention','Inspection readiness and corrective actions'];
+const CHECKS=[['Applicability','Confirm establishment type, employee category, headcount, location and statutory coverage.'],['Current law','Verify the controlling Act/Code, commencement notification, applicable rules and amendments.'],['Authorisation','Check registration, licence, approval, committee constitution or delegated authority where applicable.'],['Records','Inspect prescribed registers, service records, notices, policies and supporting evidence.'],['Calculation / process','Recalculate applicable payments, contributions, benefits or procedural steps from verified current provisions.'],['Returns / notices','Verify filing, payment, display, notice and reporting obligations and due dates.'],['Exemptions / exceptions','Check valid exemptions, special-category rules, approvals and written reasons for non-applicability.'],['Closure and review','Record gaps, responsible officer, target date, evidence of correction and periodic review.']];
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const uid=p=>p+'-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);const safeUrl=u=>{try{const x=new URL(u);return ['https:','http:'].includes(x.protocol)?x.href:''}catch{return''}};const nowDate=()=>new Date().toISOString().slice(0,10);
+let db=loadDB();let currentEditor=null;let lastAnalysis='';
+function blankDB(){return{profile:{version:'5.0'},news:[],sources:[],audit:[],judgments:[],actions:[],advisorHistory:[]}}
+function loadDB(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null')}catch{}if(!d){for(const k of OLD_KEYS){try{const old=JSON.parse(localStorage.getItem(k)||'null');if(old){d={...blankDB(),...old,news:old.news||[],actions:old.actions||old.deadlines||[],sources:old.sources||[],audit:old.audit||[],judgments:old.judgments||[],advisorHistory:old.advisorHistory||[]};break}}catch{}}}d=d||blankDB();for(const k of Object.keys(blankDB()))if(d[k]===undefined)d[k]=blankDB()[k];return d}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll()}
+function seed(){if(!db.sources.length){db.sources=SOURCES.map(s=>({id:uid('SRC'),title:s[0],category:s[1],url:s[2],description:s[3],authority:s[1],sourceType:'Official portal',status:'Requires Verification',verified:false,summary:'',keywords:s[0].toLowerCase(),createdAt:nowDate()}))}if(!db.audit.length){AREAS.forEach((area,ai)=>CHECKS.forEach((c,ci)=>db.audit.push({id:uid('AUD'),area,control:c[0],requirement:c[1],evidence:'Identify and retain relevant official record / evidence.',frequency:'As applicable / periodic',risk:ci===1?'High':'Medium',status:'Not Started',observation:'',action:'Verify current applicable provision and document evidence.',sourceIds:[],reference:'Verify applicable current provision; do not assume universal applicability.',code:`AUD-${String(ai+1).padStart(2,'0')}-${ci+1}`})))}if(!db.news.length){/* intentionally no fabricated news headlines */}save()}
+function go(panel){document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.panel===panel));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===panel));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.panel)));document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+function officialLink(s){return `<a class="source-link" href="${esc(s[2])}" target="_blank" rel="noopener"><strong>${esc(s[0])}</strong><span>${esc(s[3])}</span></a>`}
+function searchLink(s){return `<a class="source-link" href="${esc(s[1])}" target="_blank" rel="noopener"><strong>↗ ${esc(s[0])}</strong><span>Open public web search</span></a>`}
+function fillSelect(id,values,first){const el=document.getElementById(id);if(!el)return;const old=el.value;el.innerHTML=`<option value="all">${esc(first||'All')}</option>`+values.map(v=>`<option>${esc(v)}</option>`).join('');if(values.includes(old))el.value=old}
+function renderLinks(){document.getElementById('officialLinks').innerHTML=SOURCES.map(officialLink).join('')+SEARCH_TEMPLATES.map(searchLink).join('');document.getElementById('dashboardLinks').innerHTML=SOURCES.slice(0,8).map(officialLink).join('');fillSelect('newsCategory',CATEGORIES,'All categories');fillSelect('sourceTypeFilter',CATEGORIES,'All categories')}
+function newsCard(n){const url=safeUrl(n.url);return `<article class="card news-card"><div class="row"><span class="badge ${n.verified?'green':'amber'}">${n.verified?'Verified by user':esc(n.verification||'Unverified')}</span><span class="muted">${esc(n.date||'Date not recorded')}</span></div><h3>${esc(n.title)}</h3><div class="source">${esc(n.authority||'Authority not recorded')} · ${esc(n.category||'Other')}</div><p>${esc(n.summary||'No summary entered.')}</p>${n.impact?`<p><strong>Compliance impact:</strong> ${esc(n.impact)}</p>`:''}${n.status?`<p><strong>Tracking:</strong> ${esc(n.status)}</p>`:''}<div class="actions">${url?`<a class="btn small" href="${esc(url)}" target="_blank" rel="noopener">Open source ↗</a>`:''}<button class="btn secondary small" data-edit-news="${esc(n.id)}">Edit</button><button class="btn secondary small" data-save-source="${esc(n.id)}">Save to library</button><button class="btn danger small" data-del-news="${esc(n.id)}">Delete</button></div></article>`}
+function renderNews(){const q=(document.getElementById('newsQuery')?.value||'').toLowerCase().trim(),cat=document.getElementById('newsCategory')?.value||'all',from=document.getElementById('newsFrom')?.value||'',to=document.getElementById('newsTo')?.value||'';let arr=db.news.filter(n=>{const txt=[n.title,n.summary,n.authority,n.category,n.impact,n.caseNo].join(' ').toLowerCase();return(!q||txt.includes(q))&&(cat==='all'||n.category===cat)&&(!from||!n.date||n.date>=from)&&(!to||!n.date||n.date<=to)}).sort((a,b)=>(b.date||'').localeCompare(a.date||''));document.getElementById('newsCount').textContent=`${arr.length} item(s)`;document.getElementById('newsList').innerHTML=arr.length?arr.map(newsCard).join(''):'<div class="card empty" style="grid-column:1/-1">No saved news items match these filters. Use official-source links or add a news record. No sample headlines are fabricated.</div>';document.getElementById('recentNews').innerHTML=db.news.length?db.news.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5).map(n=>`<p><strong>${esc(n.title)}</strong> <span class="muted">· ${esc(n.date||'')}</span></p>`).join(''):'<div class="empty">No news items saved yet.</div>'}
+function sourceRow(s){return `<div class="card" style="margin-bottom:9px"><div class="section-head"><h3 style="margin:0">${esc(s.title||'Untitled source')}</h3><span class="badge ${s.verified?'green':'amber'}">${esc(s.status||'Requires Verification')}</span></div><p class="muted">${esc(s.category||'Other')} · ${esc(s.authority||'Authority not recorded')} · ${esc(s.sourceType||'Source type not recorded')}</p><p>${esc(s.summary||s.description||'No summary entered.')}</p>${s.reference?`<p><strong>Reference:</strong> ${esc(s.reference)}</p>`:''}${safeUrl(s.url)?`<p><a href="${esc(safeUrl(s.url))}" target="_blank" rel="noopener">Open source ↗</a></p>`:''}<div class="row"><button class="btn secondary small fixed" data-edit-source="${esc(s.id)}">Edit</button><button class="btn danger small fixed" data-del-source="${esc(s.id)}">Delete</button></div></div>`}
+function renderSources(){const q=(document.getElementById('sourceSearch')?.value||'').toLowerCase(),cat=document.getElementById('sourceTypeFilter')?.value||'all';const arr=db.sources.filter(s=>(cat==='all'||s.category===cat)&&[s.title,s.category,s.authority,s.summary,s.reference,s.keywords,s.url].join(' ').toLowerCase().includes(q));document.getElementById('sourceList').innerHTML=arr.length?arr.map(sourceRow).join(''):'<div class="card empty">No sources found.</div>'}
+function renderAudit(){const q=(document.getElementById('auditSearch')?.value||'').toLowerCase(),st=document.getElementById('auditStatusFilter')?.value||'all';const arr=db.audit.filter(a=>(st==='all'||a.status===st)&&[a.code,a.area,a.control,a.requirement,a.evidence,a.action].join(' ').toLowerCase().includes(q));document.getElementById('auditList').innerHTML=`<div class="table-wrap"><table><thead><tr><th>Control / area</th><th>Requirement / evidence</th><th>Status</th><th>Observation / action</th><th>Update</th></tr></thead><tbody>${arr.map(a=>`<tr><td><strong>${esc(a.code||'')}</strong><br>${esc(a.area)}<br><span class="muted">${esc(a.control)}</span><br><span class="badge ${a.risk==='High'?'red':'amber'}">${esc(a.risk||'Review risk')}</span></td><td>${esc(a.requirement)}<p class="muted">Evidence: ${esc(a.evidence||'Not specified')}</p><p class="muted">${esc(a.reference||'Verify current provision')}</p></td><td><select data-audit-status="${esc(a.id)}">${['Not Started','Under Review','Compliant','Gap Identified','Not Applicable'].map(x=>`<option ${a.status===x?'selected':''}>${x}</option>`).join('')}</select></td><td><textarea data-audit-observation="${esc(a.id)}" placeholder="Observation">${esc(a.observation||'')}</textarea><textarea data-audit-action="${esc(a.id)}" placeholder="Corrective action">${esc(a.action||'')}</textarea></td><td><button class="btn small" data-save-audit="${esc(a.id)}">Save</button></td></tr>`).join('')}</tbody></table></div>`}
+function renderCases(){const q=(document.getElementById('caseSearch')?.value||'').toLowerCase();const arr=db.judgments.filter(c=>[c.court,c.caseName,c.caseNo,c.subject,c.ratio,c.outcome,c.status].join(' ').toLowerCase().includes(q));document.getElementById('caseList').innerHTML=arr.length?arr.map(c=>`<div class="card" style="margin-bottom:9px"><div class="section-head"><h3 style="margin:0">${esc(c.caseName||'Case name not entered')}</h3><span class="badge ${c.status==='Verified'?'green':'amber'}">${esc(c.status||'Needs verification')}</span></div><p>${esc(c.court||'Court not entered')} · ${esc(c.caseNo||'Case number not entered')} · ${esc(c.date||'Date not entered')}</p><p><strong>Issue / subject:</strong> ${esc(c.subject||'—')}</p><p><strong>Finding / ratio:</strong> ${esc(c.ratio||c.finding||'Not recorded')}</p><p><strong>Judicial status:</strong> ${esc(c.judicialStatus||'Check appeal, stay, modification and later treatment')}</p>${safeUrl(c.url)?`<a href="${esc(safeUrl(c.url))}" target="_blank" rel="noopener">Open official case source ↗</a>`:''}<p><button class="btn secondary small" data-edit-case="${esc(c.id)}">Edit</button> <button class="btn danger small" data-del-case="${esc(c.id)}">Delete</button></p></div>`).join(''):'<div class="card empty">No judgments or cases saved.</div>'}
+function renderActions(){const arr=db.actions.slice().sort((a,b)=>(a.dueDate||'9999').localeCompare(b.dueDate||'9999'));document.getElementById('actionList').innerHTML=arr.length?`<div class="table-wrap"><table><thead><tr><th>Action</th><th>Due date</th><th>Owner</th><th>Status</th><th>Source / notes</th><th></th></tr></thead><tbody>${arr.map(a=>`<tr><td><strong>${esc(a.title)}</strong><p>${esc(a.description||'')}</p></td><td>${esc(a.dueDate||'Not set')}</td><td>${esc(a.owner||'Not assigned')}</td><td>${esc(a.status||'Open')}</td><td>${esc(a.source||'')}<p>${esc(a.notes||'')}</p></td><td><button class="btn secondary small" data-edit-action="${esc(a.id)}">Edit</button> <button class="btn danger small" data-del-action="${esc(a.id)}">Delete</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="card empty">No actions or deadlines saved. Add a task and confirm the due date against an official source.</div>'}
+function renderAdvisorHistory(){document.getElementById('advisorHistory').innerHTML=db.advisorHistory.length?db.advisorHistory.slice().reverse().map(a=>`<div class="card" style="margin:8px 0"><strong>${esc(a.question.slice(0,180))}</strong><p class="muted">${esc(a.date)} · ${esc(a.area)}</p><button class="btn secondary small" data-load-analysis="${esc(a.id)}">View analysis</button></div>`).join(''):'<div class="empty">No saved analyses.</div>'}
+function renderAll(){document.getElementById('mNews').textContent=db.news.length;document.getElementById('mSources').textContent=db.sources.length;document.getElementById('mAudit').textContent=db.audit.length;document.getElementById('mActions').textContent=db.actions.filter(a=>a.status!=='Completed'&&a.status!=='Closed').length;renderNews();renderSources();renderAudit();renderCases();renderActions();renderAdvisorHistory()}
+function field(name,label,type='text',value='',opts=null,wide=false,placeholder=''){let control;if(type==='textarea')control=`<textarea name="${name}" placeholder="${esc(placeholder)}">${esc(value)}</textarea>`;else if(type==='select')control=`<select name="${name}">${opts.map(o=>`<option ${value===o?'selected':''}>${esc(o)}</option>`).join('')}</select>`;else control=`<input name="${name}" type="${type}" value="${esc(value)}" placeholder="${esc(placeholder)}">`;return `<div class="${wide?'wide':''}"><label>${esc(label)}</label>${control}</div>`}
+function openEditor(kind,id=null,extra={}){currentEditor={kind,id};let obj=id?findRecord(kind,id):{};const F=[];if(kind==='news'){F.push(field('title','Headline','text',obj.title||'',null,true),field('date','Publication date','date',obj.date||nowDate()),field('category','Category','select',obj.category||'Other',CATEGORIES),field('authority','Issuing authority / publisher','text',obj.authority||''),field('url','Official source URL','url',obj.url||'',null,true),field('summary','Summary (paraphrase)','textarea',obj.summary||'',null,true,'Summarise the primary source; do not treat commentary as binding law.'),field('impact','Potential employee / compliance impact','textarea',obj.impact||'',null,true),field('effectiveDate','Effective date (if stated)','date',obj.effectiveDate||''),field('verification','Verification status','select',obj.verification||'Unverified',['Unverified','Official source opened','Document reviewed','Legal status checked']),field('status','Follow-up status','select',obj.status||'New',['New','Under Review','Action Required','Implemented','Not Applicable']),field('caseNo','Circular / notification / case reference','text',obj.caseNo||'',null,true),field('notes','Notes / next action','textarea',obj.notes||'',null,true));}
+if(kind==='source'){F.push(field('title','Source title','text',obj.title||'',null,true),field('category','Category','select',obj.category||'Other',CATEGORIES),field('authority','Issuing authority','text',obj.authority||''),field('sourceType','Source type','select',obj.sourceType||'Official order / circular',['Constitution / Act / Code','Rules','Gazette notification','Regulation / Scheme','Official order / circular','Court judgment','Tribunal order','Departmental guidance','Secondary commentary','Official portal']),field('reference','Reference / number / provision','text',obj.reference||'',null,true),field('date','Publication / order date','date',obj.date||''),field('effectiveDate','Effective date','date',obj.effectiveDate||''),field('url','Official URL','url',obj.url||'',null,true),field('summary','Summary / legal principle','textarea',obj.summary||obj.description||'',null,true),field('keywords','Keywords','text',obj.keywords||'',null,true),field('status','Legal status','select',obj.status||'Requires Verification',['Current / Verified','Requires Verification','Superseded','Repealed','Judicial Status Uncertain']),field('verified','Reviewed against primary source?','select',obj.verified?'Yes':'No',['No','Yes']));}
+if(kind==='case'){F.push(field('caseName','Case name','text',obj.caseName||'',null,true),field('court','Court / tribunal','select',obj.court||'High Court',['Supreme Court','High Court','CAT','Labour Court','Industrial Tribunal / CGIT','EPFO / ESIC Tribunal','Other Tribunal']),field('caseNo','Case number / citation','text',obj.caseNo||'',null,true),field('date','Decision date','date',obj.date||''),field('subject','Issue / applicable law','text',obj.subject||'',null,true),field('finding','Finding / outcome','textarea',obj.finding||'',null,true),field('ratio','Ratio / compliance implication','textarea',obj.ratio||'',null,true),field('judicialStatus','Appeal / stay / overruled status','text',obj.judicialStatus||'Not checked',null,true),field('url','Official judgment URL','url',obj.url||'',null,true),field('status','Record verification','select',obj.status||'Needs verification',['Needs verification','Official judgment reviewed','Judicial status checked','Uncertain']));}
+if(kind==='action'){F.push(field('title','Action / deadline title','text',obj.title||'',null,true),field('dueDate','Due date','date',obj.dueDate||''),field('owner','Responsible officer','text',obj.owner||''),field('status','Status','select',obj.status||'Open',['Open','In Progress','Completed','Closed','On Hold']),field('source','Controlling source / reference','text',obj.source||'',null,true),field('description','Action details','textarea',obj.description||'',null,true),field('notes','Notes / evidence','textarea',obj.notes||'',null,true));}
+document.getElementById('dialogTitle').textContent=(id?'Edit ':'Add ')+({news:'news item',source:'source record',case:'judgment / case',action:'action'}[kind]);document.getElementById('dialogFields').innerHTML=`<div class="form-grid">${F.join('')}</div>`;document.getElementById('editDialog').showModal()}
+function findRecord(kind,id){return ({news:db.news,source:db.sources,case:db.judgments,action:db.actions}[kind]||[]).find(x=>x.id===id)||{}}
+document.getElementById('editForm').addEventListener('submit',e=>{e.preventDefault();if(!currentEditor)return;const form=new FormData(e.target),obj=Object.fromEntries(form.entries()),{kind,id}=currentEditor;obj.id=id||uid(kind.toUpperCase());if(kind==='news'){obj.verified=['Document reviewed','Legal status checked'].includes(obj.verification);db.news=db.news.filter(x=>x.id!==obj.id);db.news.push(obj)}if(kind==='source'){obj.verified=obj.verified==='Yes';db.sources=db.sources.filter(x=>x.id!==obj.id);db.sources.push(obj)}if(kind==='case'){db.judgments=db.judgments.filter(x=>x.id!==obj.id);db.judgments.push(obj)}if(kind==='action'){db.actions=db.actions.filter(x=>x.id!==obj.id);db.actions.push(obj)}document.getElementById('editDialog').close();save()});function closeEditor(){document.getElementById('editDialog').close()}document.getElementById('closeDialog').onclick=closeEditor;document.getElementById('cancelDialog').onclick=closeEditor;
+document.getElementById('newNewsBtn').onclick=()=>openEditor('news');document.getElementById('newSourceBtn').onclick=()=>openEditor('source');document.getElementById('newCaseBtn').onclick=()=>openEditor('case');document.getElementById('newActionBtn').onclick=()=>openEditor('action');
+document.getElementById('searchNewsBtn').onclick=()=>{const q=document.getElementById('newsQuery').value.trim()||'India employee labour law EPFO ESIC CCS court judgment notification';const cat=document.getElementById('newsCategory').value;const extra=cat!=='all'?' '+cat:'';window.open('https://www.google.com/search?q='+encodeURIComponent(q+extra+' India official notification circular judgment'),'_blank','noopener')};document.getElementById('clearNewsFilter').onclick=()=>{['newsQuery','newsFrom','newsTo'].forEach(id=>document.getElementById(id).value='');document.getElementById('newsCategory').value='all';renderNews()};['newsQuery','newsFrom','newsTo','newsCategory'].forEach(id=>document.getElementById(id).addEventListener('input',renderNews));document.getElementById('sourceSearch').addEventListener('input',renderSources);document.getElementById('sourceTypeFilter').addEventListener('change',renderSources);document.getElementById('auditSearch').addEventListener('input',renderAudit);document.getElementById('auditStatusFilter').addEventListener('change',renderAudit);document.getElementById('caseSearch').addEventListener('input',renderCases);
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const ds=b.dataset;if(ds.editNews)openEditor('news',ds.editNews);if(ds.editSource)openEditor('source',ds.editSource);if(ds.editCase)openEditor('case',ds.editCase);if(ds.editAction)openEditor('action',ds.editAction);if(ds.delNews&&confirm('Delete this saved news item?')){db.news=db.news.filter(x=>x.id!==ds.delNews);save()}if(ds.delSource&&confirm('Delete this source record?')){db.sources=db.sources.filter(x=>x.id!==ds.delSource);save()}if(ds.delCase&&confirm('Delete this case record?')){db.judgments=db.judgments.filter(x=>x.id!==ds.delCase);save()}if(ds.delAction&&confirm('Delete this action?')){db.actions=db.actions.filter(x=>x.id!==ds.delAction);save()}if(ds.saveSource){const n=db.news.find(x=>x.id===ds.saveSource);if(n){db.sources.push({id:uid('SRC'),title:n.title,category:n.category,authority:n.authority,url:n.url,reference:n.caseNo,date:n.date,effectiveDate:n.effectiveDate,summary:n.summary,keywords:[n.title,n.category].join(' '),status:n.verified?'Current / Verified':'Requires Verification',verified:!!n.verified,sourceType:'News reference'});save();alert('News reference saved to Source Library. Verify the primary legal document before relying on it.')}}if(ds.saveAudit){const a=db.audit.find(x=>x.id===ds.saveAudit);if(a){a.status=document.querySelector(`[data-audit-status="${CSS.escape(a.id)}"]`).value;a.observation=document.querySelector(`[data-audit-observation="${CSS.escape(a.id)}"]`).value;a.action=document.querySelector(`[data-audit-action="${CSS.escape(a.id)}"]`).value;save()}}if(ds.loadAnalysis){const a=db.advisorHistory.find(x=>x.id===ds.loadAnalysis);if(a){lastAnalysis=a.analysis;document.getElementById('advisorOutput').innerHTML=`<pre style="white-space:pre-wrap;font:inherit">${esc(a.analysis)}</pre>`;go('advisor')}}});
+function analyse(){const question=document.getElementById('advQuestion').value.trim();if(!question){alert('Please enter the employee issue and relevant facts first.');return}const area=document.getElementById('advArea').value,jur=document.getElementById('advJurisdiction').value,outcome=document.getElementById('advOutcome').value;const terms=(question+' '+area).toLowerCase().split(/[^a-z0-9]+/).filter(t=>t.length>3);const relatedSources=db.sources.map(s=>({...s,score:terms.reduce((n,t)=>n+([s.title,s.summary,s.reference,s.keywords,s.category].join(' ').toLowerCase().includes(t)?1:0),0)})).filter(s=>s.score>0).sort((a,b)=>b.score-a.score).slice(0,8);const relatedNews=db.news.map(n=>({...n,score:terms.reduce((z,t)=>z+([n.title,n.summary,n.impact,n.category].join(' ').toLowerCase().includes(t)?1:0),0)})).filter(n=>n.score>0).sort((a,b)=>b.score-a.score).slice(0,5);const relatedAudit=db.audit.filter(a=>(area==='General service matter'||area==='Other labour compliance'||[a.area,a.control,a.requirement].join(' ').toLowerCase().includes(area.split('/')[0].trim().toLowerCase()))).slice(0,12);let textOut=`LCSA v5.0 — PRELIMINARY SOURCE-BASED ISSUE NOTE\nGenerated: ${new Date().toLocaleString()}\nSubject: ${area}\nJurisdiction: ${jur}\nRequested output: ${outcome}\n\nFACTS / QUESTION\n${question}\n\n1. INITIAL POSITION\nThis is a preliminary research aid generated from records currently saved in this browser. It is not a legal opinion and does not establish that a provision is currently in force or applicable. Identify the employer type, employee category, relevant dates, governing service rules, jurisdiction and any special regulations before deciding the issue.\n\n2. POTENTIALLY RELEVANT SAVED SOURCES\n${relatedSources.length?relatedSources.map((s,i)=>`${i+1}. ${s.title} | ${s.category} | status: ${s.status||'Requires Verification'} | reference: ${s.reference||'not recorded'} | URL: ${s.url||'not recorded'}\n   Summary: ${s.summary||s.description||'No summary recorded.'}`).join('\n'):'No matching source record found. Search the official portals and add the primary Act/Code, Rules, notification, OM/circular or order to the Source Library.'}\n\n3. MATCHING SAVED NEWS\n${relatedNews.length?relatedNews.map((n,i)=>`${i+1}. ${n.title} | ${n.date||'date not recorded'} | ${n.authority||'authority not recorded'} | ${n.verification||'Unverified'} | ${n.url||'no URL'}\n   Summary: ${n.summary||'No summary'}`).join('\n'):'No matching saved news item. A current official-source search is required.'}\n\n4. REVIEW CHECKLIST\n${relatedAudit.map((a,i)=>`${i+1}. [${a.status}] ${a.area} — ${a.control}: ${a.requirement}`).join('\n')||'Confirm applicability; identify controlling provision; obtain employee/service records; calculate any financial entitlement independently; check limitation, appeal and procedural deadlines; document approvals and reasons.'}\n\n5. EVIDENCE TO COLLECT\n• Appointment / employment terms and employee category.\n• Relevant service book, pay slips, attendance, contribution records or personal file.\n• Original order / notice / application and proof of service.\n• Applicable rules, amendments, official circulars and delegations.\n• Comparable prior decisions, where legally relevant, and evidence of subsequent judicial treatment.\n\n6. LEGAL STATUS / RISK CHECKS\n• Confirm commencement, territorial and establishment applicability.\n• Check later amendments, supersession, stay, appeal, review or higher-court treatment.\n• Verify limitation and prescribed time limits from the current primary source.\n• Do not rely on search snippets or secondary commentary as controlling law.\n\n7. RECOMMENDED NEXT STEP\nObtain and verify the primary official text, record its exact provision and effective date in the Source Library, then have the competent HR / Legal officer review the facts and proposed action.\n\nDisclaimer: This note is not an automatic legal determination. Missing source records mean the legal position remains unverified.`;lastAnalysis=textOut;document.getElementById('advisorOutput').innerHTML=`<div class="section-head"><h3>Preliminary analysis</h3><button class="btn secondary small" id="copyAnalysisNow">Copy note</button></div><pre style="white-space:pre-wrap;font:inherit;overflow-wrap:anywhere">${esc(textOut)}</pre>`;document.getElementById('copyAnalysisNow').onclick=()=>copyText(lastAnalysis);return textOut}
+document.getElementById('runAdvisor').onclick=analyse;function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>alert('Copied.')).catch(()=>fallbackCopy(t));else fallbackCopy(t)}function fallbackCopy(t){const x=document.createElement('textarea');x.value=t;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();alert('Copied where browser permissions allow.')}document.getElementById('copyAdvisor').onclick=()=>lastAnalysis?copyText(lastAnalysis):alert('Run an analysis first.');document.getElementById('saveAdvisor').onclick=()=>{if(!lastAnalysis){analyse();if(!lastAnalysis)return}db.advisorHistory.push({id:uid('ADV'),date:nowDate(),area:document.getElementById('advArea').value,question:document.getElementById('advQuestion').value,analysis:lastAnalysis});save();alert('Analysis saved locally.')};
+function csvEscape(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}document.getElementById('exportAudit').onclick=()=>{const rows=[['Code','Area','Control','Requirement','Evidence','Risk','Status','Observation','Action'],...db.audit.map(a=>[a.code,a.area,a.control,a.requirement,a.evidence,a.risk,a.status,a.observation,a.action])];download('lcsa-audit.csv',rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'),'text/csv')};function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}function exportJSON(){download('lcsa-v5-backup-'+nowDate()+'.json',JSON.stringify(db,null,2),'application/json')}document.getElementById('exportBtn').onclick=exportJSON;document.getElementById('exportText').onclick=exportJSON;document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const incoming=JSON.parse(await f.text());if(!incoming||typeof incoming!=='object')throw Error('Invalid JSON');if(!confirm('Import and replace current LCSA records? Export a backup first if needed.'))return;db={...blankDB(),...incoming};save();alert('Backup imported.')}catch(err){alert('Import failed: '+err.message)}e.target.value=''};document.getElementById('resetSeed').onclick=()=>{seed();alert('Missing starter sources and audit controls restored. Existing records were retained.')};document.getElementById('clearAll').onclick=()=>{if(confirm('Permanently clear all LCSA data in this browser? Export a backup first.')){db=blankDB();localStorage.removeItem(KEY);seed();save();alert('Local LCSA data cleared; starter records restored.')}};
+seed();renderLinks();renderAll();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+})();
+</script></body>
+                                </html>
