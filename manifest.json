@@ -1,13 +1,11 @@
-
 {
   "name": "LCSA Labour Compliance & Strategy Advisor",
   "short_name": "LCSA",
-  "description": "Indian labour-law compliance, service rules, source library, legal research and audit advisor.",
+  "description": "Source-based Indian labour and employee compliance research workspace",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#f3f6fa",
-  "theme_color": "#142d4e",
-  "icons": []
+  "theme_color": "#12304a"
 }
