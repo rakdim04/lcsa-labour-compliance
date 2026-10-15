@@ -1,0 +1,12 @@
+{
+  "name": "LCSA Labour Compliance & Strategy Advisor",
+  "short_name": "LCSA",
+  "description": "Labour compliance source library, news monitoring and verification workspace",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f6fa",
+  "theme_color": "#10243a",
+  "icons": []
+}
