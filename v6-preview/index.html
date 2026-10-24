@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="theme-color" content="#10243a">
-          <title>LCSA v6.0 — Labour Compliance & Strategy Advisor</title>
-          <link rel="manifest" href="./manifest.json">
-            <style>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#10243a">
+    <title>LCSA v6.0 — Labour Compliance & Strategy Advisor</title>
+    <link rel="manifest" href="./manifest.json">
+    <style>
 :root{--navy:#10243a;--blue:#1d4ed8;--ink:#182230;--muted:#637083;--bg:#f3f6fa;--card:#fff;--line:#dbe3ec;--green:#166534;--amber:#92400e;--red:#991b1b}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
 header{background:var(--navy);color:white;padding:16px max(16px,calc((100% - 1250px)/2));position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0002}
@@ -17,321 +17,323 @@ label{display:block;font-size:13px;font-weight:650;margin:8px 0 4px}input,select
 footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);font-size:12px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{white-space:nowrap;width:auto}.panel{padding:13px}.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}header{position:static}}
 </style>
-            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-            <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs" type="module"></script>
-            <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
-          </head>
-          <body>
-            <header>
-              <div class="brand">
-                <div class="logo">LC</div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="logo">LC</div>
+        <div>
+          <h1>LCSA v6.0</h1>
+          <p>Labour Compliance & Strategy Advisor · Source-backed research workspace</p>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="notice">
+        <strong>Configuration required:</strong> this app is not connected to Supabase until you enter your own project URL and public anon/publishable key and configure the supplied SQL. Never place a service-role key in this page.</div>
+        <div class="layout">
+          <nav class="sidebar" aria-label="Main navigation">
+            <button class="navbtn active" data-page="dashboard">Dashboard</button>
+            <button class="navbtn" data-page="news">News & Legal Updates</button>
+            <button class="navbtn" data-page="sources">Official Source Registry</button>
+            <button class="navbtn" data-page="upload">Upload / Import</button>
+            <button class="navbtn" data-page="queue">Verification Queue</button>
+            <button class="navbtn" data-page="library">National Source Library</button>
+            <button class="navbtn" data-page="advisor">Advisor</button>
+            <button class="navbtn" data-page="settings">Settings / Backup</button>
+          </nav>
+          <section class="panel">
+            <div id="globalStatus" class="status">Not connected to Supabase. Local draft mode is available.</div>
+            <section id="page-dashboard" class="page">
+              <div class="sectionhead">
                 <div>
-                  <h1>LCSA v6.0</h1>
-                  <p>Labour Compliance & Strategy Advisor · Source-backed research workspace</p>
+                  <h2>Dashboard</h2>
+                  <div class="muted">Monitor official updates, import documents and verify before relying on them.</div>
+                </div>
+                <button onclick="showPage('news')">Open News</button>
+              </div>
+              <div class="cards">
+                <div class="card">
+                  <h3>News items</h3>
+                  <div id="statNews">0</div>
+                  <div class="muted">Saved news and updates</div>
+                </div>
+                <div class="card">
+                  <h3>Verification queue</h3>
+                  <div id="statQueue">0</div>
+                  <div class="muted">Items awaiting review</div>
+                </div>
+                <div class="card">
+                  <h3>Source registry</h3>
+                  <div id="statSources">0</div>
+                  <div class="muted">Configured official sources</div>
+                </div>
+                <div class="card">
+                  <h3>Library documents</h3>
+                  <div id="statDocs">0</div>
+                  <div class="muted">Imported or uploaded records</div>
                 </div>
               </div>
-            </header>
-            <main>
-              <div class="notice">
-                <strong>Configuration required:</strong> this app is not connected to Supabase until you enter your own project URL and public anon/publishable key and configure the supplied SQL. Never place a service-role key in this page.</div>
-                <div class="layout">
-                  <nav class="sidebar" aria-label="Main navigation">
-                    <button class="navbtn active" data-page="dashboard">Dashboard</button>
-                    <button class="navbtn" data-page="news">News & Legal Updates</button>
-                    <button class="navbtn" data-page="sources">Official Source Registry</button>
-                    <button class="navbtn" data-page="upload">Upload / Import</button>
-                    <button class="navbtn" data-page="queue">Verification Queue</button>
-                    <button class="navbtn" data-page="library">National Source Library</button>
-                    <button class="navbtn" data-page="advisor">Advisor</button>
-                    <button class="navbtn" data-page="settings">Settings / Backup</button>
-                  </nav>
-                  <section class="panel">
-                    <div id="globalStatus" class="status">Not connected to Supabase. Local draft mode is available.</div>
-                    <section id="page-dashboard" class="page">
-                      <div class="sectionhead">
-                        <div>
-                          <h2>Dashboard</h2>
-                          <div class="muted">Monitor official updates, import documents and verify before relying on them.</div>
-                        </div>
-                        <button onclick="showPage('news')">Open News</button>
-                      </div>
-                      <div class="cards">
-                        <div class="card">
-                          <h3>News items</h3>
-                          <div id="statNews">0</div>
-                          <div class="muted">Saved news and updates</div>
-                        </div>
-                        <div class="card">
-                          <h3>Verification queue</h3>
-                          <div id="statQueue">0</div>
-                          <div class="muted">Items awaiting review</div>
-                        </div>
-                        <div class="card">
-                          <h3>Source registry</h3>
-                          <div id="statSources">0</div>
-                          <div class="muted">Configured official sources</div>
-                        </div>
-                        <div class="card">
-                          <h3>Library documents</h3>
-                          <div id="statDocs">0</div>
-                          <div class="muted">Imported or uploaded records</div>
-                        </div>
-                      </div>
-                      <h3>Daily monitoring model</h3>
-                      <p>GitHub Actions can run once daily for sources with a confirmed, accessible RSS/Atom feed URL. The starter registry intentionally leaves feed URLs blank unless you configure and test them. Websites without permitted feeds or APIs remain available through official links and manual import.</p>
-                      <div class="notice">Legal safeguard: collected items are unverified leads. Confirm the underlying official document, applicability, effective date, amendments, stays and subsequent judicial treatment before taking action.</div>
-                    </section>
-                    <section id="page-news" class="page hidden">
-                      <div class="sectionhead">
-                        <div>
-                          <h2>News & Legal Updates</h2>
-                          <div class="muted">Search saved items, filter by authority/category, and send records to the verification queue.</div>
-                        </div>
-                        <button onclick="showPage('upload')">Import item</button>
-                      </div>
-                      <div class="formgrid">
-                        <div>
-                          <label for="newsSearch">Search</label>
-                          <input id="newsSearch" placeholder="Keyword, subject, case number…" oninput="renderNews()">
-                          </div>
-                          <div>
-                            <label for="newsCategory">Category</label>
-                            <select id="newsCategory" onchange="renderNews()">
-                              <option value="">All categories</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label for="newsStatus">Review status</label>
-                            <select id="newsStatus" onchange="renderNews()">
-                              <option value="">All statuses</option>
-                              <option>Unverified</option>
-                              <option>Under Review</option>
-                              <option>Verified</option>
-                              <option>Superseded</option>
-                              <option>Status Uncertain</option>
-                            </select>
-                          </div>
-                          <div>
-                            <label for="newsFrom">From date</label>
-                            <input id="newsFrom" type="date" onchange="renderNews()">
-                            </div>
-                          </div>
-                          <div id="newsList" class="list">
-                          </div>
-                        </section>
-                        <section id="page-sources" class="page hidden">
-                          <div class="sectionhead">
-                            <div>
-                              <h2>Official Source Registry</h2>
-                              <div class="muted">Official portals are starter references, not proof of an active feed. Add a tested RSS/Atom URL to enable scheduled monitoring.</div>
-                            </div>
-                          </div>
-                          <form id="sourceForm">
-                            <div class="formgrid">
-                              <div>
-                                <label>Authority / source name *</label>
-                                <input name="name" required placeholder="e.g. EPFO">
-                                </div>
-                                <div>
-                                  <label>Category *</label>
-                                  <select name="category" required class="categorySelect">
-                                  </select>
-                                </div>
-                                <div class="full">
-                                  <label>Official website URL *</label>
-                                  <input name="website_url" type="url" required placeholder="https://…">
-                                  </div>
-                                  <div class="full">
-                                    <label>RSS / Atom feed URL (optional)</label>
-                                    <input name="feed_url" type="url" placeholder="Only enter a tested public feed URL">
-                                    </div>
-                                    <div>
-                                      <label>Jurisdiction</label>
-                                      <input name="jurisdiction" placeholder="India / State / UT">
-                                      </div>
-                                      <div>
-                                        <label>Monitoring enabled</label>
-                                        <select name="enabled">
-                                          <option value="true">Yes</option>
-                                          <option value="false">No</option>
-                                        </select>
-                                      </div>
-                                      <div class="full">
-                                        <label>Notes / limitations</label>
-                                        <textarea name="notes" placeholder="Feed checked date, access notes, etc.">
-                                        </textarea>
-                                      </div>
-                                    </div>
-                                    <p>
-                                      <button type="submit">Save source</button> <button type="button" class="secondary" onclick="seedLocalSources()">Add starter registry locally</button>
-                                    </p>
-                                  </form>
-                                  <div id="sourceList" class="list">
-                                  </div>
-                                </section>
-                                <section id="page-upload" class="page hidden">
-                                  <div class="sectionhead">
-                                    <div>
-                                      <h2>Upload / Import</h2>
-                                      <div class="muted">Upload a PDF/DOCX/TXT/HTML/CSV, or register a link and pasted text.</div>
-                                    </div>
-                                  </div>
-                                  <form id="importForm">
-                                    <div class="formgrid">
-                                      <div class="full">
-                                        <label>Document / update title *</label>
-                                        <input name="title" required placeholder="Circular number, judgment title, Act or news headline">
-                                        </div>
-                                        <div>
-                                          <label>Type</label>
-                                          <select name="kind">
-                                            <option>News</option>
-                                            <option>Circular / Office Memorandum</option>
-                                            <option>Act / Code / Rules</option>
-                                            <option>Gazette Notification</option>
-                                            <option>Judgment / Tribunal Order</option>
-                                            <option>Scheme / Regulation</option>
-                                            <option>Guidance / Other</option>
-                                          </select>
-                                        </div>
-                                        <div>
-                                          <label>Category</label>
-                                          <select name="category" class="categorySelect">
-                                          </select>
-                                        </div>
-                                        <div>
-                                          <label>Issuing authority</label>
-                                          <input name="authority" placeholder="Ministry, EPFO, ESIC, Court…">
-                                          </div>
-                                          <div>
-                                            <label>Document date</label>
-                                            <input name="document_date" type="date">
-                                            </div>
-                                            <div>
-                                              <label>Reference / case number</label>
-                                              <input name="reference_no">
-                                              </div>
-                                              <div>
-                                                <label>Official source URL</label>
-                                                <input name="source_url" type="url" placeholder="https://…">
-                                                </div>
-                                                <div>
-                                                  <label>Review status</label>
-                                                  <select name="status">
-                                                    <option>Unverified</option>
-                                                    <option>Under Review</option>
-                                                    <option>Verified</option>
-                                                    <option>Superseded</option>
-                                                    <option>Status Uncertain</option>
-                                                  </select>
-                                                </div>
-                                                <div class="full">
-                                                  <label>Summary / compliance impact</label>
-                                                  <textarea name="summary" placeholder="Brief summary, affected group, possible action; distinguish fact from analysis.">
-                                                  </textarea>
-                                                </div>
-                                                <div class="full">
-                                                  <label>Paste source text (optional)</label>
-                                                  <textarea name="pasted_text" placeholder="Paste official extract or article text. Keep a link to the original.">
-                                                  </textarea>
-                                                </div>
-                                                <div class="full">
-                                                  <label>Select document file (optional)</label>
-                                                  <input name="file" type="file" accept=".pdf,.docx,.txt,.html,.htm,.csv,.md">
-                                                  </div>
-                                                </div>
-                                                <p class="muted">Text extraction for PDF/DOCX depends on the online libraries loading successfully. Scanned PDFs may require OCR, which is not included in this starter version.</p>
-                                                <button type="submit">Extract, deduplicate & save</button>
-                                              </form>
-                                              <div id="importStatus" class="status">Files are processed in this browser before upload. Supabase storage is used only after connection and schema setup.</div>
-                                            </section>
-                                            <section id="page-queue" class="page hidden">
-                                              <div class="sectionhead">
-                                                <div>
-                                                  <h2>Verification Queue</h2>
-                                                  <div class="muted">Check the original document and its legal status before marking verified.</div>
-                                                </div>
-                                              </div>
-                                              <div id="queueList" class="list">
-                                              </div>
-                                            </section>
-                                            <section id="page-library" class="page hidden">
-                                              <div class="sectionhead">
-                                                <div>
-                                                  <h2>National Source Library</h2>
-                                                  <div class="muted">Search imported records and extracted text. Source-backed advice depends on what has actually been imported.</div>
-                                                </div>
-                                                <button onclick="showPage('upload')">Add source</button>
-                                              </div>
-                                              <div class="row">
-                                                <div style="flex:1;min-width:200px">
-                                                  <input id="librarySearch" placeholder="Search titles, provisions, extracted text…" oninput="renderLibrary()">
-                                                  </div>
-                                                  <button class="secondary" onclick="exportSourceText()">Export text index</button>
-                                                </div>
-                                                <div id="libraryList" class="list">
-                                                </div>
-                                              </section>
-                                              <section id="page-advisor" class="page hidden">
-                                                <div class="sectionhead">
-                                                  <div>
-                                                    <h2>Advisor</h2>
-                                                    <div class="muted">Preliminary research aid using records available in this application; not an automatic legal opinion.</div>
-                                                  </div>
-                                                </div>
-                                                <label for="question">Question / issue</label>
-                                                <textarea id="question" placeholder="Example: What should be checked before approving a pay fixation or acting on an EPFO circular?">
-                                                </textarea>
-                                                <p>
-                                                  <button onclick="runAdvisor()">Search library & prepare research note</button>
-                                                </p>
-                                                <div id="advisorResult" class="list">
-                                                </div>
-                                                <div class="notice">The Advisor does not independently determine the current law from the internet. Check the official text and any later amendments or binding judgments.</div>
-                                              </section>
-                                              <section id="page-settings" class="page hidden">
-                                                <div class="sectionhead">
-                                                  <div>
-                                                    <h2>Settings / Backup</h2>
-                                                    <div class="muted">Connect this frontend to your own Supabase project.</div>
-                                                  </div>
-                                                </div>
-                                                <form id="configForm">
-                                                  <label>Supabase project URL</label>
-                                                  <input name="url" type="url" placeholder="https://YOUR-PROJECT.supabase.co">
-                                                    <label>Supabase public anon / publishable key</label>
-                                                    <input name="key" type="password" autocomplete="off" placeholder="Public browser key (never service_role)">
-                                                      <p class="muted">The public key is safe to use in a browser only when Row Level Security (RLS) is correctly configured. Never paste a service-role key here.</p>
-                                                      <button type="submit">Connect / save settings</button> <button type="button" class="secondary" onclick="disconnect()">Disconnect</button>
-                                                    </form>
-                                                    <h3>Account</h3>
-                                                    <form id="authForm">
-                                                      <label>Email</label>
-                                                      <input name="email" type="email" required>
-                                                        <label>Password</label>
-                                                        <input name="password" type="password" minlength="6" required>
-                                                          <div class="row" style="margin-top:10px">
-                                                            <button type="submit">Sign in</button>
-                                                            <button type="button" class="secondary" onclick="signUp()">Create account</button>
-                                                            <button type="button" class="secondary" onclick="signOut()">Sign out</button>
-                                                          </div>
-                                                        </form>
-                                                        <h3>Backup / Restore</h3>
-                                                        <div class="row">
-                                                          <button onclick="exportBackup()">Download JSON backup</button>
-                                                          <label class="button secondary" style="margin:0">Restore JSON <input type="file" accept=".json" style="display:none" onchange="restoreBackup(event)">
-                                                          </label>
-                                                          <button class="secondary" onclick="exportSourceText()">Export text index</button>
-                                                        </div>
-                                                        <p class="muted">JSON backup includes metadata and extracted text stored in browser memory. It does not replace a separate backup of original files in Supabase Storage.</p>
-                                                        <h3>Deployment</h3>
-                                                        <p>Use the included README, SQL schema and GitHub Actions workflow. Daily automation runs only for registry entries with an explicitly configured feed URL. Add GitHub repository secrets for Supabase URL and service-role key to enable the scheduled collector. The service-role key must remain a GitHub Actions secret and must never be exposed to the browser.</p>
-                                                      </section>
-                                                    </section>
-                                                  </div>
-                                                </main>
-                                                <footer>LCSA v6.0 · Keep original official sources and verify amendments, effective dates, applicability and judicial status. No legal outcome is guaranteed.</footer>
-                                                <script>
+              <h3>Daily monitoring model</h3>
+              <p>GitHub Actions can run once daily for sources with a confirmed, accessible RSS/Atom feed URL. The starter registry intentionally leaves feed URLs blank unless you configure and test them. Websites without permitted feeds or APIs remain available through official links and manual import.</p>
+              <div class="notice">Legal safeguard: collected items are unverified leads. Confirm the underlying official document, applicability, effective date, amendments, stays and subsequent judicial treatment before taking action.</div>
+            </section>
+            <section id="page-news" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>News & Legal Updates</h2>
+                  <div class="muted">Search saved items, filter by authority/category, and send records to the verification queue.</div>
+                </div>
+                <button onclick="showPage('upload')">Import item</button>
+              </div>
+              <div class="formgrid">
+                <div>
+                  <label for="newsSearch">Search</label>
+                  <input id="newsSearch" placeholder="Keyword, subject, case number…" oninput="renderNews()">
+                </div>
+                <div>
+                  <label for="newsCategory">Category</label>
+                  <select id="newsCategory" onchange="renderNews()">
+                    <option value="">All categories</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="newsStatus">Review status</label>
+                  <select id="newsStatus" onchange="renderNews()">
+                    <option value="">All statuses</option>
+                    <option>Unverified</option>
+                    <option>Under Review</option>
+                    <option>Verified</option>
+                    <option>Superseded</option>
+                    <option>Status Uncertain</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="newsFrom">From date</label>
+                  <input id="newsFrom" type="date" onchange="renderNews()">
+                </div>
+              </div>
+              <div id="newsList" class="list">
+              </div>
+            </section>
+            <section id="page-sources" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>Official Source Registry</h2>
+                  <div class="muted">Official portals are starter references, not proof of an active feed. Add a tested RSS/Atom URL to enable scheduled monitoring.</div>
+                </div>
+              </div>
+              <form id="sourceForm">
+                <div class="formgrid">
+                  <div>
+                    <label>Authority / source name *</label>
+                    <input name="name" required placeholder="e.g. EPFO">
+                  </div>
+                  <div>
+                    <label>Category *</label>
+                    <select name="category" required class="categorySelect">
+                    </select>
+                  </div>
+                  <div class="full">
+                    <label>Official website URL *</label>
+                    <input name="website_url" type="url" required placeholder="https://…">
+                  </div>
+                  <div class="full">
+                    <label>RSS / Atom feed URL (optional)</label>
+                    <input name="feed_url" type="url" placeholder="Only enter a tested public feed URL">
+                  </div>
+                  <div>
+                    <label>Jurisdiction</label>
+                    <input name="jurisdiction" placeholder="India / State / UT">
+                  </div>
+                  <div>
+                    <label>Monitoring enabled</label>
+                    <select name="enabled">
+                      <option value="true">Yes</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                  <div class="full">
+                    <label>Notes / limitations</label>
+                    <textarea name="notes" placeholder="Feed checked date, access notes, etc.">
+                    </textarea>
+                  </div>
+                </div>
+                <p>
+                  <button type="submit">Save source</button> <button type="button" class="secondary" onclick="seedLocalSources()">Add starter registry locally</button>
+                </p>
+              </form>
+              <div id="sourceList" class="list">
+              </div>
+            </section>
+            <section id="page-upload" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>Upload / Import</h2>
+                  <div class="muted">Upload a PDF/DOCX/TXT/HTML/CSV, or register a link and pasted text.</div>
+                </div>
+              </div>
+              <form id="importForm">
+                <div class="formgrid">
+                  <div class="full">
+                    <label>Document / update title *</label>
+                    <input name="title" required placeholder="Circular number, judgment title, Act or news headline">
+                  </div>
+                  <div>
+                    <label>Type</label>
+                    <select name="kind">
+                      <option>News</option>
+                      <option>Circular / Office Memorandum</option>
+                      <option>Act / Code / Rules</option>
+                      <option>Gazette Notification</option>
+                      <option>Judgment / Tribunal Order</option>
+                      <option>Scheme / Regulation</option>
+                      <option>Guidance / Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Category</label>
+                    <select name="category" class="categorySelect">
+                    </select>
+                  </div>
+                  <div>
+                    <label>Issuing authority</label>
+                    <input name="authority" placeholder="Ministry, EPFO, ESIC, Court…">
+                  </div>
+                  <div>
+                    <label>Document date</label>
+                    <input name="document_date" type="date">
+                  </div>
+                  <div>
+                    <label>Reference / case number</label>
+                    <input name="reference_no">
+                  </div>
+                  <div>
+                    <label>Official source URL</label>
+                    <input name="source_url" type="url" placeholder="https://…">
+                    <button type="button" class="secondary" id="fetchOfficialUrlBtn" onclick="fetchOfficialUrl()">Fetch content from URL</button>
+                    <p class="muted">Retrieves a publicly accessible page or PDF. Review all extracted details before saving.</p>
+                  </div>
+                  <div>
+                    <label>Review status</label>
+                    <select name="status">
+                      <option>Unverified</option>
+                      <option>Under Review</option>
+                      <option>Verified</option>
+                      <option>Superseded</option>
+                      <option>Status Uncertain</option>
+                    </select>
+                  </div>
+                  <div class="full">
+                    <label>Summary / compliance impact</label>
+                    <textarea name="summary" placeholder="Brief summary, affected group, possible action; distinguish fact from analysis.">
+                    </textarea>
+                  </div>
+                  <div class="full">
+                    <label>Paste source text (optional)</label>
+                    <textarea name="pasted_text" placeholder="Paste official extract or article text. Keep a link to the original.">
+                    </textarea>
+                  </div>
+                  <div class="full">
+                    <label>Select document file (optional)</label>
+                    <input name="file" type="file" accept=".pdf,.docx,.txt,.html,.htm,.csv,.md">
+                  </div>
+                </div>
+                <p class="muted">Text extraction for PDF/DOCX depends on the online libraries loading successfully. Scanned PDFs may require OCR, which is not included in this starter version.</p>
+                <button type="submit">Extract, deduplicate & save</button>
+              </form>
+              <div id="importStatus" class="status">Files are processed in this browser before upload. Supabase storage is used only after connection and schema setup.</div>
+            </section>
+            <section id="page-queue" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>Verification Queue</h2>
+                  <div class="muted">Check the original document and its legal status before marking verified.</div>
+                </div>
+              </div>
+              <div id="queueList" class="list">
+              </div>
+            </section>
+            <section id="page-library" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>National Source Library</h2>
+                  <div class="muted">Search imported records and extracted text. Source-backed advice depends on what has actually been imported.</div>
+                </div>
+                <button onclick="showPage('upload')">Add source</button>
+              </div>
+              <div class="row">
+                <div style="flex:1;min-width:200px">
+                  <input id="librarySearch" placeholder="Search titles, provisions, extracted text…" oninput="renderLibrary()">
+                </div>
+                <button class="secondary" onclick="exportSourceText()">Export text index</button>
+              </div>
+              <div id="libraryList" class="list">
+              </div>
+            </section>
+            <section id="page-advisor" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>Advisor</h2>
+                  <div class="muted">Preliminary research aid using records available in this application; not an automatic legal opinion.</div>
+                </div>
+              </div>
+              <label for="question">Question / issue</label>
+              <textarea id="question" placeholder="Example: What should be checked before approving a pay fixation or acting on an EPFO circular?">
+              </textarea>
+              <p>
+                <button onclick="runAdvisor()">Search library & prepare research note</button>
+              </p>
+              <div id="advisorResult" class="list">
+              </div>
+              <div class="notice">The Advisor does not independently determine the current law from the internet. Check the official text and any later amendments or binding judgments.</div>
+            </section>
+            <section id="page-settings" class="page hidden">
+              <div class="sectionhead">
+                <div>
+                  <h2>Settings / Backup</h2>
+                  <div class="muted">Connect this frontend to your own Supabase project.</div>
+                </div>
+              </div>
+              <form id="configForm">
+                <label>Supabase project URL</label>
+                <input name="url" type="url" placeholder="https://YOUR-PROJECT.supabase.co">
+                <label>Supabase public anon / publishable key</label>
+                <input name="key" type="password" autocomplete="off" placeholder="Public browser key (never service_role)">
+                <p class="muted">The public key is safe to use in a browser only when Row Level Security (RLS) is correctly configured. Never paste a service-role key here.</p>
+                <button type="submit">Connect / save settings</button> <button type="button" class="secondary" onclick="disconnect()">Disconnect</button>
+              </form>
+              <h3>Account</h3>
+              <form id="authForm">
+                <label>Email</label>
+                <input name="email" type="email" required>
+                <label>Password</label>
+                <input name="password" type="password" minlength="6" required>
+                <div class="row" style="margin-top:10px">
+                  <button type="submit">Sign in</button>
+                  <button type="button" class="secondary" onclick="signUp()">Create account</button>
+                  <button type="button" class="secondary" onclick="signOut()">Sign out</button>
+                </div>
+              </form>
+              <h3>Backup / Restore</h3>
+              <div class="row">
+                <button onclick="exportBackup()">Download JSON backup</button>
+                <label class="button secondary" style="margin:0">Restore JSON <input type="file" accept=".json" style="display:none" onchange="restoreBackup(event)">
+                </label>
+                <button class="secondary" onclick="exportSourceText()">Export text index</button>
+              </div>
+              <p class="muted">JSON backup includes metadata and extracted text stored in browser memory. It does not replace a separate backup of original files in Supabase Storage.</p>
+              <h3>Deployment</h3>
+              <p>Use the included README, SQL schema and GitHub Actions workflow. Daily automation runs only for registry entries with an explicitly configured feed URL. Add GitHub repository secrets for Supabase URL and service-role key to enable the scheduled collector. The service-role key must remain a GitHub Actions secret and must never be exposed to the browser.</p>
+            </section>
+          </section>
+        </div>
+      </main>
+      <footer>LCSA v6.0 · Keep original official sources and verify amendments, effective dates, applicability and judicial status. No legal outcome is guaranteed.</footer>
+      <script>
 const DBKEY='LCSA_V6_LOCAL';
 const CATEGORIES=['Labour Ministry / CLC','State / UT Labour Department','EPFO','ESIC','CCS / DoPT','Department of Expenditure','Pension / Pensioners Welfare','Supreme Court','High Court','CAT','Labour Court / Industrial Tribunal / CGIT','EPFO / ESIC Tribunal','Gazette / PIB','POSH','Other'];
 const STARTERS=[
@@ -400,14 +402,46 @@ async function extractFile(file){
  }
  throw new Error('Unsupported file type. Use PDF, DOCX, TXT, HTML, CSV or Markdown.');
 }
+
+let officialUrlFetched=false;
+async function fetchOfficialUrl(){
+ const form=$('importForm'), urlField=form.querySelector('[name="source_url"]'), status=$('importStatus'), btn=$('fetchOfficialUrlBtn');
+ const url=(urlField.value||'').trim();
+ if(!url){status.textContent='Enter the official source URL first.';urlField.focus();return;}
+ try{const u=new URL(url);if(!['http:','https:'].includes(u.protocol))throw new Error('Use an HTTP or HTTPS URL.');}catch(e){status.textContent='Please enter a valid official HTTP/HTTPS URL.';return;}
+ if(!supabase||!user){status.textContent='Connect Supabase and sign in first. The import-official-url Edge Function must also be deployed.';return;}
+ btn.disabled=true;status.textContent='Retrieving page/document…';
+ try{
+  const {data,error}=await supabase.functions.invoke('import-official-url',{body:{url}});
+  if(error)throw new Error(error.message||'URL retrieval failed.');
+  if(!data||!data.ok)throw new Error(data?.error||'No readable content returned.');
+  urlField.value=data.finalUrl||url;officialUrlFetched=true;
+  const setIfBlank=(name,value)=>{const el=form.querySelector('[name="'+name+'"]');if(el&&value&&!el.value.trim())el.value=value;};
+  setIfBlank('title',data.title||'');setIfBlank('authority',data.authority||'');setIfBlank('document_date',data.documentDate||'');
+  form.querySelector('[name="status"]').value='Unverified';
+  if(data.contentType==='application/pdf'&&data.fileBase64){
+   const raw=atob(data.fileBase64), bytes=new Uint8Array(raw.length);
+   for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+   const file=new File([bytes],data.fileName||'official-document.pdf',{type:'application/pdf'});
+   const transfer=new DataTransfer();transfer.items.add(file);form.querySelector('[name="file"]').files=transfer.files;
+   status.textContent='PDF retrieved and attached. Click “Extract, deduplicate & save” to extract text and save the original file. The item will remain Unverified.';
+  }else{
+   const text=(data.text||'').trim();if(!text)throw new Error('The page was retrieved but no readable text was extracted.');
+   const box=form.querySelector('[name="pasted_text"]');box.value=box.value.trim()?box.value.trim()+'\n\n'+text:text;
+   status.textContent='Retrieved and extracted '+text.length+' characters. Check title, authority and date, then click “Extract, deduplicate & save”. Status is Unverified.';
+  }
+ }catch(e){status.textContent='URL import failed: '+(e.message||String(e))+'. The website may block automated access, require a session, or provide a scanned PDF. You can download it manually and use Select document file.';console.error(e);}
+ finally{btn.disabled=false;}
+}
+
 $('importForm').addEventListener('submit',async e=>{
  e.preventDefault();const f=new FormData(e.target),file=f.get('file');$('importStatus').textContent='Extracting text…';
  try{
   const extracted=await extractFile(file&&file.size?file:null), pasted=(f.get('pasted_text')||'').trim(), textContent=[pasted,extracted].filter(Boolean).join('\n\n');
   const title=f.get('title').trim(), url=cleanUrl(f.get('source_url')||''), ref=f.get('reference_no')||'';
   const dedupe=hashText([title,ref,url,textContent.slice(0,1000)].join('|'));
-  const item=recordToNews({title,kind:f.get('kind'),category:f.get('category'),authority:f.get('authority'),document_date:f.get('document_date'),reference_no:ref,source_url:url,summary:f.get('summary'),status:f.get('status'),source_text:textContent,dedupe_key:dedupe});
-  if(!uniqueNews(item)){ $('importStatus').textContent='Possible duplicate detected. Existing item was retained; no duplicate added.';return;}
+  const item=recordToNews({title,kind:f.get('kind'),category:f.get('category'),authority:f.get('authority'),document_date:f.get('document_date'),reference_no:ref,source_url:url,summary:f.get('summary'),status:officialUrlFetched?'Unverified':f.get('status'),source_text:textContent,dedupe_key:dedupe});
+  if(!uniqueNews(item)){ officialUrlFetched=false; $('importStatus').textContent='Possible duplicate detected. Existing item was retained; no duplicate added.';return;}
   let storage_path=null;
   if(file&&file.size&&supabase&&user){
     const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_'), path=user.id+'/'+Date.now()+'-'+safeName;
@@ -428,7 +462,7 @@ $('importForm').addEventListener('submit',async e=>{
     state.queue.unshift({id:uid(),news_id:item.id,title:item.title,reason:'Newly imported item requires review',status:'Pending'});
     state.documents.unshift({id:uid(),title:item.title,kind:item.kind,category:item.category,authority:item.authority,document_date:item.document_date,reference_no:item.reference_no,source_url:item.source_url,summary:item.summary,extracted_text:item.source_text,storage_path:null,news_id:item.id});
   }
-  state.news.unshift(item);localSave();e.target.reset();$('importStatus').textContent='Imported and indexed. Status: '+item.status+'. '+(storage_path?'Original file uploaded to private Supabase Storage.':'Original file not uploaded to Supabase; extracted text/metadata saved locally or in database.');
+  state.news.unshift(item);localSave();e.target.reset();officialUrlFetched=false;$('importStatus').textContent='Imported and indexed. Status: '+item.status+'. '+(storage_path?'Original file uploaded to private Supabase Storage.':'Original file not uploaded to Supabase; extracted text/metadata saved locally or in database.');
  }catch(err){$('importStatus').textContent='Import failed: '+err.message;console.error(err);}
 });
 function renderNews(){
@@ -458,5 +492,5 @@ function disconnect(){localStorage.removeItem('LCSA_SUPABASE_URL');localStorage.
 localLoad();renderAll();if(localStorage.getItem('LCSA_SUPABASE_URL'))connectSupabase();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 </script>
-                                              </body>
-                                            </html>
+    </body>
+  </html>
