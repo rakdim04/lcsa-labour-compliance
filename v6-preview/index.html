@@ -214,8 +214,6 @@ footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);f
                   <div>
                     <label>Official source URL</label>
                     <input name="source_url" type="url" placeholder="https://…">
-                    <button type="button" class="secondary" id="fetchOfficialUrlBtn" onclick="fetchOfficialUrl()">Fetch content from URL</button>
-                    <p class="muted">Retrieves a publicly accessible page or PDF. Review all extracted details before saving.</p>
                   </div>
                   <div>
                     <label>Review status</label>
@@ -402,46 +400,14 @@ async function extractFile(file){
  }
  throw new Error('Unsupported file type. Use PDF, DOCX, TXT, HTML, CSV or Markdown.');
 }
-
-let officialUrlFetched=false;
-async function fetchOfficialUrl(){
- const form=$('importForm'), urlField=form.querySelector('[name="source_url"]'), status=$('importStatus'), btn=$('fetchOfficialUrlBtn');
- const url=(urlField.value||'').trim();
- if(!url){status.textContent='Enter the official source URL first.';urlField.focus();return;}
- try{const u=new URL(url);if(!['http:','https:'].includes(u.protocol))throw new Error('Use an HTTP or HTTPS URL.');}catch(e){status.textContent='Please enter a valid official HTTP/HTTPS URL.';return;}
- if(!supabase||!user){status.textContent='Connect Supabase and sign in first. The import-official-url Edge Function must also be deployed.';return;}
- btn.disabled=true;status.textContent='Retrieving page/document…';
- try{
-  const {data,error}=await supabase.functions.invoke('import-official-url',{body:{url}});
-  if(error)throw new Error(error.message||'URL retrieval failed.');
-  if(!data||!data.ok)throw new Error(data?.error||'No readable content returned.');
-  urlField.value=data.finalUrl||url;officialUrlFetched=true;
-  const setIfBlank=(name,value)=>{const el=form.querySelector('[name="'+name+'"]');if(el&&value&&!el.value.trim())el.value=value;};
-  setIfBlank('title',data.title||'');setIfBlank('authority',data.authority||'');setIfBlank('document_date',data.documentDate||'');
-  form.querySelector('[name="status"]').value='Unverified';
-  if(data.contentType==='application/pdf'&&data.fileBase64){
-   const raw=atob(data.fileBase64), bytes=new Uint8Array(raw.length);
-   for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
-   const file=new File([bytes],data.fileName||'official-document.pdf',{type:'application/pdf'});
-   const transfer=new DataTransfer();transfer.items.add(file);form.querySelector('[name="file"]').files=transfer.files;
-   status.textContent='PDF retrieved and attached. Click “Extract, deduplicate & save” to extract text and save the original file. The item will remain Unverified.';
-  }else{
-   const text=(data.text||'').trim();if(!text)throw new Error('The page was retrieved but no readable text was extracted.');
-   const box=form.querySelector('[name="pasted_text"]');box.value=box.value.trim()?box.value.trim()+'\n\n'+text:text;
-   status.textContent='Retrieved and extracted '+text.length+' characters. Check title, authority and date, then click “Extract, deduplicate & save”. Status is Unverified.';
-  }
- }catch(e){status.textContent='URL import failed: '+(e.message||String(e))+'. The website may block automated access, require a session, or provide a scanned PDF. You can download it manually and use Select document file.';console.error(e);}
- finally{btn.disabled=false;}
-}
-
 $('importForm').addEventListener('submit',async e=>{
  e.preventDefault();const f=new FormData(e.target),file=f.get('file');$('importStatus').textContent='Extracting text…';
  try{
   const extracted=await extractFile(file&&file.size?file:null), pasted=(f.get('pasted_text')||'').trim(), textContent=[pasted,extracted].filter(Boolean).join('\n\n');
   const title=f.get('title').trim(), url=cleanUrl(f.get('source_url')||''), ref=f.get('reference_no')||'';
   const dedupe=hashText([title,ref,url,textContent.slice(0,1000)].join('|'));
-  const item=recordToNews({title,kind:f.get('kind'),category:f.get('category'),authority:f.get('authority'),document_date:f.get('document_date'),reference_no:ref,source_url:url,summary:f.get('summary'),status:officialUrlFetched?'Unverified':f.get('status'),source_text:textContent,dedupe_key:dedupe});
-  if(!uniqueNews(item)){ officialUrlFetched=false; $('importStatus').textContent='Possible duplicate detected. Existing item was retained; no duplicate added.';return;}
+  const item=recordToNews({title,kind:f.get('kind'),category:f.get('category'),authority:f.get('authority'),document_date:f.get('document_date'),reference_no:ref,source_url:url,summary:f.get('summary'),status:f.get('status'),source_text:textContent,dedupe_key:dedupe});
+  if(!uniqueNews(item)){ $('importStatus').textContent='Possible duplicate detected. Existing item was retained; no duplicate added.';return;}
   let storage_path=null;
   if(file&&file.size&&supabase&&user){
     const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_'), path=user.id+'/'+Date.now()+'-'+safeName;
@@ -462,7 +428,7 @@ $('importForm').addEventListener('submit',async e=>{
     state.queue.unshift({id:uid(),news_id:item.id,title:item.title,reason:'Newly imported item requires review',status:'Pending'});
     state.documents.unshift({id:uid(),title:item.title,kind:item.kind,category:item.category,authority:item.authority,document_date:item.document_date,reference_no:item.reference_no,source_url:item.source_url,summary:item.summary,extracted_text:item.source_text,storage_path:null,news_id:item.id});
   }
-  state.news.unshift(item);localSave();e.target.reset();officialUrlFetched=false;$('importStatus').textContent='Imported and indexed. Status: '+item.status+'. '+(storage_path?'Original file uploaded to private Supabase Storage.':'Original file not uploaded to Supabase; extracted text/metadata saved locally or in database.');
+  state.news.unshift(item);localSave();e.target.reset();$('importStatus').textContent='Imported and indexed. Status: '+item.status+'. '+(storage_path?'Original file uploaded to private Supabase Storage.':'Original file not uploaded to Supabase; extracted text/metadata saved locally or in database.');
  }catch(err){$('importStatus').textContent='Import failed: '+err.message;console.error(err);}
 });
 function renderNews(){
