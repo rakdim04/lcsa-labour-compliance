@@ -357,8 +357,43 @@ function cleanUrl(s){try{const u=new URL(s);return ['http:','https:'].includes(u
 function localLoad(){try{state={...state,...JSON.parse(localStorage.getItem(DBKEY)||'{}')}}catch{}}
 function localSave(){localStorage.setItem(DBKEY,JSON.stringify(state));renderAll();}
 function showStatus(s, bad=false){$('globalStatus').textContent=s;$('globalStatus').className='status'+(bad?' error':'');}
-function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.page===p));if(p==='news')renderNews();if(p==='sources')renderSources();if(p==='queue')renderQueue();if(p==='library')renderLibrary();}
-document.querySelectorAll('.navbtn').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+
+window.showPage = function(p) {
+  const target = document.getElementById('page-' + p);
+  if (!target) {
+    alert('LCSA: Page not found: ' + p);
+    return;
+  }
+
+  document.querySelectorAll('.page').forEach(function(page) {
+    page.classList.add('hidden');
+  });
+
+  target.classList.remove('hidden');
+
+  document.querySelectorAll('.navbtn').forEach(function(button) {
+    button.classList.toggle('active', button.dataset.page === p);
+  });
+
+  try {
+    if (p === 'news') renderNews();
+    if (p === 'sources') renderSources();
+    if (p === 'queue') renderQueue();
+    if (p === 'library') renderLibrary();
+  } catch (error) {
+    console.error('LCSA rendering error:', error);
+    alert('The page opened, but its content could not be rendered. Check the browser console.');
+  }
+};
+
+document.addEventListener('click', function(event) {
+  const button = event.target.closest('.navbtn');
+  if (button) {
+    event.preventDefault();
+    window.showPage(button.dataset.page);
+  }
+});
+
 document.querySelectorAll('.categorySelect').forEach(sel=>sel.innerHTML=CATEGORIES.map(c=>`<option>${esc(c)}</option>`).join(''));
 $('newsCategory').innerHTML='<option value="">All categories</option>'+CATEGORIES.map(c=>`<option>${esc(c)}</option>`).join('');
 function starterObjects(){return STARTERS.map(a=>({id:uid(),name:a[0],category:a[1],website_url:a[2],feed_url:'',jurisdiction:a[3],enabled:false,notes:'Official portal starter entry. Feed not configured; verify availability and terms before enabling.',is_seed:true}));}
