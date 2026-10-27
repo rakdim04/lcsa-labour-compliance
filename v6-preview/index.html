@@ -36,14 +36,16 @@ footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);f
         <strong>Configuration required:</strong> this app is not connected to Supabase until you enter your own project URL and public anon/publishable key and configure the supplied SQL. Never place a service-role key in this page.</div>
         <div class="layout">
           <nav class="sidebar" aria-label="Main navigation">
-            <button class="navbtn active" data-page="dashboard">Dashboard</button>
-            <button class="navbtn" data-page="news">News & Legal Updates</button>
-            <button class="navbtn" data-page="sources">Official Source Registry</button>
-            <button class="navbtn" data-page="upload">Upload / Import</button>
-            <button class="navbtn" data-page="queue">Verification Queue</button>
-            <button class="navbtn" data-page="library">National Source Library</button>
-            <button class="navbtn" data-page="advisor">Advisor</button>
-            <button class="navbtn" data-page="settings">Settings / Backup</button>
+            
+<button class="navbtn active" data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
+<button class="navbtn" data-page="news" onclick="showPage('news')">News & Legal Updates</button>
+<button class="navbtn" data-page="sources" onclick="showPage('sources')">Official Source Registry</button>
+<button class="navbtn" data-page="upload" onclick="showPage('upload')">Upload / Import</button>
+<button class="navbtn" data-page="queue" onclick="showPage('queue')">Verification Queue</button>
+<button class="navbtn" data-page="library" onclick="showPage('library')">National Source Library</button>
+<button class="navbtn" data-page="advisor" onclick="showPage('advisor')">Advisor</button>
+<button class="navbtn" data-page="settings" onclick="showPage('settings')">Settings / Backup</button>
+
           </nav>
           <section class="panel">
             <div id="globalStatus" class="status">Not connected to Supabase. Local draft mode is available.</div>
