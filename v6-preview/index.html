@@ -13,7 +13,10 @@ header{background:var(--navy);color:white;padding:16px max(16px,calc((100% - 125
 .brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:12px;background:#fff1;display:grid;place-items:center;font-weight:800;font-size:18px}.brand h1{font-size:19px;margin:0}.brand p{margin:2px 0 0;color:#cbd5e1;font-size:12px}
 main{max-width:1250px;margin:auto;padding:18px}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px}.sidebar,.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px}.sidebar{padding:10px;height:max-content;position:sticky;top:100px}.navbtn{display:block;width:100%;text-align:left;padding:10px;border:0;background:transparent;border-radius:9px;color:var(--ink);cursor:pointer;margin:2px 0}.navbtn.active,.navbtn:hover{background:#e8efff;color:#163d92;font-weight:700}.panel{padding:18px;min-width:0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.card{padding:14px}.card h3{margin:0 0 6px;font-size:15px}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.tag{display:inline-block;background:#edf2f7;color:#334155;border-radius:999px;padding:3px 8px;font-size:12px;margin:2px}.tag.good{background:#dcfce7;color:var(--green)}.tag.warn{background:#fef3c7;color:var(--amber)}.tag.bad{background:#fee2e2;color:var(--red)}
 h2{margin:0 0 4px;font-size:22px}h3{margin:18px 0 8px;font-size:16px}.sectionhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
-label{display:block;font-size:13px;font-weight:650;margin:8px 0 4px}input,select,textarea{font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:10px;width:100%;background:white;color:var(--ink)}textarea{min-height:90px;resize:vertical}button,.button{border:0;border-radius:9px;padding:10px 13px;font:inherit;font-weight:650;background:var(--blue);color:white;cursor:pointer;text-decoration:none;display:inline-block}button.secondary,.button.secondary{background:#e8edf4;color:#263448}button.danger{background:#b91c1c}button:disabled{opacity:.5;cursor:not-allowed}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.formgrid .full{grid-column:1/-1}.list{display:grid;gap:10px;margin-top:12px}.item{border:1px solid var(--line);border-radius:12px;padding:13px;background:white}.item h3{margin:0 0 5px}.item p{margin:6px 0}.item .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.item a{overflow-wrap:anywhere}.hidden{display:none!important}.notice{border-left:4px solid #d97706;background:#fffbeb;padding:11px 13px;border-radius:7px;margin:12px 0}.success{border-left-color:#16a34a;background:#f0fdf4}.error{border-left-color:#dc2626;background:#fef2f2}.status{padding:8px 10px;border-radius:8px;background:#e8edf4;font-size:13px;margin:10px 0}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8fafc}
+label{display:block;font-size:13px;font-weight:650;margin:8px 0 4px}input,select,textarea{font:inherit;border:1px solid #cbd5e1;border-radius:9px;padding:10px;width:100%;background:white;color:var(--ink)}textarea{min-height:90px;resize:vertical}button,.button{border:0;border-radius:9px;padding:10px 13px;font:inherit;font-weight:650;background:var(--blue);color:white;cursor:pointer;text-decoration:none;display:inline-block}button.secondary,.button.secondary{background:#e8edf4;color:#263448}button.danger{background:#b91c1c}button:disabled{opacity:.5;cursor:not-allowed}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.formgrid .full{grid-column:1/-1}.list{display:grid;gap:10px;margin-top:12px}.item{border:1px solid var(--line);border-radius:12px;padding:13px;background:white}.item h3{margin:0 0 5px}.item p{margin:6px 0}.item .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.item a{overflow-wrap:anywhere}.hidden{display:none!important}
+.page:target{display:block!important}
+.navbtn{text-decoration:none}
+.notice{notice{border-left:4px solid #d97706;background:#fffbeb;padding:11px 13px;border-radius:7px;margin:12px 0}.success{border-left-color:#16a34a;background:#f0fdf4}.error{border-left-color:#dc2626;background:#fef2f2}.status{padding:8px 10px;border-radius:8px;background:#e8edf4;font-size:13px;margin:10px 0}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8fafc}
 footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);font-size:12px}
 @media(max-width:800px){.layout{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{white-space:nowrap;width:auto}.panel{padding:13px}.formgrid{grid-template-columns:1fr}.formgrid .full{grid-column:auto}header{position:static}}
 </style>
@@ -37,14 +40,7 @@ footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);f
         <div class="layout">
           <nav class="sidebar" aria-label="Main navigation">
             
-<button class="navbtn active" data-page="dashboard" onclick="showPage('dashboard')">Dashboard</button>
-<button class="navbtn" data-page="news" onclick="showPage('news')">News & Legal Updates</button>
-<button class="navbtn" data-page="sources" onclick="showPage('sources')">Official Source Registry</button>
-<button class="navbtn" data-page="upload" onclick="showPage('upload')">Upload / Import</button>
-<button class="navbtn" data-page="queue" onclick="showPage('queue')">Verification Queue</button>
-<button class="navbtn" data-page="library" onclick="showPage('library')">National Source Library</button>
-<button class="navbtn" data-page="advisor" onclick="showPage('advisor')">Advisor</button>
-<button class="navbtn" data-page="settings" onclick="showPage('settings')">Settings / Backup</button>
+ <nav class="sidebar">
 
           </nav>
           <section class="panel">
@@ -178,6 +174,32 @@ footer{max-width:1250px;margin:0 auto;padding:4px 18px 24px;color:var(--muted);f
                   <div class="muted">Upload a PDF/DOCX/TXT/HTML/CSV, or register a link and pasted text.</div>
                 </div>
               </div>
+              <div class="item">
+  <h3>Fetch content from URL</h3>
+  <p class="muted">
+    Enter an official circular, notification, judgment, order or
+    press-release URL. Accessible HTML/text pages and PDFs can be
+    retrieved. Imported material remains Unverified until reviewed.
+  </p>
+
+  <form id="urlFetchForm">
+    <label for="fetchUrl">Official document URL</label>
+    <input
+      id="fetchUrl"
+      name="url"
+      type="url"
+      required
+      placeholder="https://official.gov.in/document.pdf"
+    >
+    <p>
+      <button type="submit">Fetch URL &amp; Save as Unverified</button>
+    </p>
+  </form>
+
+  <p id="urlFetchStatus" class="muted" aria-live="polite">
+    Ready to fetch an official URL.
+  </p>
+</div>
               <form id="importForm">
                 <div class="formgrid">
                   <div class="full">
