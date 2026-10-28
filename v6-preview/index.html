@@ -459,6 +459,144 @@ async function extractFile(file){
  }
  throw new Error('Unsupported file type. Use PDF, DOCX, TXT, HTML, CSV or Markdown.');
 }
+        
+$('urlFetchForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const status = $('urlFetchStatus');
+  const button = e.target.querySelector('button[type="submit"]');
+  const requestedUrl = cleanUrl($('fetchUrl').value);
+
+  if (!requestedUrl) {
+    status.textContent = 'Enter a valid HTTP or HTTPS URL.';
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = 'Fetching official document…';
+
+  try {
+    const response = await fetch(requestedUrl, {
+      method: 'GET',
+      credentials: 'omit',
+      redirect: 'follow'
+    });
+
+    if (!response.ok) {
+      throw new Error('HTTP status ' + response.status);
+    }
+
+    const finalUrl = response.url || requestedUrl;
+    const url = new URL(finalUrl);
+    const blob = await response.blob();
+    const contentType =
+      (response.headers.get('content-type') || '').toLowerCase();
+    const signature = await blob.slice(0, 5).text();
+
+    const pathName = decodeURIComponent(
+      url.pathname.split('/').pop() || 'official-document'
+    );
+
+    const isPdf =
+      contentType.includes('application/pdf') ||
+      /\.pdf$/i.test(pathName) ||
+      signature === '%PDF-';
+
+    const form = $('importForm');
+    const field = name => form.elements.namedItem(name);
+
+    let title = '';
+    let sourceText = '';
+
+    if (isPdf) {
+      const filename = /\.pdf$/i.test(pathName)
+        ? pathName
+        : pathName + '.pdf';
+
+      const file = new File([blob], filename, {
+        type: 'application/pdf'
+      });
+
+      const transfer = new DataTransfer();
+      transfer.items.add(file);
+      field('file').files = transfer.files;
+
+      title = filename.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ');
+      field('pasted_text').value = '';
+    } else {
+      const raw = await blob.text();
+
+      if (!raw.trim()) {
+        throw new Error('The URL returned an empty document.');
+      }
+
+      const isHtml =
+        contentType.includes('text/html') ||
+        /<(?:!doctype\s+html|html\b|body\b)/i.test(raw.slice(0, 2000));
+
+      if (isHtml) {
+        const doc = new DOMParser().parseFromString(raw, 'text/html');
+
+        title = (doc.querySelector('title')?.textContent || '').trim();
+
+        doc.querySelectorAll(
+          'script,style,noscript,svg,nav,footer,form,button'
+        ).forEach(node => node.remove());
+
+        sourceText = (
+          doc.body?.innerText ||
+          doc.body?.textContent ||
+          ''
+        ).replace(/[ \t]+/g, ' ')
+         .replace(/\n{3,}/g, '\n\n')
+         .trim();
+      } else {
+        sourceText = raw.trim();
+      }
+
+      if (!sourceText) {
+        throw new Error('No readable text was found.');
+      }
+
+      if (sourceText.length > 1000000) {
+        sourceText = sourceText.slice(0, 1000000);
+      }
+
+      field('file').value = '';
+      field('pasted_text').value = sourceText;
+
+      if (!title) {
+        title = pathName.replace(/\.[a-z0-9]{1,8}$/i, '')
+          .replace(/[_-]+/g, ' ');
+      }
+    }
+
+    field('title').value = title || 'Official document from ' + url.hostname;
+    field('source_url').value = finalUrl;
+    field('authority').value =
+      field('authority').value.trim() || url.hostname;
+    field('status').value = 'Unverified';
+
+    status.textContent =
+      'Content retrieved. Sending it to the existing import workflow…';
+
+    // Reuse the existing handler for extraction, deduplication,
+    // storage, verification queue and library record creation.
+    form.requestSubmit();
+
+  } catch (error) {
+    console.error('LCSA URL import failed:', error);
+
+    status.textContent =
+      'Fetch failed: ' + error.message +
+      '. The website may block browser access (CORS). ' +
+      'Download the original PDF or paste its text and source URL ' +
+      'into the existing import form instead.';
+  } finally {
+    button.disabled = false;
+  }
+});
+
 $('importForm').addEventListener('submit',async e=>{
  e.preventDefault();const f=new FormData(e.target),file=f.get('file');$('importStatus').textContent='Extracting text…';
  try{
